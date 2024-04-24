@@ -13,10 +13,4 @@ int main()
 			add_history(line);
 		parsing(&parse, line);
 	}
-	puts("\n");
-	while (parse)
-	{
-		printf("%s\n", parse->type);
-		parse = parse->next;
-	}
 }
