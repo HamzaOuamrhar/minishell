@@ -41,7 +41,7 @@ int	is_word(char *s)
 
 int	valide_operator(char *s)
 {
-	if (ft_strncmp(s, "<<", 1) == 0 || ft_strncmp(s, ">>", 1) == 0)
+	if (ft_strncmp(s, "<<", 2) == 0 || ft_strncmp(s, ">>", 2) == 0 || ft_strncmp(s, "<", 1) == 0 || ft_strncmp(s, ">", 1) == 0)
 		return (1);
 	return (0);
 }
