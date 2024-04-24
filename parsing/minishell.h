@@ -8,6 +8,7 @@
 #include <readline/history.h>
 
 
+
 // types:
 // "
 // '
@@ -32,5 +33,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s1);
 int	    ft_strncmp(const char *s1, const char *s2, size_t n);
 void	add_back(t_parse **parse, t_parse *new);
+size_t	ft_strlen(const char *s);
+void	exit_syntax_error();
 
 #endif

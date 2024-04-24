@@ -17,3 +17,9 @@ void	add_back(t_parse **parse, t_parse *new)
 	else
 		last_node(*parse)->next = new;
 }
+
+void	exit_syntax_error()
+{
+	perror("syntax error");
+	exit(1);
+}

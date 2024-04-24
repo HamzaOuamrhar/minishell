@@ -13,4 +13,12 @@ int main()
 			add_history(line);
 		parsing(&parse, line);
 	}
+	// puts("\n");
+	// while (parse)
+	// {
+	// 	printf("%s\n", parse->type);
+	// 	parse = parse->next;
+	// }
+	// char *arr[] = {"ls", "-l", "/Users/houamrha/Desktop/minishell", NULL};
+	// execve("/bin/ls", arr, NULL);
 }
