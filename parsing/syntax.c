@@ -30,14 +30,14 @@ void	quotes_syntax(t_token *token)
 		exit_syntax_error("Unclosed quotes");
 }
 
-void	heredoc_syntax(t_token *token)
+void	redirection_syntax(t_token *token)
 {
 	int	error;
 
 	error = 0;
 	while (token)
 	{
-		if (ft_strncmp(token->type, "HEREDOC", 7) == 0)
+		if (ft_strncmp(token->type, "HEREDOC", 7) == 0 || ft_strncmp(token->type, "INPUT", 7) == 0)
 		{
 			if (token->next)
 				if (ft_strncmp(token->next->type, "WHITE", 5) == 0)
@@ -56,11 +56,11 @@ void	heredoc_syntax(t_token *token)
 		token = token->next;
 	}
 	if (error)
-		exit_syntax_error("invalid heredoc delimiter");
+		exit_syntax_error("redirection syntax error");
 }
 
 void	syntax(t_token *token)
 {
 	quotes_syntax(token);
-	heredoc_syntax(token);
+	redirection_syntax(token);
 }

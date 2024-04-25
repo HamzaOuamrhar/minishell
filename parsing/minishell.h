@@ -21,7 +21,7 @@
 // word
 
 //syntax error for redirections
-// for the heredoc => anything execpt {<, >, <<, >>, |}
+// for the heredoc => anything execpt {<, >, <<, >>, |} for quotes it accepts anything
 
 
 
