@@ -37,7 +37,8 @@ void	redirection_syntax(t_token *token)
 	error = 0;
 	while (token)
 	{
-		if (ft_strncmp(token->type, "HEREDOC", 7) == 0 || ft_strncmp(token->type, "INPUT", 7) == 0)
+		if (ft_strncmp(token->type, "HEREDOC", 7) == 0 || ft_strncmp(token->type, "INPUT", 7) == 0
+			|| ft_strncmp(token->type, "OUTPUT", 6) == 0 || ft_strncmp(token->type, "APPEND", 6) == 0)
 		{
 			if (token->next)
 				if (ft_strncmp(token->next->type, "WHITE", 5) == 0)

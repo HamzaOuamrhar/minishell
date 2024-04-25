@@ -21,8 +21,8 @@
 // word
 
 //syntax error for redirections
-// for the heredoc => anything execpt {<, >, <<, >>, |} for quotes it accepts anything
-
+// for the heredoc and input => anything execpt {<, >, <<, >>, |} for quotes it accepts anything
+// the input and output and append expand the variables ($var)
 
 
 typedef    struct t_token
