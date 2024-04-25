@@ -12,5 +12,6 @@ int main()
 		if (line)
 			add_history(line);
 		tokenize(&token, line);
+		syntax(token);
 	}
 }

@@ -18,8 +18,8 @@ void	add_back(t_token **token, t_token *new)
 		last_node(*token)->next = new;
 }
 
-void	exit_syntax_error()
+void	exit_syntax_error(char *error_msg)
 {
-	perror("syntax error");
+	printf("%s\n", error_msg);
 	exit(1);
 }

@@ -75,6 +75,5 @@ void	tokenize(t_token **token, char *line)
 		init_token(new_token, line, &i);
 		new_token->next = NULL;
 		add_back(token, new_token);
-		printf("%s | %s\n", new_token->value, new_token->type);
 	}
 }
