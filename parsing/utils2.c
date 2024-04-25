@@ -18,6 +18,21 @@ void	add_back(t_token **token, t_token *new)
 		last_node(*token)->next = new;
 }
 
+void	tokens_reset(t_token **token)
+{
+	t_token	*tmp;
+
+	while (*token)
+	{
+		tmp = *token;
+		*token = (*token)->next;
+		free(tmp->type);
+		free(tmp->value);
+		free(tmp);
+	}
+	*token = NULL;
+}
+
 void	exit_syntax_error(char *error_msg)
 {
 	printf("%s\n", error_msg);

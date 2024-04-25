@@ -41,5 +41,6 @@ int	    is_white(char c);
 int	    is_alph_num(char c);
 char	*ft_strjoin(char *s1, char *s2);
 void	syntax(t_token *token);
+void	tokens_reset(t_token **token);
 
 #endif
