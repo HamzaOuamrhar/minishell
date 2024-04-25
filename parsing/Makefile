@@ -1,5 +1,5 @@
 CC = cc  -Wall -Wextra -Werror
-SRC = ft_split.c ft_strdup.c utils.c utils1.c utils2.c main.c
+SRC = ft_split.c utils.c utils1.c utils2.c utils3.c main.c libc1.c
 OBJ = $(SRC:.c=.o)
 NAME = ./minishell
 

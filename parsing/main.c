@@ -3,7 +3,7 @@
 int main()
 {
 	char *line;
-	t_parse	*parse;
+	t_token	*token;
 	while (1)
 	{
 		line = readline("Shellantics$ ");
@@ -11,14 +11,6 @@ int main()
 			break ;
 		if (line)
 			add_history(line);
-		parsing(&parse, line);
+		tokenize(&token, line);
 	}
-	// puts("\n");
-	// while (parse)
-	// {
-	// 	printf("%s\n", parse->type);
-	// 	parse = parse->next;
-	// }
-	// char *arr[] = {"ls", "-l", "/Users/houamrha/Desktop/minishell", NULL};
-	// execve("/bin/ls", arr, NULL);
 }

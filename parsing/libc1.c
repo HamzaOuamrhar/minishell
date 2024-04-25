@@ -1,0 +1,107 @@
+#include "minishell.h"
+
+char	*ft_strdup(const char *s1)
+{
+	char		*copy;
+	char		*c;
+	const char	*s;
+	int			i;
+
+	i = 0;
+	s = s1;
+	while (*s)
+	{
+		i++;
+		s++;
+	}
+	copy = (char *)malloc(i * sizeof(char) + 1);
+	if (copy == NULL)
+		return (0);
+	c = copy;
+	while (*s1)
+	{
+		*c = *s1;
+		c++;
+		s1++;
+	}
+	*c = '\0';
+	return (copy);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*substring;
+	int		i;
+
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	i = 0;
+	substring = (char *)malloc((len + 1) * sizeof(char));
+	if (substring == 0)
+		return (NULL);
+	while (len > 0)
+	{
+		substring[i] = s[start];
+		i++;
+		start++;
+		len--;
+	}
+	substring[i] = '\0';
+	return (substring);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*join_string;
+	char	*join;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	join_string = (char *)malloc
+		((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (join_string == 0)
+		return (0);
+	join = join_string;
+	while (*s1)
+	{
+		*join = *s1;
+		join++;
+		s1++;
+	}
+	while (*s2)
+	{
+		*join = *s2;
+		join++;
+		s2++;
+	}
+	*join = '\0';
+	return (join_string);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	if (n == 0)
+		return (0);
+	while (*s1 && *s2 && (n - 1) > 0
+		&& *(unsigned char*)s1 == *(unsigned char*)s2)
+	{
+		s1++;
+		s2++;
+		n--;
+	}
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+}

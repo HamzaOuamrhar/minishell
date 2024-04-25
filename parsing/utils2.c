@@ -1,21 +1,21 @@
 #include "minishell.h"
 
-t_parse	*last_node(t_parse *parse)
+t_token	*last_node(t_token *token)
 {
-	t_parse	*tmp;
+	t_token	*tmp;
 
-	tmp = parse;
+	tmp = token;
 	while (tmp->next)
 		tmp = tmp->next;
 	return (tmp);
 }
 
-void	add_back(t_parse **parse, t_parse *new)
+void	add_back(t_token **token, t_token *new)
 {
-	if (!*parse)
-		*parse = new;
+	if (!*token)
+		*token = new;
 	else
-		last_node(*parse)->next = new;
+		last_node(*token)->next = new;
 }
 
 void	exit_syntax_error()

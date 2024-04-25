@@ -1,83 +1,80 @@
 #include "minishell.h"
 
-int	in_str(char *str, char c, int *count)
+char	*get_type1(char *line, int *i)
 {
-	int	i;
-	int	in;
-
-	i = 0;
-	in = 0;
-	(*count) = 0;
-	while(str[i])
+	if (line[*i] == '"')
+		return ((*i)++, ft_strdup("DQUOTE"));
+	else if (line[*i] == '\'')
+		return ((*i)++, ft_strdup("SQUOTE"));
+	else if (line[*i] == '|')
+		return ((*i)++, ft_strdup("PIPE"));
+	else if (line[*i] == '<' && line[*i + 1] == '<')
+		return ((*i)+=2, ft_strdup("HEREDOC"));
+	else if (line[*i] == '>' && line[*i + 1] == '>')
+		return ((*i)+=2, ft_strdup("APPEND"));
+	else if (line[*i] == '<')
+		return ((*i)++, ft_strdup("INPUT"));
+	else if (line[*i] == '>')
+		return ((*i)++, ft_strdup("OUTPUT"));
+	else if (is_white(line[*i]))
 	{
-		if (str[i] == c)
-		{
-			in = 1;
-			(*count)++;
-		}
-		i++;
+		while (is_white(line[*i]))
+			(*i)++;
+		return (ft_strdup("WHITE"));
 	}
-	return (in);
-}
-
-int	is_alph_num(char c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >='A' && c <= 'Z') || (c >= '0' && c <= '9'));
-}
-
-int	is_word(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (!is_alph_num(s[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	valide_operator(char *s)
-{
-	if (ft_strncmp(s, "<<", 2) == 0 || ft_strncmp(s, ">>", 2) == 0 || ft_strncmp(s, "<", 1) == 0 || ft_strncmp(s, ">", 1) == 0)
-		return (1);
-	return (0);
-}
-
-char*	get_type(char *token)
-{
-	int	count;
-
-	if (!in_str(token, '\'', &count) && !in_str(token, '"', &count) && is_word(token))
-		return (ft_strdup("word"));
-	else if (in_str(token, '\'', &count) && (token[0] == '\'') && (count % 2 == 0) && token[ft_strlen(token) - 1] == '\'')
-		return (ft_strdup("word"));
-	else if (in_str(token, '"', &count) && (token[0] == '"') && (count % 2 == 0) && token[ft_strlen(token) - 1] == '"')
-		return (ft_strdup("word"));
 	else
-		if (valide_operator(token))
-			return (ft_strdup("operator"));
-	return (NULL);
+		return (NULL);
 }
 
-void	parsing(t_parse **parse, char *line)
+char	*get_type2(char *line, int *i)
 {
-	t_parse *new_parse;
-	char	**line_array;
-	int		i;
+	char	*type;
+
+	if (line[*i] == '$')
+	{
+		type = ft_strdup("ENV");
+		(*i)++;
+		while (line[*i] && (is_alph_num(line[*i]) || line[*i] == '_'))
+			(*i)++;
+	}
+	else
+	{
+		type = ft_strdup("WORD");
+		while (line[*i] && is_in_word(line[*i]))
+			(*i)++;
+	}
+	return (type);
+}
+
+void	init_token(t_token *new_token, char *line, int *i)
+{
+	char	*type;
+	int		start;
+
+	type = get_type1(line, i);
+	if (type)
+		new_token->value = ft_strdup("operator");
+	else
+	{
+		start = *i;
+		type = get_type2(line, i);
+		new_token->value = ft_substr(line, start, (*i) - start);
+	}
+	new_token->type = type;
+}
+
+void	tokenize(t_token **token, char *line)
+{
+	int	i;
+	t_token	*new_token;
 
 	i = 0;
-	line_array = ft_split(line, ' ');
-	while (line_array[i])
+	while (line[i])
 	{
-		new_parse = malloc(sizeof(t_parse));
-		new_parse->type = get_type(line_array[i]);
-		if (!new_parse->type)
-			exit_syntax_error();
-		new_parse->next = NULL;
-		add_back(parse, new_parse);
-		i++;
+		new_token = malloc(sizeof(t_token));
+		init_token(new_token, line, &i);
+		new_token->next = NULL;
+		add_back(token, new_token);
+		printf("%s | %s\n", new_token->value, new_token->type);
 	}
 }
