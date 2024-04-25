@@ -20,6 +20,10 @@
 // $ : env
 // word
 
+//syntax error for redirections
+// for the heredoc => anything execpt {<, >, <<, >>, |}
+
+
 
 typedef    struct t_token
 {
