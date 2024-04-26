@@ -24,6 +24,12 @@
 // for the heredoc and input => anything execpt {<, >, <<, >>, |} for quotes it accepts anything
 // the input and output and append expand the variables ($var)
 
+typedef struct t_env
+{
+    char *key;
+    char *value;
+    struct t_env *next;
+}   t_env;
 
 typedef    struct t_token
 {
@@ -46,5 +52,7 @@ int	    is_alph_num(char c);
 char	*ft_strjoin(char *s1, char *s2);
 void	syntax(t_token *token);
 void	tokens_reset(t_token **token);
+void	set_env(t_env **env_vars, char **env);
+
 
 #endif
