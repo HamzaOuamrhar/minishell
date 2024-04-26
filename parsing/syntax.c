@@ -5,6 +5,8 @@ void	quotes_syntax(t_token *token)
 	int	error;
 
 	error = 0;
+	if (token && ft_strncmp(token->type, "PIPE", 4) == 0)
+		exit_syntax_error("syntax error near unexpected token `|'");
 	while (token)
 	{
 		error = 1;

@@ -36,5 +36,4 @@ void	tokens_reset(t_token **token)
 void	exit_syntax_error(char *error_msg)
 {
 	printf("%s\n", error_msg);
-	exit(1);
 }
