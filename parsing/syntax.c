@@ -1,35 +1,5 @@
 #include "minishell.h"
 
-void	quotes_syntax(t_token *token)
-{
-	int	error;
-
-	error = 0;
-	while (token)
-	{
-		error = 1;
-		if (ft_strncmp(token->type, "DQUOTE", 6) == 0)
-		{
-			token = token->next;
-			while (token && ft_strncmp(token->type, "DQUOTE", 6) != 0)
-				token = token->next;
-		}
-		else if (ft_strncmp(token->type, "SQUOTE", 6) == 0)
-		{
-			token = token->next;
-			while (token && ft_strncmp(token->type, "SQUOTE", 6) != 0)
-				token = token->next;
-		}
-		if (token)
-		{
-			error = 0;
-			token = token->next;
-		}
-	}
-	if (error)
-		exit_syntax_error("Unclosed quotes");
-}
-
 void	redirection_syntax(t_token *token)
 {
 	int	error;
@@ -62,6 +32,9 @@ void	redirection_syntax(t_token *token)
 
 void	pipe_syntax(t_token *token)
 {
+	int	error;
+
+	error = 0;
 	if (token && ft_strncmp(token->type, "PIPE", 4) == 0)
 	{
 		exit_syntax_error("syntax error near unexpected token `|'");
@@ -71,19 +44,29 @@ void	pipe_syntax(t_token *token)
 	{
 		if (ft_strncmp(token->type, "PIPE", 4) == 0)
 		{
-			if (!token->next || (token->next && ft_strncmp(token->next->type, "WHITE", 5) == 0))
+			error = 1;
+			if (!token->next)
+				break ;
+			token = token->next;
+			while (token)
 			{
-				exit_syntax_error("syntax error near unexpected token `|'");
-				return ;
+				if (ft_strncmp(token->type, "WHITE", 5) != 0)
+				{
+					error = 0;
+					break ;
+				}
+				token = token->next;
 			}
+			break ;
 		}
 		token = token->next;
 	}
+	if (error)
+		exit_syntax_error("syntax error near unexpected token `|'");
 }
 
 void	syntax(t_token *token)
 {
-	quotes_syntax(token);
 	pipe_syntax(token);
 	redirection_syntax(token);
 }
