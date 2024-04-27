@@ -26,6 +26,7 @@ char	*get_type2(char *line, int *i)
 {
 	char	*type;
 	int		in_quote;
+	char	quote;
 
 	in_quote = 0;
 	if (line[*i] == '$')
@@ -40,12 +41,15 @@ char	*get_type2(char *line, int *i)
 		type = ft_strdup("WORD");
 		while (line[*i])
 		{
-			if (line[*i] == '\'')
+			if (line[*i] == '\'' || line[*i] == '"')
 			{
-				if (in_quote)
+				if (in_quote && line[*i] == quote)
 					in_quote = 0;
-				else
+				else if (!in_quote)
+				{
+					quote = line[*i];
 					in_quote = 1;
+				}
 			}
 			if (in_quote)
 				(*i)++;
