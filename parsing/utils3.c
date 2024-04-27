@@ -12,7 +12,7 @@ int	is_white(char c)
 
 int	is_special(char c)
 {
-	return (c == '<' || c == '>' || c == '|' || c == '$');
+	return (c == '<' || c == '>' || c == '|');
 }
 
 int	is_in_word(char c)

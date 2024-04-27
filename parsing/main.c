@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **env)
 	set_env(&env_vars, env);
 	while (1)
 	{
-		line = readline("Shellantics => ");
+		line = readline("___Shellantics => ");
 		if (!line)
 			break ;
 		add_history(line);

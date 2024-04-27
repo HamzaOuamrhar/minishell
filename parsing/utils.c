@@ -29,41 +29,31 @@ char	*get_type2(char *line, int *i)
 	char	quote;
 
 	in_quote = 0;
-	if (line[*i] == '$')
+	type = ft_strdup("WORD");
+	while (line[*i])
 	{
-		type = ft_strdup("ENV");
-		(*i)++;
-		while (line[*i] && (is_alph_num(line[*i]) || line[*i] == '_'))
-			(*i)++;
-	}
-	else
-	{
-		type = ft_strdup("WORD");
-		while (line[*i])
+		if (line[*i] == '\'' || line[*i] == '"')
 		{
-			if (line[*i] == '\'' || line[*i] == '"')
+			if (in_quote && line[*i] == quote)
+				in_quote = 0;
+			else if (!in_quote)
 			{
-				if (in_quote && line[*i] == quote)
-					in_quote = 0;
-				else if (!in_quote)
-				{
-					quote = line[*i];
-					in_quote = 1;
-				}
-			}
-			if (in_quote)
-				(*i)++;
-			else
-			{
-				if (is_in_word(line[*i]))
-					(*i)++;
-				else
-					break;
+				quote = line[*i];
+				in_quote = 1;
 			}
 		}
 		if (in_quote)
-			exit_syntax_error("unclosed quotes syntax error");
+			(*i)++;
+		else
+		{
+			if (is_in_word(line[*i]))
+				(*i)++;
+			else
+				break;
+		}
 	}
+	if (in_quote)
+		exit_syntax_error("unclosed quotes syntax error");
 	return (type);
 }
 

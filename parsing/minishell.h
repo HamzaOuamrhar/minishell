@@ -15,7 +15,6 @@
 // heredoc : <<
 // append : >>
 // pipe : |
-// $ : env
 // word
 
 // syntax error for redirections
