@@ -5,8 +5,6 @@ void	quotes_syntax(t_token *token)
 	int	error;
 
 	error = 0;
-	if (token && ft_strncmp(token->type, "PIPE", 4) == 0)
-		exit_syntax_error("syntax error near unexpected token `|'");
 	while (token)
 	{
 		error = 1;
@@ -62,8 +60,30 @@ void	redirection_syntax(t_token *token)
 		exit_syntax_error("redirection syntax error");
 }
 
+void	pipe_syntax(t_token *token)
+{
+	if (token && ft_strncmp(token->type, "PIPE", 4) == 0)
+	{
+		exit_syntax_error("syntax error near unexpected token `|'");
+		return ;
+	}
+	while (token)
+	{
+		if (ft_strncmp(token->type, "PIPE", 4) == 0)
+		{
+			if (!token->next || (token->next && ft_strncmp(token->next->type, "WHITE", 5) == 0))
+			{
+				exit_syntax_error("syntax error near unexpected token `|'");
+				return ;
+			}
+		}
+		token = token->next;
+	}
+}
+
 void	syntax(t_token *token)
 {
 	quotes_syntax(token);
+	pipe_syntax(token);
 	redirection_syntax(token);
 }
