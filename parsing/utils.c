@@ -61,6 +61,8 @@ char	*get_type2(char *line, int *i)
 					break;
 			}
 		}
+		if (in_quote)
+			exit_syntax_error("unclosed quotes syntax error");
 	}
 	return (type);
 }
