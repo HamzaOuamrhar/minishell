@@ -2,11 +2,7 @@
 
 char	*get_type1(char *line, int *i)
 {
-	if (line[*i] == '"')
-		return ((*i)++, ft_strdup("DQUOTE"));
-	else if (line[*i] == '\'')
-		return ((*i)++, ft_strdup("SQUOTE"));
-	else if (line[*i] == '|')
+	if (line[*i] == '|')
 		return ((*i)++, ft_strdup("PIPE"));
 	else if (line[*i] == '<' && line[*i + 1] == '<')
 		return ((*i)+=2, ft_strdup("HEREDOC"));
@@ -29,7 +25,9 @@ char	*get_type1(char *line, int *i)
 char	*get_type2(char *line, int *i)
 {
 	char	*type;
+	int		in_quote;
 
+	in_quote = 0;
 	if (line[*i] == '$')
 	{
 		type = ft_strdup("ENV");
@@ -40,8 +38,25 @@ char	*get_type2(char *line, int *i)
 	else
 	{
 		type = ft_strdup("WORD");
-		while (line[*i] && is_in_word(line[*i]))
-			(*i)++;
+		while (line[*i])
+		{
+			if (line[*i] == '\'')
+			{
+				if (in_quote)
+					in_quote = 0;
+				else
+					in_quote = 1;
+			}
+			if (in_quote)
+				(*i)++;
+			else
+			{
+				if (is_in_word(line[*i]))
+					(*i)++;
+				else
+					break;
+			}
+		}
 	}
 	return (type);
 }
@@ -75,5 +90,6 @@ void	tokenize(t_token **token, char *line)
 		init_token(new_token, line, &i);
 		new_token->next = NULL;
 		add_back(token, new_token);
+		printf("%s:%s\n", new_token->type, new_token->value);
 	}
 }
