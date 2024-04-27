@@ -10,8 +10,6 @@
 
 
 // types:
-// "
-// '
 // input : <
 // output : >
 // heredoc : <<
@@ -20,9 +18,12 @@
 // $ : env
 // word
 
-//syntax error for redirections
+// syntax error for redirections
 // for the heredoc and input => anything execpt {<, >, <<, >>, |} for quotes it accepts anything
 // the input and output and append expand the variables ($var)
+
+// expanding exceptions
+// echo $12DFGHJ_ => 2DFGHJ_
 
 typedef struct t_env
 {
