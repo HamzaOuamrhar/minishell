@@ -19,6 +19,12 @@ int main(int argc, char **argv, char **env)
 		add_history(line);
 		tokenize(&token, line);
 		syntax(token);
-		tokens_reset(&token);
+		expander(token);
+		// tokens_reset(&token);
+		while (token)
+		{
+			printf("%s\n", token->value);
+			token = token->next;
+		}
 	}
 }
