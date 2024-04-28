@@ -22,18 +22,21 @@ void	set_value(char **new_token_value, char *token_value, int *i)
 	while (token_value[*i])
 	{
 		if (token_value[*i] == '$')
+		{
 			(*i)++;
+			first = *i;
+			while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
+				(*i)++;
+			value = getenv(ft_substr(token_value, first, (*i) - first));
+			if (!value)
+				*new_token_value = ft_strjoin(*new_token_value, "");
+			else
+				*new_token_value = ft_strjoin(*new_token_value, value);
+		}
 		first = *i;
 		while (token_value[*i] && token_value[*i] != '$')
 			(*i)++;
-		if (token_value[*i] == '$')
-			(*i)--;
-		value = getenv(ft_substr(token_value, first, (*i) - first + 1));
-		if (!value)
-			*new_token_value = ft_strjoin(*new_token_value, "");
-		else
-			*new_token_value = ft_strjoin(*new_token_value, value);
-		(*i)++;
+		*new_token_value = ft_strjoin(*new_token_value, ft_substr(token_value, first, (*i) - first));
 	}
 }
 
