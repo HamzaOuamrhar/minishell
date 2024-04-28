@@ -47,6 +47,7 @@ void	quotes_expander(t_token *token)
 	char	quote;
 	char	*new_token_value;
 	int start;
+	char	*value;
 
 	new_token_value = NULL;
 	in_quote = 0;
@@ -59,7 +60,10 @@ void	quotes_expander(t_token *token)
 			quote = token->value[i];
 		}
 		else if (in_quote && quote == token->value[i])
+		{
+			i += 1;
 			in_quote = 0;
+		}
 		if (in_quote)
 		{
 			if (quote == '\'')
@@ -78,16 +82,24 @@ void	quotes_expander(t_token *token)
 		else
 		{
 			start = i;
-			while (token->value[i] && token->value[i] != '\'' && token->value[i] != '"')
+			if (token->value[i] == '$')
 			{
-				if (token->value[i] == '$')
-				{
-					puts("env");
-				}
-				else
+				i += 1;
+				start = i;
+				while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
 					i++;
+				value = getenv(ft_substr(token->value, start, i - start));
+				if (value)
+					new_token_value = ft_strjoin(new_token_value, value);
+				else
+					new_token_value = ft_strjoin(new_token_value, "");
 			}
-			new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+			else
+			{
+				while (token->value[i] && token->value[i] != '\'' && token->value[i] != '"' && token->value[i] != '$')
+					i++;
+				new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+			}
 		}
 	}
 	token->value = new_token_value;
