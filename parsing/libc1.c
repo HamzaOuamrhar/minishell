@@ -69,8 +69,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*join_string;
 	char	*join;
 
-	if (s1 == NULL || s2 == NULL)
+	if (s1 == NULL && s2 == NULL)
 		return (NULL);
+	if (!s1)
+		s1 = ft_strdup("");
 	join_string = (char *)malloc
 		((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (join_string == 0)

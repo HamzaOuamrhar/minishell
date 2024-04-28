@@ -37,36 +37,58 @@ void	set_value(char **new_token_value, char *token_value, int *i)
 	}
 }
 
-// void	quotes_expander(t_token *token)
-// {
-// 	int	in_quote;
-// 	int	i;
-// 	char	quote;
+void	quotes_expander(t_token *token)
+{
+	int	in_quote;
+	int	i;
+	char	quote;
+	char	*new_token_value;
+	int start;
 
-// 	in_quote = 0;
-// 	i = 0;
-// 	while (token->value[i])
-// 	{
-// 		if (token->value[i] == '\'' || token->value[i] == '"' || token->value[i] == '$')
-// 		{
-// 			if (in_quote && token->value[i] == quote)
-// 				in_quote = 0;
-// 			else if (!in_quote)
-// 			{
-// 				in_quote = 1;
-// 				quote = token->value[i];
-// 			}
-// 			if (!in_quote)
-// 			{
-// 				while (token->value[i] && token->value[i] != '\'' && token->value[i] != '"' && token->value[i] != '$')
-// 				{
-
-// 				}
-// 			}
-// 		}
-// 		i++;
-// 	}
-// }
+	new_token_value = NULL;
+	in_quote = 0;
+	i = 0;
+	while (token->value[i])
+	{
+		if ((token->value[i] == '\'' || token->value[i] == '"') && !in_quote)
+		{
+			in_quote = 1;
+			quote = token->value[i];
+		}
+		else if (in_quote && quote == token->value[i])
+			in_quote = 0;
+		if (in_quote)
+		{
+			if (quote == '\'')
+			{
+				i += 1;
+				start = i;
+				while (token->value[i] && token->value[i] != '\'')
+					i++;
+				new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+			}
+			else
+			{
+				puts("inside double quotes");
+			}
+		}
+		else
+		{
+			start = i;
+			while (token->value[i] && token->value[i] != '\'' && token->value[i] != '"')
+			{
+				if (token->value[i] == '$')
+				{
+					puts("env");
+				}
+				else
+					i++;
+			}
+			new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+		}
+	}
+	token->value = new_token_value;
+}
 
 void	non_quotes_expander(t_token *token)
 {
@@ -89,8 +111,7 @@ void	expander(t_token *token)
 		if (ft_strncmp(token->type, "WORD", 4) == 0)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
-				puts("quotes expander");
-			// quotes_expander(token);
+				quotes_expander(token);
 			else
 				non_quotes_expander(token);
 		}
