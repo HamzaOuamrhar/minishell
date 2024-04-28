@@ -112,7 +112,7 @@ void	expander(t_token *token)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
 				quotes_expander(token);
-			else
+			else if (in_str(token->value, '$'))
 				non_quotes_expander(token);
 		}
 		token = token->next;
