@@ -58,6 +58,7 @@ void	quotes_expander(t_token *token)
 		{
 			in_quote = 1;
 			quote = token->value[i];
+			i++;
 		}
 		else if (in_quote && quote == token->value[i])
 		{
@@ -68,7 +69,6 @@ void	quotes_expander(t_token *token)
 		{
 			if (quote == '\'')
 			{
-				i += 1;
 				start = i;
 				while (token->value[i] && token->value[i] != '\'')
 					i++;
@@ -76,7 +76,25 @@ void	quotes_expander(t_token *token)
 			}
 			else
 			{
-				puts("inside double quotes");
+				if (token->value[i] == '$')
+				{
+					i += 1;
+					start = i;
+					while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
+						i++;
+					value = getenv(ft_substr(token->value, start, i - start));
+					if (value)
+						new_token_value = ft_strjoin(new_token_value, value);
+					else
+						new_token_value = ft_strjoin(new_token_value, "");
+				}
+				else
+				{
+					start = i;
+					while (token->value[i] && token->value[i] != '"' && token->value[i] != '$')
+						i++;
+					new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+				}
 			}
 		}
 		else
