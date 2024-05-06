@@ -33,6 +33,17 @@ void	tokens_reset(t_token **token)
 	*token = NULL;
 }
 
+char	*get_env(char *key, t_env *env_vars)
+{
+	while (env_vars)
+	{
+		if (ft_strncmp(key, env_vars->key, ft_strlen(key)) == 0)
+			return (env_vars->value);
+		env_vars = env_vars->next;
+	}
+	return (NULL);
+}
+
 void	exit_syntax_error(char *error_msg)
 {
 	printf("%s\n", error_msg);

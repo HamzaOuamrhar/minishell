@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **env)
 		add_history(line);
 		tokenize(&token, line);
 		syntax(token);
-		expander(token);
+		expander(token, env_vars);
 		while (token)
 		{
 			printf("%s:%s\n", token->value, token->type);

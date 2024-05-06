@@ -14,7 +14,7 @@ int	in_str(char *str, char c)
 	return (0);
 }
 
-void	set_value(char **new_token_value, char *token_value, int *i)
+void	set_value(char **new_token_value, char *token_value, int *i, t_env *env_vars)
 {
 	char	*value;
 	int		first;
@@ -27,7 +27,7 @@ void	set_value(char **new_token_value, char *token_value, int *i)
 			first = *i;
 			while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
 				(*i)++;
-			value = getenv(ft_substr(token_value, first, (*i) - first));
+			value = get_env(ft_substr(token_value, first, (*i) - first), env_vars);
 			if (!value)
 				*new_token_value = ft_strjoin(*new_token_value, "");
 			else
@@ -40,7 +40,7 @@ void	set_value(char **new_token_value, char *token_value, int *i)
 	}
 }
 
-void	quotes_expander(t_token *token)
+void	quotes_expander(t_token *token, t_env *env_vars)
 {
 	int	in_quote;
 	int	i;
@@ -83,7 +83,7 @@ void	quotes_expander(t_token *token)
 					start = i;
 					while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
 						i++;
-					value = getenv(ft_substr(token->value, start, i - start));
+					value = get_env(ft_substr(token->value, start, i - start), env_vars);
 					if (value)
 						new_token_value = ft_strjoin(new_token_value, value);
 					else
@@ -112,7 +112,7 @@ void	quotes_expander(t_token *token)
 				start = i;
 				while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
 					i++;
-				value = getenv(ft_substr(token->value, start, i - start));
+				value = get_env(ft_substr(token->value, start, i - start), env_vars);
 				if (value)
 					new_token_value = ft_strjoin(new_token_value, value);
 				else
@@ -129,7 +129,7 @@ void	quotes_expander(t_token *token)
 	token->value = new_token_value;
 }
 
-void	non_quotes_expander(t_token *token)
+void	non_quotes_expander(t_token *token, t_env *env_vars)
 {
 	int	i;
 	char	*new_token_value;
@@ -139,20 +139,20 @@ void	non_quotes_expander(t_token *token)
 		i++;
 	new_token_value = ft_substr(token->value, 0, i);
 	if (token->value[i])
-		set_value(&new_token_value, token->value, &i);
+		set_value(&new_token_value, token->value, &i, env_vars);
 	token->value = new_token_value;
 }
 
-void	expander(t_token *token)
+void	expander(t_token *token, t_env *env_vars)
 {
 	while (token)
 	{
 		if (ft_strncmp(token->type, "WORD", 4) == 0)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
-				quotes_expander(token);
+				quotes_expander(token, env_vars);
 			else if (in_str(token->value, '$'))
-				non_quotes_expander(token);
+				non_quotes_expander(token, env_vars);
 		}
 		token = token->next;
 	}
