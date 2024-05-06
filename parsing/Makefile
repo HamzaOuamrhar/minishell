@@ -1,4 +1,4 @@
-CC = cc  -Wall -Wextra -Werror -fsanitize=thread
+CC = cc  -Wall -Wextra -Werror -fsanitize=address
 SRC = ft_split.c utils.c utils1.c utils2.c utils3.c main.c libc1.c syntax.c set_env.c expander1.c
 OBJ = $(SRC:.c=.o)
 NAME = ./minishell
