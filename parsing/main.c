@@ -20,11 +20,11 @@ int main(int argc, char **argv, char **env)
 		tokenize(&token, line);
 		syntax(token);
 		expander(token);
-		// tokens_reset(&token);
 		while (token)
 		{
-			printf("%s\n", token->value);
+			printf("%s:%s\n", token->value, token->type);
 			token = token->next;
 		}
+		tokens_reset(&token);
 	}
 }
