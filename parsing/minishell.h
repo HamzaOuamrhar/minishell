@@ -56,6 +56,8 @@ void	set_env(t_env **env_vars, char **env);
 void	expander(t_token *token, t_env *env_vars);
 char	*get_env(char *key, t_env *env_vars);
 int	    ft_strcmp(char *s1, char *s2);
+int	    in_str(char *str, char c);
+void	quotes_removal(t_token *tokens);
 
 
 #endif

@@ -20,6 +20,7 @@ int main(int argc, char **argv, char **env)
 		tokenize(&token, line);
 		syntax(token);
 		expander(token, env_vars);
+		quotes_removal(token);
 		while (token)
 		{
 			printf("%s:%s\n", token->value, token->type);
