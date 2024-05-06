@@ -58,24 +58,25 @@ void	quotes_expander(t_token *token)
 		{
 			in_quote = 1;
 			quote = token->value[i];
-			i++;
 		}
 		else if (in_quote && quote == token->value[i])
 		{
-			i += 1;
 			in_quote = 0;
+			i += 1;
 		}
 		if (in_quote)
 		{
 			if (quote == '\'')
 			{
 				start = i;
+				i += 1;
 				while (token->value[i] && token->value[i] != '\'')
 					i++;
-				new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+				new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start + 1));
 			}
 			else
 			{
+				start = i;
 				if (token->value[i] == '$')
 				{
 					i += 1;
@@ -87,13 +88,18 @@ void	quotes_expander(t_token *token)
 						new_token_value = ft_strjoin(new_token_value, value);
 					else
 						new_token_value = ft_strjoin(new_token_value, "");
+					if (token->value[i] == '"')
+						new_token_value = ft_strjoin(new_token_value, "\"");
 				}
 				else
 				{
-					start = i;
+					i += 1;
 					while (token->value[i] && token->value[i] != '"' && token->value[i] != '$')
 						i++;
-					new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+					if (token->value[i] == '$')
+						new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
+					else
+						new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start + 1));
 				}
 			}
 		}
