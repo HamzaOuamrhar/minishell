@@ -47,4 +47,5 @@ char	*get_env(char *key, t_env *env_vars)
 void	exit_syntax_error(char *error_msg)
 {
 	printf("%s\n", error_msg);
+	exit(1);
 }
