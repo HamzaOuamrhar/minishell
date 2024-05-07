@@ -25,8 +25,13 @@ void	set_value(char **new_token_value, char *token_value, int *i, t_env *env_var
 		{
 			(*i)++;
 			first = *i;
-			while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
+			if ((token_value[*i] >= '0' && token_value[*i] <= '9') || token_value[*i] == '?')
 				(*i)++;
+			else
+			{
+				while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
+					(*i)++;
+			}
 			value = get_env(ft_substr(token_value, first, (*i) - first), env_vars);
 			if (!value)
 				*new_token_value = ft_strjoin(*new_token_value, "");
@@ -81,8 +86,13 @@ void	quotes_expander(t_token *token, t_env *env_vars)
 				{
 					i += 1;
 					start = i;
-					while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
-						i++;
+					if ((token->value[i] >= '0' && token->value[i] <= '9') || token->value[i] == '?')
+						i += 1;
+					else
+					{
+						while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
+							i++;
+					}
 					value = get_env(ft_substr(token->value, start, i - start), env_vars);
 					if (value)
 						new_token_value = ft_strjoin(new_token_value, value);
@@ -110,8 +120,13 @@ void	quotes_expander(t_token *token, t_env *env_vars)
 			{
 				i += 1;
 				start = i;
-				while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
-					i++;
+				if ((token->value[i] >= '0' && token->value[i] <= '9') || token->value[i] == '?')
+					i += 1;
+				else
+				{
+					while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
+						i++;
+				}
 				value = get_env(ft_substr(token->value, start, i - start), env_vars);
 				if (value)
 					new_token_value = ft_strjoin(new_token_value, value);
