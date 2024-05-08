@@ -17,12 +17,11 @@
 // pipe : |
 // word
 
-// syntax error for redirections
-// for the heredoc and input => anything execpt {<, >, <<, >>, |} for quotes it accepts anything
-// the input and output and append expand the variables ($var)
+// heredoc
+// accept anything as delimiter and don't expand delimiter
 
-// expanding exceptions
-// echo $12DFGHJ_ => 2DFGHJ_
+// syntax error for redirections
+// the input and output and append expand the variables ($var)
 
 typedef struct t_env
 {
