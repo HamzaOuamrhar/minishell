@@ -1,0 +1,5 @@
+ls$var$$^var$var$
+ls"$'"$
+
+cat < main.c minishell.h utils3.c
+ls > out out2 out3
