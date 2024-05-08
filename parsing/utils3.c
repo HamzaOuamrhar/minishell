@@ -5,6 +5,11 @@ int	is_alph_num(char c)
 	return ((c >= 'a' && c <= 'z') || (c >='A' && c <= 'Z') || (c >= '0' && c <= '9'));
 }
 
+int	is_alph(char c)
+{
+	return ((c >= 'a' && c <= 'z') || (c >='A' && c <= 'Z'));
+}
+
 int	is_white(char c)
 {
 	return (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f' || c == '\r');

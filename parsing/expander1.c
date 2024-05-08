@@ -25,7 +25,7 @@ void	set_value(char **new_token_value, char *token_value, int *i, t_env *env_var
 		{
 			(*i)++;
 			first = *i;
-			if ((token_value[*i] >= '0' && token_value[*i] <= '9') || token_value[*i] == '?')
+			if (token_value[*i] && !is_alph(token_value[*i]) && token_value[*i] != '_')
 				(*i)++;
 			else
 			{
@@ -86,7 +86,7 @@ void	quotes_expander(t_token *token, t_env *env_vars)
 				{
 					i += 1;
 					start = i;
-					if ((token->value[i] >= '0' && token->value[i] <= '9') || token->value[i] == '?')
+					if (token->value[i] && !is_alph(token->value[i]) && token->value[i] != '_')
 						i += 1;
 					else
 					{
@@ -120,7 +120,7 @@ void	quotes_expander(t_token *token, t_env *env_vars)
 			{
 				i += 1;
 				start = i;
-				if ((token->value[i] >= '0' && token->value[i] <= '9') || token->value[i] == '?')
+				if (token->value[i] && !is_alph(token->value[i]) && token->value[i] != '_')
 					i += 1;
 				else
 				{
