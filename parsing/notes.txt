@@ -1,0 +1,19 @@
+// types:
+// input : <
+// output : >
+// heredoc : <<
+// append : >>
+// pipe : |
+// word
+
+// heredoc
+// accept anything as delimiter and don't expand delimiter
+
+// syntax error for redirections
+// the input and output and append expand the variables ($var)
+
+// input, output and append (<, >, >>)
+// if the command is setted
+// the token after '<' is the input file and anything else after is the arguments
+// if the command is not setted
+// the token after '<' is the input file and anything else after is the command and its arguments

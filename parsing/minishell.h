@@ -3,25 +3,8 @@
 
 #include <libc.h>
 
-
 #include <readline/readline.h>
 #include <readline/history.h>
-
-
-
-// types:
-// input : <
-// output : >
-// heredoc : <<
-// append : >>
-// pipe : |
-// word
-
-// heredoc
-// accept anything as delimiter and don't expand delimiter
-
-// syntax error for redirections
-// the input and output and append expand the variables ($var)
 
 typedef struct t_env
 {
@@ -58,6 +41,5 @@ int	    ft_strcmp(char *s1, char *s2);
 int	    in_str(char *str, char c);
 void	quotes_removal(t_token *tokens);
 int	    is_alph(char c);
-
 
 #endif
