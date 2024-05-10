@@ -10,12 +10,30 @@ t_token	*last_node(t_token *token)
 	return (tmp);
 }
 
+t_parse	*last_node_parse(t_parse *parse)
+{
+	t_parse	*tmp;
+
+	tmp = parse;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
+}
+
 void	add_back(t_token **token, t_token *new)
 {
 	if (!*token)
 		*token = new;
 	else
 		last_node(*token)->next = new;
+}
+
+void	add_back_parse(t_parse **parse, t_parse *new)
+{
+	if (!*parse)
+		*parse = new;
+	else
+		last_node_parse(*parse)->next = new;
 }
 
 void	tokens_reset(t_token **token)

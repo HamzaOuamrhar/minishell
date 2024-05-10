@@ -12,7 +12,7 @@ int	is_alph(char c)
 
 int	is_white(char c)
 {
-	return (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f' || c == '\r');
+	return (c == ' ' || c == '\n' || c == '\t');
 }
 
 int	is_special(char c)

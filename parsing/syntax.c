@@ -35,11 +35,10 @@ void	pipe_syntax(t_token *token)
 	int	error;
 
 	error = 0;
+	if (token && ft_strcmp(token->type, "WHITE") == 0)
+		token = token->next;
 	if (token && ft_strncmp(token->type, "PIPE", 4) == 0)
-	{
 		exit_syntax_error("syntax error near unexpected token `|'");
-		return ;
-	}
 	while (token)
 	{
 		if (ft_strncmp(token->type, "PIPE", 4) == 0)
@@ -50,16 +49,16 @@ void	pipe_syntax(t_token *token)
 			token = token->next;
 			while (token)
 			{
-				if (ft_strncmp(token->type, "WHITE", 5) != 0)
+				if (ft_strncmp(token->type, "WHITE", 5) != 0 && ft_strncmp(token->type, "PIPE", 4) != 0)
 				{
 					error = 0;
 					break ;
 				}
 				token = token->next;
 			}
-			break ;
 		}
-		token = token->next;
+		if (token)
+			token = token->next;
 	}
 	if (error)
 		exit_syntax_error("syntax error near unexpected token `|'");

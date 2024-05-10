@@ -13,12 +13,29 @@ typedef struct t_env
     struct t_env *next;
 }   t_env;
 
+typedef struct t_count
+{
+    int in;
+    int out;
+    int app;
+    int words;
+}   t_count;
+
 typedef    struct t_token
 {
     char            *value;
     char            *type;
     struct t_token   *next;
 }    t_token;
+
+typedef struct t_parse
+{
+    char    **cmd;
+    char    **in;
+    char    **out;
+    char    **app;
+    struct  t_parse *next;
+}   t_parse;
 
 void	tokenize(t_token **token, char *line);
 char	**ft_split(char const *s, char c);
@@ -41,5 +58,7 @@ int	    ft_strcmp(char *s1, char *s2);
 int	    in_str(char *str, char c);
 void	quotes_removal(t_token *tokens);
 int	    is_alph(char c);
+void    parser(t_token *tokens, t_parse **parse);
+void	add_back_parse(t_parse **parse, t_parse *new);
 
 #endif
