@@ -1,3 +1,4 @@
 heredoc
 norminette
 garbage collector
+adding default envs if removed

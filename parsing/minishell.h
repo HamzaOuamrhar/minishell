@@ -60,5 +60,7 @@ void	quotes_removal(t_token *tokens);
 int	    is_alph(char c);
 void    parser(t_token *tokens, t_parse **parse);
 void	add_back_parse(t_parse **parse, t_parse *new);
+void	non_quotes_expander(t_token *token, t_env *env_vars);
+void	get_var_key(char *token_value, int *i);
 
 #endif

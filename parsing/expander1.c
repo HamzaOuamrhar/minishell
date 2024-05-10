@@ -14,47 +14,83 @@ int	in_str(char *str, char c)
 	return (0);
 }
 
-void	set_value(char **new_token_value, char *token_value, int *i, t_env *env_vars)
+void	outsize_quotes(int *i, char **new_tv, char *token_value, t_env *e_v)
 {
+	int		start;
 	char	*value;
-	int		first;
 
-	while (token_value[*i])
+	start = *i;
+	if (token_value[*i] == '$')
 	{
-		if (token_value[*i] == '$')
-		{
+		*i += 1;
+		start = *i;
+		get_var_key(token_value, i);
+		value = get_env(ft_substr(token_value, start, *i - start), e_v);
+		if (value)
+			*new_tv = ft_strjoin(*new_tv, value);
+		else
+			*new_tv = ft_strjoin(*new_tv, "");
+	}
+	else
+	{
+		while (token_value[*i] && token_value[*i] != '\''
+			&& token_value[*i] != '"' && token_value[*i] != '$')
 			(*i)++;
-			first = *i;
-			if (token_value[*i] && !is_alph(token_value[*i]) && token_value[*i] != '_')
-				(*i)++;
-			else
-			{
-				while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
-					(*i)++;
-			}
-			value = get_env(ft_substr(token_value, first, (*i) - first), env_vars);
-			if (!value)
-				*new_token_value = ft_strjoin(*new_token_value, "");
-			else
-				*new_token_value = ft_strjoin(*new_token_value, value);
-		}
-		first = *i;
-		while (token_value[*i] && token_value[*i] != '$')
-			(*i)++;
-		*new_token_value = ft_strjoin(*new_token_value, ft_substr(token_value, first, (*i) - first));
+		*new_tv = ft_strjoin(*new_tv,
+				ft_substr(token_value, start, *i - start));
 	}
 }
 
-void	quotes_expander(t_token *token, t_env *env_vars)
+void	inside_double_quotes(int *i, char *t_v, t_env *e_v, char **new_tv)
+{
+	int		start;
+	char	*value;
+
+	start = *i;
+	if (t_v[*i] == '$')
+	{
+		*i += 1;
+		start = *i;
+		get_var_key(t_v, i);
+		value = get_env(ft_substr(t_v, start, *i - start), e_v);
+		if (value)
+			*new_tv = ft_strjoin(*new_tv, value);
+		else
+			*new_tv = ft_strjoin(*new_tv, "");
+		if (t_v[*i] == '"')
+			*new_tv = ft_strjoin(*new_tv, "\"");
+	}
+	else
+	{
+		*i += 1;
+		while (t_v[*i] && t_v[*i] != '"' && t_v[*i] != '$')
+			(*i)++;
+		if (t_v[*i] == '$')
+			*new_tv = ft_strjoin(*new_tv, ft_substr(t_v, start, *i - start));
+		else
+			*new_tv = ft_strjoin(*new_tv, ft_substr(t_v, start, *i - start + 1));
+	}
+}
+
+void	inside_single_quotes(int *i, char *t_v, char **new_tv)
+{
+	int	start;
+
+	start = *i;
+	*i += 1;
+	while (t_v[*i] && t_v[*i] != '\'')
+		(*i)++;
+	*new_tv = ft_strjoin(*new_tv, ft_substr(t_v, start, *i - start + 1));
+}
+
+void	quotes_expander(t_token *token, t_env *e_v)
 {
 	int	in_quote;
 	int	i;
 	char	quote;
-	char	*new_token_value;
-	int start;
-	char	*value;
+	char	*new_tv;
 
-	new_token_value = NULL;
+	new_tv = NULL;
 	in_quote = 0;
 	i = 0;
 	while (token->value[i])
@@ -72,102 +108,27 @@ void	quotes_expander(t_token *token, t_env *env_vars)
 		if (in_quote)
 		{
 			if (quote == '\'')
-			{
-				start = i;
-				i += 1;
-				while (token->value[i] && token->value[i] != '\'')
-					i++;
-				new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start + 1));
-			}
+				inside_single_quotes(&i, token->value, &new_tv);
 			else
-			{
-				start = i;
-				if (token->value[i] == '$')
-				{
-					i += 1;
-					start = i;
-					if (token->value[i] && !is_alph(token->value[i]) && token->value[i] != '_')
-						i += 1;
-					else
-					{
-						while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
-							i++;
-					}
-					value = get_env(ft_substr(token->value, start, i - start), env_vars);
-					if (value)
-						new_token_value = ft_strjoin(new_token_value, value);
-					else
-						new_token_value = ft_strjoin(new_token_value, "");
-					if (token->value[i] == '"')
-						new_token_value = ft_strjoin(new_token_value, "\"");
-				}
-				else
-				{
-					i += 1;
-					while (token->value[i] && token->value[i] != '"' && token->value[i] != '$')
-						i++;
-					if (token->value[i] == '$')
-						new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
-					else
-						new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start + 1));
-				}
-			}
+				inside_double_quotes(&i, token->value, e_v, &new_tv);
 		}
 		else
-		{
-			start = i;
-			if (token->value[i] == '$')
-			{
-				i += 1;
-				start = i;
-				if (token->value[i] && !is_alph(token->value[i]) && token->value[i] != '_')
-					i += 1;
-				else
-				{
-					while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
-						i++;
-				}
-				value = get_env(ft_substr(token->value, start, i - start), env_vars);
-				if (value)
-					new_token_value = ft_strjoin(new_token_value, value);
-				else
-					new_token_value = ft_strjoin(new_token_value, "");
-			}
-			else
-			{
-				while (token->value[i] && token->value[i] != '\'' && token->value[i] != '"' && token->value[i] != '$')
-					i++;
-				new_token_value = ft_strjoin(new_token_value, ft_substr(token->value, start, i - start));
-			}
-		}
+			outsize_quotes(&i, &new_tv, token->value, e_v);
 	}
-	token->value = new_token_value;
+	token->value = new_tv;
 }
 
-void	non_quotes_expander(t_token *token, t_env *env_vars)
-{
-	int	i;
-	char	*new_token_value;
-
-	i = 0;
-	while (token->value[i] && token->value[i] != '$')
-		i++;
-	new_token_value = ft_substr(token->value, 0, i);
-	if (token->value[i])
-		set_value(&new_token_value, token->value, &i, env_vars);
-	token->value = new_token_value;
-}
-
-void	expander(t_token *token, t_env *env_vars)
+void	expander(t_token *token, t_env *e_v)
 {
 	while (token)
 	{
-		if (ft_strncmp(token->type, "WORD", 4) == 0 && in_str(token->value, '$'))
+		if (ft_strncmp(token->type, "WORD", 4) == 0
+			&& in_str(token->value, '$'))
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
-				quotes_expander(token, env_vars);
+				quotes_expander(token, e_v);
 			else if (in_str(token->value, '$'))
-				non_quotes_expander(token, env_vars);
+				non_quotes_expander(token, e_v);
 		}
 		token = token->next;
 	}
