@@ -9,3 +9,4 @@ ls > out > out2 > out3
 ls > out > out2
 >out cat <in
 export var='ls		-la' => echo $var => $var => touch $var
+ls | ""
