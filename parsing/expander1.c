@@ -162,7 +162,7 @@ void	expander(t_token *token, t_env *env_vars)
 {
 	while (token)
 	{
-		if (ft_strncmp(token->type, "WORD", 4) == 0)
+		if (ft_strncmp(token->type, "WORD", 4) == 0 && in_str(token->value, '$'))
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
 				quotes_expander(token, env_vars);
