@@ -10,4 +10,4 @@ ls > out > out2
 >out cat <in
 export var='ls		-la' => echo $var => $var => touch $var
 ls | ""
-export var=ls -la  =>  echo $var => touch var$var.zz$1k
+export var=ls -la  =>  echo $var => touch var$var.zz$1k => ls > $var
