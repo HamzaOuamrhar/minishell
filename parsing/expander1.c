@@ -14,7 +14,7 @@ int	in_str(char *str, char c)
 	return (0);
 }
 
-void	outsize_quotes(int *i, char **new_tv, char *token_value, t_env *e_v)
+void	outside_quotes(int *i, char **new_tv, char *token_value, t_env *e_v)
 {
 	int		start;
 	char	*value;
@@ -113,7 +113,7 @@ void	quotes_expander(t_token *token, t_env *e_v)
 				inside_double_quotes(&i, token->value, e_v, &new_tv);
 		}
 		else
-			outsize_quotes(&i, &new_tv, token->value, e_v);
+			outside_quotes(&i, &new_tv, token->value, e_v);
 	}
 	token->value = new_tv;
 }
@@ -122,11 +122,14 @@ void	expander(t_token *token, t_env *e_v)
 {
 	while (token)
 	{
-		if (ft_strncmp(token->type, "WORD", 4) == 0
-			&& in_str(token->value, '$'))
+		if (ft_strncmp(token->type, "WORD", 4) == 0)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
-				quotes_expander(token, e_v);
+			{
+				if (in_str(token->value, '$'))
+					quotes_expander(token, e_v);
+				quotes_removal(token);
+			}
 			else if (in_str(token->value, '$'))
 				non_quotes_expander(token, e_v);
 		}
