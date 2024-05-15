@@ -58,6 +58,13 @@ int main(int argc, char **argv, char **env)
 				i++;
 			}
 			puts("\n");
+			puts("---------in_dup------");
+			if (parse->in_dup)
+				printf("%s\n", parse->in_dup);
+			puts("\n");
+			puts("---------out_dup------");
+			if (parse->out_dup)
+				printf("%s\n", parse->out_dup);
 			parse = parse->next;
 			puts("******************");
 		}

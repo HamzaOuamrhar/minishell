@@ -17,3 +17,7 @@ export my name=hamza
 cat <<end
 "$var"
 end
+
+cat <<hi file
+
+<< a | << b

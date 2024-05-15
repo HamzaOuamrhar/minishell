@@ -34,6 +34,8 @@ typedef struct t_parse
     char    **in;
     char    **out;
     char    **app;
+    char    *in_dup;
+    char    *out_dup;
     struct  t_parse *next;
 }   t_parse;
 
