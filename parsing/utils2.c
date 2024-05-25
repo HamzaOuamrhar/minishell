@@ -51,6 +51,28 @@ void	tokens_reset(t_token **token)
 	*token = NULL;
 }
 
+void	add_middle(t_token **token, char **arr)
+{
+	t_token	*tmp;
+	t_token	*new;
+	int		i;
+
+
+	i = 0;
+	while (arr[i])
+	{
+		new = malloc(sizeof(t_token));
+		new->next = NULL;
+		new->type = ft_strdup("WORD");
+		new->value = ft_strdup(arr[i]);
+		tmp = (*token)->next;
+		(*token)->next = new;
+		new->next = tmp;
+		*token = (*token)->next;
+		i++;
+	}
+}
+
 char	*get_env(char *key, t_env *env_vars)
 {
 	while (env_vars)

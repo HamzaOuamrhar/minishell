@@ -25,6 +25,7 @@ typedef    struct t_token
 {
     char            *value;
     char            *type;
+    int             flag;
     struct t_token   *next;
 }    t_token;
 
@@ -64,5 +65,8 @@ void    parser(t_token *tokens, t_parse **parse);
 void	add_back_parse(t_parse **parse, t_parse *new);
 void	non_quotes_expander(t_token *token);
 void	get_var_key(char *token_value, int *i);
+void	add_middle(t_token **token, char **arr);
+int	    word_count(char *str);
+int	    white_word(char *str);
 
 #endif

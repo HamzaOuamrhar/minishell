@@ -14,11 +14,13 @@ int	in_str(char *str, char c)
 	return (0);
 }
 
-void	set_value(char **new_token_value, char *token_value, int *i)
+void	set_value(char **new_token_value, char *token_value, int *i, t_token *token)
 {
 	char	*value;
 	int		first;
+	int		j;
 
+	j = 0;
 	while (token_value[*i])
 	{
 		if (token_value[*i] == '$')
@@ -33,7 +35,21 @@ void	set_value(char **new_token_value, char *token_value, int *i)
 			if (!value)
 				*new_token_value = ft_strjoin(*new_token_value, "");
 			else
-				*new_token_value = ft_strjoin(*new_token_value, value);
+			{
+				if (word_count(value) > 1)
+				{
+					token->flag = 1;
+					if (!is_white(value[0]))
+					{
+						while (value[j] && !is_white(value[j]))
+							j++;
+					}
+					*new_token_value = ft_strjoin(*new_token_value, ft_substr(value, 0, j));
+					add_middle(&token, ft_split(value + j, ' '));
+				}
+				else
+					*new_token_value = ft_strjoin(*new_token_value, value);
+			}
 		}
 		first = *i;
 		while (token_value[*i] && token_value[*i] != '$')
@@ -139,7 +155,7 @@ void	non_quotes_expander(t_token *token)
 		i++;
 	new_token_value = ft_substr(token->value, 0, i);
 	if (token->value[i])
-		set_value(&new_token_value, token->value, &i);
+		set_value(&new_token_value, token->value, &i, token);
 	token->value = new_token_value;
 }
 
@@ -147,6 +163,7 @@ void	expander(t_token *token)
 {
 	while (token)
 	{
+		token->flag = 0;
 		if (ft_strncmp(token->type, "WORD", 4) == 0)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))

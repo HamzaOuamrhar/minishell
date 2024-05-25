@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	words_count(char const *s, char c)
+static int	words_count(char const *s, char c)
 {
 	int	count;
 	int	i;

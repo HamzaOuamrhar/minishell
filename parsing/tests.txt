@@ -12,3 +12,5 @@ end
 cat <<hi file
 
 << a | << b
+
+var=" ls -l -a"
