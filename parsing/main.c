@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **env)
 		add_history(line);
 		tokenize(&token, line);
 		syntax(token);
-		expander(token, env_vars);
+		expander(token);
 		parser(token, &parse);
 		while (parse)
 		{
@@ -66,7 +66,8 @@ int main(int argc, char **argv, char **env)
 			if (parse->out_dup)
 				printf("%s\n", parse->out_dup);
 			parse = parse->next;
-			puts("******************");
+			if (parse)
+				puts("**********next********");
 		}
 		tokens_reset(&token);
 	}

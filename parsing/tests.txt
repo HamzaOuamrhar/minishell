@@ -1,13 +1,4 @@
-ls$var$$^var$var$
-ls"$'"$
-
 <<$var
-cat < main.c minishell.h utils3.c
-< main.c minishell.h
-ls > out out2 out3
-ls > out > out2 > out3
-ls > out > out2
->out cat <in
 export var='ls		-la' => echo $var => $var => touch $var
 ls | ""
 export var="ls -la"  =>  echo $var => touch $var => ls > $var

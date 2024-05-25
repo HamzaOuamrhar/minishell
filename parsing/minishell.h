@@ -54,7 +54,7 @@ char	*ft_strjoin(char *s1, char *s2);
 void	syntax(t_token *token);
 void	tokens_reset(t_token **token);
 void	set_env(t_env **env_vars, char **env);
-void	expander(t_token *token, t_env *env_vars);
+void	expander(t_token *token);
 char	*get_env(char *key, t_env *env_vars);
 int	    ft_strcmp(char *s1, char *s2);
 int	    in_str(char *str, char c);
@@ -62,7 +62,7 @@ void	quotes_removal(t_token *tokens);
 int	    is_alph(char c);
 void    parser(t_token *tokens, t_parse **parse);
 void	add_back_parse(t_parse **parse, t_parse *new);
-void	non_quotes_expander(t_token *token, t_env *env_vars);
+void	non_quotes_expander(t_token *token);
 void	get_var_key(char *token_value, int *i);
 
 #endif

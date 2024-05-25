@@ -2,3 +2,4 @@ heredoc
 norminette
 garbage collector
 adding default envs if removed
+syntax error for heredoc
