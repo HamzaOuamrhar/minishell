@@ -103,27 +103,11 @@ void	quotes_expander(t_token *token)
 				{
 					i += 1;
 					start = i;
-					if (token->value[i] && (!is_alph(token->value[i]) || token->value[i] != '_'))
-						i++;
 					while (token->value[i] && (is_alph_num(token->value[i]) || token->value[i] == '_'))
 						i++;
 					value = getenv(ft_substr(token->value, start, i - start));
 					if (value)
-					{
-						if (word_count(value) > 1)
-						{
-							token->flag = 1;
-							if (!is_white(value[0]))
-							{
-								while (value[j] && !is_white(value[j]))
-									j++;
-							}
-							new_token_value = ft_strjoin(new_token_value, ft_substr(value, 0, j));
-							add_middle(&token, ft_split(value + j, ' ', NULL));
-						}
-						else
-							new_token_value = ft_strjoin(new_token_value, value);
-					}
+						new_token_value = ft_strjoin(new_token_value, value);
 					else
 						new_token_value = ft_strjoin(new_token_value, "");
 				}
