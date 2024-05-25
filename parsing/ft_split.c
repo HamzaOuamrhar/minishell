@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	words_count(char const *s, char c)
+static int	words_count(char const *s, char c, int *still)
 {
 	int	count;
 	int	i;
@@ -16,6 +16,10 @@ static int	words_count(char const *s, char c)
 		while (s[i] && s[i] != c && s[i] != '\t' && s[i] != '\n')
 			i++;
 	}
+	if (is_white(s[i - 1]))
+		*still = 1;
+	else
+		*still = 0;
 	return (count);
 }
 
@@ -88,14 +92,14 @@ char	**allocate_and_initialize_array(const char *s, char c, int w_count)
 	return (array);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, int *still)
 {
 	int		w_count;
 	char	**array;
 
 	if (!s)
 		return (NULL);
-	w_count = words_count(s, c);
+	w_count = words_count(s, c, still);
 	array = allocate_and_initialize_array(s, c, w_count);
 	return (array);
 }

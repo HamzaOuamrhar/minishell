@@ -41,7 +41,7 @@ char	*get_acc_path(char **paths, char *com)
 char	*get_com_path(char **env, char *com)
 {
 	char *paths = get_path_variable(env) + 5;
-	char **paths_array = ft_split(paths, ':');
+	char **paths_array = ft_split(paths, ':', NULL);
 	char *com_path = get_acc_path(paths_array, com);
 	return (com_path);
 }

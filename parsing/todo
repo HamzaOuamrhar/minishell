@@ -3,3 +3,4 @@ norminette
 garbage collector
 adding default envs if removed
 syntax error for heredoc
+$adfj (not return empty string)

@@ -19,42 +19,45 @@ void	set_value(char **new_token_value, char *token_value, int *i, t_token *token
 	char	*value;
 	int		first;
 	int		j;
+	int		still;
 
-	j = 0;
+	still = 0;
 	while (token_value[*i])
 	{
-		if (token_value[*i] == '$')
-		{
-			(*i)++;
-			first = *i;
-			if (token_value[*i] && (!is_alph(token_value[*i]) || token_value[*i] != '_'))
-				(*i)++;
-			while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
-				(*i)++;
-			value = getenv(ft_substr(token_value, first, (*i) - first));
-			if (!value)
-				*new_token_value = ft_strjoin(*new_token_value, "");
-			else
-			{
-				if (word_count(value) > 1)
-				{
-					token->flag = 1;
-					if (!is_white(value[0]))
-					{
-						while (value[j] && !is_white(value[j]))
-							j++;
-					}
-					*new_token_value = ft_strjoin(*new_token_value, ft_substr(value, 0, j));
-					add_middle(&token, ft_split(value + j, ' '));
-				}
-				else
-					*new_token_value = ft_strjoin(*new_token_value, value);
-			}
-		}
+		j = 0;
+		(*i)++;
 		first = *i;
-		while (token_value[*i] && token_value[*i] != '$')
+		if (token_value[*i] && (!is_alph(token_value[*i]) || token_value[*i] != '_'))
 			(*i)++;
-		*new_token_value = ft_strjoin(*new_token_value, ft_substr(token_value, first, (*i) - first));
+		while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
+			(*i)++;
+		value = getenv(ft_substr(token_value, first, (*i) - first));
+		if (!value)
+			*new_token_value = ft_strjoin(*new_token_value, "");
+		else
+		{
+			if (!is_white(value[0]))
+			{
+				while (value[j] && !is_white(value[j]))
+					j++;
+				if (!token->flag && !still)
+					*new_token_value = ft_strjoin(*new_token_value, ft_substr(value, 0, j));
+				else
+				{
+					if (still)
+						add_middle_n(&token, ft_substr(value, 0, j));
+					else
+						token->value = ft_strjoin(token->value, ft_substr(value, 0, j));
+				}
+				if (value[j] && no_rest(value, j))
+					still = 1;
+				else
+					still = 0;
+			}
+			add_middle(&token, ft_split(value + j, ' ', &still));
+			if (!token->flag && word_count(value) > 1)
+				token->flag = 1;
+		}
 	}
 }
 
@@ -66,10 +69,12 @@ void	quotes_expander(t_token *token)
 	char	*new_token_value;
 	int start;
 	char	*value;
+	int		j;
 
 	new_token_value = NULL;
 	in_quote = 0;
 	i = 0;
+	j = 0;
 	while (token->value[i])
 	{
 		if ((token->value[i] == '\'' || token->value[i] == '"') && !in_quote)
@@ -104,7 +109,21 @@ void	quotes_expander(t_token *token)
 						i++;
 					value = getenv(ft_substr(token->value, start, i - start));
 					if (value)
-						new_token_value = ft_strjoin(new_token_value, value);
+					{
+						if (word_count(value) > 1)
+						{
+							token->flag = 1;
+							if (!is_white(value[0]))
+							{
+								while (value[j] && !is_white(value[j]))
+									j++;
+							}
+							new_token_value = ft_strjoin(new_token_value, ft_substr(value, 0, j));
+							add_middle(&token, ft_split(value + j, ' ', NULL));
+						}
+						else
+							new_token_value = ft_strjoin(new_token_value, value);
+					}
 					else
 						new_token_value = ft_strjoin(new_token_value, "");
 				}
@@ -130,7 +149,21 @@ void	quotes_expander(t_token *token)
 					i++;
 				value = getenv(ft_substr(token->value, start, i - start));
 				if (value)
-					new_token_value = ft_strjoin(new_token_value, value);
+				{
+					if (word_count(value) > 1)
+					{
+						token->flag = 1;
+						if (!is_white(value[0]))
+						{
+							while (value[j] && !is_white(value[j]))
+								j++;
+						}
+						new_token_value = ft_strjoin(new_token_value, ft_substr(value, 0, j));
+						add_middle(&token, ft_split(value + j, ' ', NULL));
+					}
+					else
+						new_token_value = ft_strjoin(new_token_value, value);
+				}
 				else
 					new_token_value = ft_strjoin(new_token_value, "");
 			}
@@ -151,9 +184,11 @@ void	non_quotes_expander(t_token *token)
 	char	*new_token_value;
 
 	i = 0;
+	new_token_value = NULL;
 	while (token->value[i] && token->value[i] != '$')
 		i++;
-	new_token_value = ft_substr(token->value, 0, i);
+	if (i)
+		new_token_value = ft_substr(token->value, 0, i);
 	if (token->value[i])
 		set_value(&new_token_value, token->value, &i, token);
 	token->value = new_token_value;

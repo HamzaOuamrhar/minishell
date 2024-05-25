@@ -73,6 +73,24 @@ void	add_middle(t_token **token, char **arr)
 	}
 }
 
+void	add_middle_n(t_token **token, char *value)
+{
+	t_token	*tmp;
+	t_token	*new;
+	int		i;
+
+
+	i = 0;
+	new = malloc(sizeof(t_token));
+	new->next = NULL;
+	new->type = ft_strdup("WORD");
+	new->value = value;
+	tmp = (*token)->next;
+	(*token)->next = new;
+	new->next = tmp;
+	*token = (*token)->next;
+}
+
 char	*get_env(char *key, t_env *env_vars)
 {
 	while (env_vars)

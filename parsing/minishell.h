@@ -41,7 +41,7 @@ typedef struct t_parse
 }   t_parse;
 
 void	tokenize(t_token **token, char *line);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c, int *still);
 char	*ft_strdup(const char *s1);
 int	    ft_strncmp(const char *s1, const char *s2, size_t n);
 void	add_back(t_token **token, t_token *new);
@@ -68,5 +68,7 @@ void	get_var_key(char *token_value, int *i);
 void	add_middle(t_token **token, char **arr);
 int	    word_count(char *str);
 int	    white_word(char *str);
+void	add_middle_n(t_token **token, char *value);
+int	    no_rest(char *str, int i);
 
 #endif
