@@ -28,7 +28,7 @@ int	white_word(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] != ' ' || str[i] != '\t' || str[i] != '\n')
+		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
 			return (0);
 		i++;
 	}
