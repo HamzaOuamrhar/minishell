@@ -54,7 +54,10 @@ void	set_value(char **new_token_value, char *token_value, int *i, t_token *token
 				else
 					still = 0;
 			}
-			add_middle(&token, ft_split(value + j, ' ', &still));
+			if (white_word(value))
+					add_middle_n(&token, ft_strdup(value));
+			else
+				add_middle(&token, ft_split(value + j, ' ', &still));
 			if (!token->flag && word_count(value) > 1)
 				token->flag = 1;
 		}

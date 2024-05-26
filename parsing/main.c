@@ -30,7 +30,7 @@ int main(int argc, char **argv, char **env)
 			puts("-------cmd------\n");
 			while (parse->cmd[i])
 			{
-				printf("*%s*\n", parse->cmd[i]);
+				printf("%s\n", parse->cmd[i]);
 				i++;
 			}
 			// puts("\n");

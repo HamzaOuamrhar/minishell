@@ -26,6 +26,7 @@ typedef    struct t_token
     char            *value;
     char            *type;
     int             flag;
+    int             wh;
     struct t_token   *next;
 }    t_token;
 

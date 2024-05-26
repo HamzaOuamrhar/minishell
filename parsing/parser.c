@@ -10,7 +10,7 @@ void	count_things(t_token **tokens, t_count *count)
 		*tokens = (*tokens)->next;
 	while (*tokens && ft_strcmp((*tokens)->type, "PIPE") != 0)
 	{
-		if (ft_strcmp((*tokens)->type, "WORD") == 0 && !white_word((*tokens)->value))
+		if (ft_strcmp((*tokens)->type, "WORD") == 0 && (!white_word((*tokens)->value) || (*tokens)->wh == 1))
 			count->words ++;
 		else if (ft_strcmp((*tokens)->type, "INPUT") == 0)
 			count->in ++;
@@ -54,7 +54,7 @@ void	parser(t_token *tokens, t_parse **parse)
 		new_parse->out_dup = NULL;
 		while (tokens && ft_strcmp(tokens->type, "PIPE") != 0)
 		{
-			if (tokens && ft_strcmp(tokens->type, "WORD") == 0 && !white_word(tokens->value))
+			if (tokens && ft_strcmp(tokens->type, "WORD") == 0 && (!white_word(tokens->value) || tokens->wh == 1))
 				new_parse->cmd[i++] = ft_strdup(tokens->value);
 			else if (tokens && ft_strcmp(tokens->type, "INPUT") == 0)
 			{

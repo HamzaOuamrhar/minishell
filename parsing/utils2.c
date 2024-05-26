@@ -85,6 +85,8 @@ void	add_middle_n(t_token **token, char *value)
 	new->next = NULL;
 	new->type = ft_strdup("WORD");
 	new->value = value;
+	if (white_word(value))
+		new->wh = 1;
 	tmp = (*token)->next;
 	(*token)->next = new;
 	new->next = tmp;
