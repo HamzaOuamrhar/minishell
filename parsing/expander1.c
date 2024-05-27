@@ -44,19 +44,16 @@ void	set_value(char **new_token_value, char *token_value, int *i, t_token **toke
 						j++;
 					if (!(*token)->flag && !still)
 					{
-						puts("one");
 						*new_token_value = ft_strjoin(*new_token_value, ft_substr(value, 0, j));
 					}
 					else
 					{
 						if (still)
 						{
-							puts("two");
 							add_middle_n(token, ft_substr(value, 0, j));
 						}
 						else
 						{
-							puts("three");
 							(*token)->value = ft_strjoin((*token)->value, ft_substr(value, 0, j));
 						}
 					}
@@ -69,7 +66,6 @@ void	set_value(char **new_token_value, char *token_value, int *i, t_token **toke
 						add_middle_n(token, ft_strdup(value));
 				else
 				{
-					puts("five");
 					add_middle(token, ft_split(value + j, ' ', &still));
 				}
 				if (!(*token)->flag && word_count(value) > 1)
@@ -78,7 +74,6 @@ void	set_value(char **new_token_value, char *token_value, int *i, t_token **toke
 		}
 		else
 		{
-			puts("six");
 			first = *i;
 			while (token_value[*i] && token_value[*i] != '$')
 				(*i)++;
@@ -130,10 +125,8 @@ void	quotes_expander(t_token **token, char *token_value)
 		}
 		if (in_quote)
 		{
-			puts("in_quote");
 			if (quote == '\'')
 			{
-				puts("single");
 				start = i;
 				while (token_value[i] && token_value[i] != '\'')
 					i++;
@@ -151,7 +144,6 @@ void	quotes_expander(t_token **token, char *token_value)
 			{
 				if (token_value[i] == '$')
 				{
-					puts("no");
 					i += 1;
 					start = i;
 					while (token_value[i] && (is_alph_num(token_value[i]) || token_value[i] == '_'))
@@ -164,7 +156,6 @@ void	quotes_expander(t_token **token, char *token_value)
 				}
 				else
 				{
-					puts("yes3");
 					start = i;
 					while (token_value[i] && token_value[i] != '"' && token_value[i] != '$')
 						i++;
@@ -182,7 +173,6 @@ void	quotes_expander(t_token **token, char *token_value)
 		}
 		else
 		{
-			puts("not quote");
 			start = i;
 			if (token_value[i] == '$')
 			{
@@ -202,12 +192,10 @@ void	quotes_expander(t_token **token, char *token_value)
 							z++;
 						if (!(*token)->flag && !still)
 						{
-							puts("yes1");
 							new_token_value = ft_strjoin(new_token_value, ft_substr(value, 0, z));
 						}
 						else
 						{
-							puts("not1");
 							if (still)
 								add_middle_n(token, ft_substr(value, 0, z));
 							else
@@ -219,12 +207,10 @@ void	quotes_expander(t_token **token, char *token_value)
 							still = 0;
 					}
 					if (white_word(value)){
-						puts("not2");
 						add_middle_n(token, ft_strdup(value));
 					}
 					else
 					{
-						puts("yes2");
 						add_middle(token, ft_split(value + z, ' ', &still));
 					}
 					if (!(*token)->flag && word_count(value) > 1)
@@ -232,13 +218,11 @@ void	quotes_expander(t_token **token, char *token_value)
 				}
 				else
 				{
-					puts("not3");
 					new_token_value = ft_strjoin(new_token_value, "");
 				}
 			}
 			else
 			{
-				puts("not4");
 				start = i;
 				while (token_value[i] && token_value[i] != '\'' && token_value[i] != '"' && token_value[i] != '$')
 					i++;
@@ -280,13 +264,15 @@ void	expander(t_token *token)
 	while (token)
 	{
 		token->flag = 0;
-		if (ft_strncmp(token->type, "WORD", 4) == 0)
+		if (ft_strncmp(token->type, "WORD", 4) == 0 && !token->here)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
 				quotes_expander(&token, token->value);
 			else if (in_str(token->value, '$'))
 				non_quotes_expander(&token);
 		}
+		else if (token->here)
+			quotes_removal(token);
 		token = token->next;
 	}
 }

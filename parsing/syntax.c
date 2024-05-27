@@ -20,6 +20,8 @@ void	redirection_syntax(t_token *token)
 					|| ft_strncmp(token->type, "APPEND", 6) == 0 || ft_strncmp(token->type, "HEREDOC", 5) == 0
 						|| ft_strncmp(token->type, "PIPE", 4) == 0)
 					error = 1;
+				else
+					token->here = 1;
 			}
 			else
 				error = 1;

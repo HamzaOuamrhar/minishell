@@ -86,6 +86,7 @@ void	tokenize(t_token **token, char *line)
 		init_token(new_token, line, &i);
 		new_token->next = NULL;
 		new_token->wh = 0;
+		new_token->here = 0;
 		add_back(token, new_token);
 	}
 }
