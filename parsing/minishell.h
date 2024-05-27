@@ -42,6 +42,14 @@ typedef struct t_parse
     struct  t_parse *next;
 }   t_parse;
 
+typedef struct t_decl
+{
+    int still;
+    int first;
+    int j;
+    char    *value;
+}   t_decl;
+
 void	tokenize(t_token **token, char *line);
 char	**ft_split(char const *s, char c, int *still);
 char	*ft_strdup(const char *s1);
@@ -72,5 +80,6 @@ int	    word_count(char *str);
 int	    white_word(char *str);
 void	add_middle_n(t_token **token, char *value);
 int	    no_rest(char *str, int i);
+void	quotes_expander(t_token **token, char *token_value);
 
 #endif
