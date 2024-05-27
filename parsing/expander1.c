@@ -264,7 +264,7 @@ void	expander(t_token *token)
 	while (token)
 	{
 		token->flag = 0;
-		if (ft_strncmp(token->type, "WORD", 4) == 0 && !token->here)
+		if (ft_strcmp(token->type, "WORD") == 0 && !token->here)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
 				quotes_expander(&token, token->value);
