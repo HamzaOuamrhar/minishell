@@ -3,6 +3,7 @@
 void	redirection_syntax(t_token *token)
 {
 	int	error;
+	t_token *tmp;
 
 	error = 0;
 	while (token)
@@ -10,6 +11,7 @@ void	redirection_syntax(t_token *token)
 		if (ft_strncmp(token->type, "HEREDOC", 7) == 0 || ft_strncmp(token->type, "INPUT", 7) == 0
 			|| ft_strncmp(token->type, "OUTPUT", 6) == 0 || ft_strncmp(token->type, "APPEND", 6) == 0)
 		{
+			tmp = token;
 			if (token->next)
 				if (ft_strncmp(token->next->type, "WHITE", 5) == 0)
 					token = token->next;
@@ -21,7 +23,10 @@ void	redirection_syntax(t_token *token)
 						|| ft_strncmp(token->type, "PIPE", 4) == 0)
 					error = 1;
 				else
-					token->here = 1;
+				{
+					if (ft_strcmp(tmp->type, "HEREDOC") == 0)
+						token->here = 1;
+				}
 			}
 			else
 				error = 1;

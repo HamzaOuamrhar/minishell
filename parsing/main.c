@@ -33,38 +33,38 @@ int main(int argc, char **argv, char **env)
 				printf("%s\n", parse->cmd[i]);
 				i++;
 			}
-			// puts("\n");
-			// i = 0;
-			// puts("-------in-------\n");
-			// while (parse->in[i])
-			// {
-			// 	printf("%s\n", parse->in[i]);
-			// 	i++;
-			// }
-			// puts("\n");
-			// i = 0;
-			// puts("-------out-------\n");
-			// while (parse->out[i])
-			// {
-			// 	printf("%s\n", parse->out[i]);
-			// 	i++;
-			// }
-			// puts("\n");
-			// i = 0;
-			// puts("--------app-------\n");
-			// while (parse->app[i])
-			// {
-			// 	printf("%s\n", parse->app[i]);
-			// 	i++;
-			// }
-			// puts("\n");
-			// puts("---------in_dup------");
-			// if (parse->in_dup)
-			// 	printf("%s\n", parse->in_dup);
-			// puts("\n");
-			// puts("---------out_dup------");
-			// if (parse->out_dup)
-			// 	printf("%s\n", parse->out_dup);
+			puts("\n");
+			i = 0;
+			puts("-------in-------\n");
+			while (parse->in[i])
+			{
+				printf("%s\n", parse->in[i]);
+				i++;
+			}
+			puts("\n");
+			i = 0;
+			puts("-------out-------\n");
+			while (parse->out[i])
+			{
+				printf("%s\n", parse->out[i]);
+				i++;
+			}
+			puts("\n");
+			i = 0;
+			puts("--------app-------\n");
+			while (parse->app[i])
+			{
+				printf("%s\n", parse->app[i]);
+				i++;
+			}
+			puts("\n");
+			puts("---------in_dup------");
+			if (parse->in_dup)
+				printf("%s\n", parse->in_dup);
+			puts("\n");
+			puts("---------out_dup------");
+			if (parse->out_dup)
+				printf("%s\n", parse->out_dup);
 			parse = parse->next;
 			if (parse)
 			puts("**********next********");
