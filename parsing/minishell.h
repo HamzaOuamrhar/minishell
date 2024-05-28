@@ -95,5 +95,6 @@ void	add_middle_n(t_token **token, char *value);
 int	    no_rest(char *str, int i);
 void	quotes_expander(t_token **token, char *token_value);
 void	comp(t_decl decl, t_token **token, char *token_value, int *i);
+void	out_quotes(t_decl2 *decl, char *t_v, t_token **token);
 
 #endif
