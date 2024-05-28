@@ -46,6 +46,22 @@ void	inside_single_quote(t_decl2 *decl, t_token **token, char *t_v)
 	}
 }
 
+void	out_quotes(t_decl2 *decl, char *t_v, t_token **token)
+{
+	decl->start = decl->i;
+	while (t_v[decl->i] && t_v[decl->i] != '\'' && t_v[decl->i] != '"' && t_v[decl->i] != '$')
+		decl->i++;
+	if (!(*token)->flag && !decl->still)
+		decl->n_t_v = ft_strjoin(decl->n_t_v, ft_substr(t_v, decl->start, decl->i - decl->start));
+	else
+	{
+		if (decl->still)
+			add_middle_n(token, ft_substr(t_v, decl->start, decl->i - decl->start));
+		else
+			(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl->start, decl->i - decl->start));
+	}
+}
+
 void	quotes_expander(t_token **token, char *t_v)
 {
 	t_decl2	decl;
@@ -146,20 +162,7 @@ void	quotes_expander(t_token **token, char *t_v)
 				}
 			}
 			else
-			{
-				decl.start = decl.i;
-				while (t_v[decl.i] && t_v[decl.i] != '\'' && t_v[decl.i] != '"' && t_v[decl.i] != '$')
-					decl.i++;
-				if (!(*token)->flag && !decl.still)
-					decl.n_t_v = ft_strjoin(decl.n_t_v, ft_substr(t_v, decl.start, decl.i - decl.start));
-				else
-				{
-					if (decl.still)
-						add_middle_n(token, ft_substr(t_v, decl.start, decl.i - decl.start));
-					else
-						(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl.start, decl.i - decl.start));
-				}
-			}
+				out_quotes(&decl, t_v, token);
 		}
 	}
 	tmp->value = decl.n_t_v;
