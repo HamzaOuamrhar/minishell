@@ -50,6 +50,19 @@ typedef struct t_decl
     char    *value;
 }   t_decl;
 
+typedef struct t_decl2
+{
+    int     in_quote;
+	int     i;
+	char    quote;
+	char    *n_t_v;
+	int     start;
+	char    *value;
+	int     j;
+	int     z;
+	int     still;
+}   t_decl2;
+
 void	tokenize(t_token **token, char *line);
 char	**ft_split(char const *s, char c, int *still);
 char	*ft_strdup(const char *s1);
@@ -81,5 +94,6 @@ int	    white_word(char *str);
 void	add_middle_n(t_token **token, char *value);
 int	    no_rest(char *str, int i);
 void	quotes_expander(t_token **token, char *token_value);
+void	comp(t_decl decl, t_token **token, char *token_value, int *i);
 
 #endif

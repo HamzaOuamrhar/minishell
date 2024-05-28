@@ -14,154 +14,145 @@ int	in_str(char *str, char c)
 	return (0);
 }
 
-
-void	quotes_expander(t_token **token, char *token_value)
+void	quotes_expander(t_token **token, char *t_v)
 {
-	int	in_quote;
-	int	i;
-	char	quote;
-	char	*new_token_value;
-	int start;
-	char	*value;
-	int		j;
-	int		z;
-	int		still;
-	t_token *tmp;
+	t_decl2	decl;
+	t_token	*tmp;
 
-	new_token_value = NULL;
-	in_quote = 0;
-	i = 0;
-	j = 0;
-	still = 0;
+	decl.n_t_v = NULL;
+	decl.in_quote = 0;
+	decl.i = 0;
+	decl.j = 0;
+	decl.still = 0;
 	tmp = *token;
-	while (token_value[i])
+	while (t_v[decl.i])
 	{
-		z = 0;
-		if ((token_value[i] == '\'' || token_value[i] == '"') && !in_quote)
+		decl.z = 0;
+		if ((t_v[decl.i] == '\'' || t_v[decl.i] == '"') && !decl.in_quote)
 		{
-			in_quote = 1;
-			quote = token_value[i];
-			i++;
+			decl.in_quote = 1;
+			decl.quote = t_v[decl.i];
+			decl.i++;
 		}
-		else if (in_quote && quote == token_value[i])
+		else if (decl.in_quote && decl.quote == t_v[decl.i])
 		{
-			i += 1;
-			in_quote = 0;
+			decl.i += 1;
+			decl.in_quote = 0;
 		}
-		if (in_quote)
+		if (decl.in_quote)
 		{
-			if (quote == '\'')
+			if (decl.quote == '\'')
 			{
-				start = i;
-				while (token_value[i] && token_value[i] != '\'')
-					i++;
-				if (!(*token)->flag && !still)
-					new_token_value = ft_strjoin(new_token_value, ft_substr(token_value, start, i - start));
+				decl.start = decl.i;
+				while (t_v[decl.i] && t_v[decl.i] != '\'')
+					decl.i++;
+				if (!(*token)->flag && !decl.still)
+					decl.n_t_v = ft_strjoin(decl.n_t_v, ft_substr(t_v, decl.start, decl.i - decl.start));
 				else
 				{
-					if (still)
-						add_middle_n(token, ft_substr(token_value, start, i - start));
+					if (decl.still)
+						add_middle_n(token, ft_substr(t_v, decl.start, decl.i - decl.start));
 					else
-						(*token)->value = ft_strjoin((*token)->value, ft_substr(token_value, start, i - start));
+						(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl.start, decl.i - decl.start));
 				}
 			}
 			else
 			{
-				if (token_value[i] == '$')
+				if (t_v[decl.i] == '$')
 				{
-					i += 1;
-					start = i;
-					while (token_value[i] && (is_alph_num(token_value[i]) || token_value[i] == '_'))
-						i++;
-					value = getenv(ft_substr(token_value, start, i - start));
-					if (value)
-						new_token_value = ft_strjoin(new_token_value, value);
+					decl.i += 1;
+					decl.start = decl.i;
+					while (t_v[decl.i] && (is_alph_num(t_v[decl.i]) || t_v[decl.i] == '_'))
+						decl.i++;
+					decl.value = getenv(ft_substr(t_v, decl.start, decl.i - decl.start));
+					if (decl.value)
+						decl.n_t_v = ft_strjoin(decl.n_t_v, decl.value);
 					else
-						new_token_value = ft_strjoin(new_token_value, "");
+						decl.n_t_v = ft_strjoin(decl.n_t_v, "");
 				}
 				else
 				{
-					start = i;
-					while (token_value[i] && token_value[i] != '"' && token_value[i] != '$')
-						i++;
-					if (!(*token)->flag && !still)
-						new_token_value = ft_strjoin(new_token_value, ft_substr(token_value, start, i - start));
+					decl.start = decl.i;
+					while (t_v[decl.i] && t_v[decl.i] != '"' && t_v[decl.i] != '$')
+						decl.i++;
+					if (!(*token)->flag && !decl.still)
+						decl.n_t_v = ft_strjoin(decl.n_t_v, ft_substr(t_v, decl.start, decl.i - decl.start));
 					else
 					{
-						if (still)
-								add_middle_n(token, ft_substr(token_value, start, i - start));
+						if (decl.still)
+								add_middle_n(token, ft_substr(t_v, decl.start, decl.i - decl.start));
 						else
-							(*token)->value = ft_strjoin((*token)->value, ft_substr(token_value, start, i - start));
+							(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl.start, decl.i - decl.start));
 					}
 				}
 			}
 		}
 		else
 		{
-			start = i;
-			if (token_value[i] == '$')
+			decl.start = decl.i;
+			if (t_v[decl.i] == '$')
 			{
-				z = 0;
-				i += 1;
-				start = i;
-				if (token_value[i] && (!is_alph(token_value[i]) || token_value[i] != '_'))
-					i++;
-				while (token_value[i] && (is_alph_num(token_value[i]) || token_value[i] == '_'))
-					i++;
-				value = getenv(ft_substr(token_value, start, i - start));
-				if (value)
+				decl.z = 0;
+				decl.i += 1;
+				decl.start = decl.i;
+				if (t_v[decl.i] && (!is_alph(t_v[decl.i]) || t_v[decl.i] != '_'))
+					decl.i++;
+				while (t_v[decl.i] && (is_alph_num(t_v[decl.i]) || t_v[decl.i] == '_'))
+					decl.i++;
+				decl.value = getenv(ft_substr(t_v, decl.start, decl.i - decl.start));
+				if (decl.value)
 				{
-					if (!is_white(value[0]))
+					if (!is_white(decl.value[0]))
 					{
-						while (value[z] && !is_white(value[z]))
-							z++;
-						if (!(*token)->flag && !still)
+						while (decl.value[decl.z] && !is_white(decl.value[decl.z]))
+							decl.z++;
+						if (!(*token)->flag && !decl.still)
 						{
-							new_token_value = ft_strjoin(new_token_value, ft_substr(value, 0, z));
+							decl.n_t_v = ft_strjoin(decl.n_t_v, ft_substr(decl.value, 0, decl.z));
 						}
 						else
 						{
-							if (still)
-								add_middle_n(token, ft_substr(value, 0, z));
+							if (decl.still)
+								add_middle_n(token, ft_substr(decl.value, 0, decl.z));
 							else
-								(*token)->value = ft_strjoin((*token)->value, ft_substr(value, 0, z));
+								(*token)->value = ft_strjoin((*token)->value, ft_substr(decl.value, 0, decl.z));
 						}
-						if (value[z] && no_rest(value, z))
-							still = 1;
+						if (decl.value[decl.z] && no_rest(decl.value, decl.z))
+							decl.still = 1;
 						else
-							still = 0;
+							decl.still = 0;
 					}
-					if (white_word(value)){
-						add_middle_n(token, ft_strdup(value));
+					if (white_word(decl.value)){
+						add_middle_n(token, ft_strdup(decl.value));
 					}
 					else
 					{
-						add_middle(token, ft_split(value + z, ' ', &still));
+						add_middle(token, ft_split(decl.value + decl.z, ' ', &decl.still));
 					}
-					if (!(*token)->flag && word_count(value) > 1)
+					if (!(*token)->flag && word_count(decl.value) > 1)
 						(*token)->flag = 1;
 				}
 				else
 				{
-					new_token_value = ft_strjoin(new_token_value, "");
+					decl.n_t_v = ft_strjoin(decl.n_t_v, "");
 				}
 			}
 			else
 			{
-				start = i;
-				while (token_value[i] && token_value[i] != '\'' && token_value[i] != '"' && token_value[i] != '$')
-					i++;
-				if (!(*token)->flag && !still)
-					new_token_value = ft_strjoin(new_token_value, ft_substr(token_value, start, i - start));
+				decl.start = decl.i;
+				while (t_v[decl.i] && t_v[decl.i] != '\'' && t_v[decl.i] != '"' && t_v[decl.i] != '$')
+					decl.i++;
+				if (!(*token)->flag && !decl.still)
+					decl.n_t_v = ft_strjoin(decl.n_t_v, ft_substr(t_v, decl.start, decl.i - decl.start));
 				else
 				{
-					if (still)
-						add_middle_n(token, ft_substr(token_value, start, i - start));
+					if (decl.still)
+						add_middle_n(token, ft_substr(t_v, decl.start, decl.i - decl.start));
 					else
-						(*token)->value = ft_strjoin((*token)->value, ft_substr(token_value, start, i - start));
+						(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl.start, decl.i - decl.start));
 				}
 			}
 		}
 	}
-	tmp->value = new_token_value;
+	tmp->value = decl.n_t_v;
 }

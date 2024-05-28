@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-void	comp(t_decl decl, t_token **token, char *token_value, int *i)
-{
-	if (decl.still)
-		add_middle_n(token, ft_substr(token_value,
-				decl.first, *i - decl.first));
-	else
-		(*token)->value = ft_strjoin((*token)->value,
-				ft_substr(token_value, decl.first, *i - decl.first));
-}
-
 void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 {
 	if (!is_white(decl->value[0]))
@@ -39,6 +29,21 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		(*token)->flag = 1;
 }
 
+void	get_value(t_decl *decl, int *i, char *token_value)
+{
+	decl->j = 0;
+	(*i)++;
+	decl->first = *i;
+	if (token_value[*i] && (!is_alph(token_value[*i])
+			|| token_value[*i] != '_'))
+		(*i)++;
+	while (token_value[*i] && token_value[*i] != '$'
+		&& (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
+		(*i)++;
+	decl->value = getenv(ft_substr(token_value,
+				decl->first, (*i) - decl->first));
+}
+
 void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 {
 	t_decl	decl;
@@ -48,14 +53,7 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 	{
 		if (token_value[*i] == '$')
 		{
-			decl.j = 0;
-			(*i)++;
-			decl.first = *i;
-			if (token_value[*i] && (!is_alph(token_value[*i]) || token_value[*i] != '_'))
-				(*i)++;
-			while (token_value[*i] && token_value[*i] != '$' && (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
-				(*i)++;
-			decl.value = getenv(ft_substr(token_value, decl.first, (*i) - decl.first));
+			get_value(&decl, i, token_value);
 			if (!decl.value)
 				*n_t_v = ft_strjoin(*n_t_v, "");
 			else
@@ -67,7 +65,8 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 			while (token_value[*i] && token_value[*i] != '$')
 				(*i)++;
 			if (!(*token)->flag && !decl.still)
-				*n_t_v = ft_strjoin(*n_t_v, ft_substr(token_value, decl.first, *i - decl.first));
+				*n_t_v = ft_strjoin(*n_t_v, ft_substr(token_value,
+							decl.first, *i - decl.first));
 			else
 				comp(decl, token, token_value, i);
 		}
