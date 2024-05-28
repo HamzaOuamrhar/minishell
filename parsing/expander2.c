@@ -22,13 +22,16 @@ void	inside_single_quote(t_decl2 *decl, t_token **token, char *t_v)
 	while (t_v[decl->i] && t_v[decl->i] != '\'')
 		decl->i++;
 	if (!(*token)->flag && !decl->still)
-		decl->n_t_v = ft_strjoin(decl->n_t_v, ft_substr(t_v, decl->start, decl->i - decl->start));
+		decl->n_t_v = ft_strjoin(decl->n_t_v,
+				ft_substr(t_v, decl->start, decl->i - decl->start));
 	else
 	{
 		if (decl->still)
-			add_middle_n(token, ft_substr(t_v, decl->start, decl->i - decl->start));
+			add_middle_n(token,
+				ft_substr(t_v, decl->start, decl->i - decl->start));
 		else
-			(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl->start, decl->i - decl->start));
+			(*token)->value = ft_strjoin((*token)->value,
+					ft_substr(t_v, decl->start, decl->i - decl->start));
 	}
 }
 
