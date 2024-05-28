@@ -14,6 +14,38 @@ int	in_str(char *str, char c)
 	return (0);
 }
 
+void	is_in_quote(t_decl2 *decl, char *t_v)
+{
+	decl->z = 0;
+	if ((t_v[decl->i] == '\'' || t_v[decl->i] == '"') && !decl->in_quote)
+	{
+		decl->in_quote = 1;
+		decl->quote = t_v[decl->i];
+		decl->i++;
+	}
+	else if (decl->in_quote && decl->quote == t_v[decl->i])
+	{
+		decl->i += 1;
+		decl->in_quote = 0;
+	}
+}
+
+void	inside_single_quote(t_decl2 *decl, t_token **token, char *t_v)
+{
+	decl->start = decl->i;
+	while (t_v[decl->i] && t_v[decl->i] != '\'')
+		decl->i++;
+	if (!(*token)->flag && !decl->still)
+		decl->n_t_v = ft_strjoin(decl->n_t_v, ft_substr(t_v, decl->start, decl->i - decl->start));
+	else
+	{
+		if (decl->still)
+			add_middle_n(token, ft_substr(t_v, decl->start, decl->i - decl->start));
+		else
+			(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl->start, decl->i - decl->start));
+	}
+}
+
 void	quotes_expander(t_token **token, char *t_v)
 {
 	t_decl2	decl;
@@ -27,35 +59,11 @@ void	quotes_expander(t_token **token, char *t_v)
 	tmp = *token;
 	while (t_v[decl.i])
 	{
-		decl.z = 0;
-		if ((t_v[decl.i] == '\'' || t_v[decl.i] == '"') && !decl.in_quote)
-		{
-			decl.in_quote = 1;
-			decl.quote = t_v[decl.i];
-			decl.i++;
-		}
-		else if (decl.in_quote && decl.quote == t_v[decl.i])
-		{
-			decl.i += 1;
-			decl.in_quote = 0;
-		}
+		is_in_quote(&decl, t_v);
 		if (decl.in_quote)
 		{
 			if (decl.quote == '\'')
-			{
-				decl.start = decl.i;
-				while (t_v[decl.i] && t_v[decl.i] != '\'')
-					decl.i++;
-				if (!(*token)->flag && !decl.still)
-					decl.n_t_v = ft_strjoin(decl.n_t_v, ft_substr(t_v, decl.start, decl.i - decl.start));
-				else
-				{
-					if (decl.still)
-						add_middle_n(token, ft_substr(t_v, decl.start, decl.i - decl.start));
-					else
-						(*token)->value = ft_strjoin((*token)->value, ft_substr(t_v, decl.start, decl.i - decl.start));
-				}
-			}
+				inside_single_quote(&decl, token, t_v);
 			else
 			{
 				if (t_v[decl.i] == '$')
