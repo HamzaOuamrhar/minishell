@@ -1,5 +1,6 @@
 CC = cc  -Wall -Wextra -Werror -fsanitize=address
-SRC = ft_split.c utils.c utils1.c utils2.c utils3.c utils4.c main.c libc1.c syntax.c set_env.c expander1.c expander1_utils.c expander2.c expander2_utils.c parser.c quote_removal.c
+SRC = ft_split.c utils.c utils1.c utils2.c utils3.c utils4.c main.c libc1.c syntax.c set_env.c expander1.c expander1_utils.c expander2.c expander2_utils.c parser.c quote_removal.c \
+ft_itoa.c
 OBJ = $(SRC:.c=.o)
 NAME = ./minishell
 

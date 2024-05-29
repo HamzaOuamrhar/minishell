@@ -39,6 +39,7 @@ typedef struct t_parse
     char    **app;
     char    *in_dup;
     char    *out_dup;
+    int     i;
     struct  t_parse *next;
 }   t_parse;
 
@@ -99,5 +100,6 @@ void	quotes_expander(t_token **token, char *token_value);
 void	comp(t_decl decl, t_token **token, char *token_value, int *i);
 void	out_quotes(t_decl2 *decl, char *t_v, t_token **token);
 void	first_word_pos(char *value, int *i, int *j);
+char	*ft_itoa(int n);
 
 #endif
