@@ -22,9 +22,21 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 			decl->still = 0;
 	}
 	if (white_word(decl->value))
-		add_middle_n(token, ft_strdup(decl->value));
+	{
+		if (!(*n_t_v))
+			*n_t_v = ft_strdup(decl->value);
+		else
+			add_middle_n(token, ft_strdup(decl->value));
+	}
 	else
+	{
+		if (!(*n_t_v))
+		{
+			first_word_pos(decl->value, &decl->i, &decl->j);
+			*n_t_v = ft_strjoin(*n_t_v, ft_substr(decl->value, decl->i, decl->j - decl->i));
+		}
 		add_middle(token, ft_split(decl->value + decl->j, ' ', &decl->still));
+	}
 	if (!(*token)->flag && word_count(decl->value) > 1)
 		(*token)->flag = 1;
 }
