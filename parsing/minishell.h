@@ -61,6 +61,7 @@ typedef struct t_decl2
 	char    *value;
 	int     j;
 	int     z;
+    int     h;
 	int     still;
 }   t_decl2;
 

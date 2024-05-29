@@ -33,7 +33,7 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		if (!(*n_t_v))
 		{
 			first_word_pos(decl->value, &decl->i, &decl->j);
-			*n_t_v = ft_strjoin(*n_t_v, ft_substr(decl->value, decl->i, decl->j - decl->i));
+			*n_t_v = ft_substr(decl->value, decl->i, decl->j - decl->i);
 		}
 		add_middle(token, ft_split(decl->value + decl->j, ' ', &decl->still));
 	}
