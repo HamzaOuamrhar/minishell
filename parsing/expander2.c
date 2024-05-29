@@ -97,4 +97,6 @@ void	quotes_expander(t_token **token, char *t_v)
 			out_quotes(&decl, t_v, token);
 	}
 	tmp->value = decl.n_t_v;
+	if (white_word(tmp->value))
+		tmp->wh = 1;
 }
