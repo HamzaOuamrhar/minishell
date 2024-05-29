@@ -101,5 +101,6 @@ void	comp(t_decl decl, t_token **token, char *token_value, int *i);
 void	out_quotes(t_decl2 *decl, char *t_v, t_token **token);
 void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
+void	expand_line(char **line);
 
 #endif
