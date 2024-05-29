@@ -88,11 +88,12 @@ void	parser(t_token *tokens, t_parse **parse)
 			}
 			else if (tokens && ft_strcmp(tokens->type, "HEREDOC") == 0)
 			{
+				new_parse->i ++;
 				if (ft_strcmp(tokens->next->type, "WHITE") == 0)
 					tokens = tokens->next;
 				new_parse->in_dup = ft_strjoin(ft_strdup(tokens->next->value), ft_itoa(new_parse->i));
 				fd = open(ft_strjoin("/tmp/", new_parse->in_dup), O_CREAT | O_RDWR | O_TRUNC, 0777);
-				// unlink(ft_strjoin("/tmp/", new_parse->in_dup));
+				unlink(ft_strjoin("/tmp/", new_parse->in_dup));
 				while(1)
 				{
 					line = readline("> ");
