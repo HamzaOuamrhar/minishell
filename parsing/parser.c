@@ -34,8 +34,10 @@ void	parser(t_token *tokens, t_parse **parse)
 	t_count	count;
 	char 	*line;
 	int		fd;
+	int		f_time;
 
 	copie = tokens;
+	f_time = 0;
 	while (tokens)
 	{
 		i = 0;
@@ -45,6 +47,10 @@ void	parser(t_token *tokens, t_parse **parse)
 		l = 0;
 		new_parse = malloc(sizeof(t_parse));
 		new_parse->next = NULL;
+		new_parse->i = 0;
+		if (f_time)
+			new_parse->i = ++(*parse)->i;
+		f_time ++;
 		count_things(&copie, &count);
 		new_parse->cmd = malloc((1 + count.words - count.in - count.out - count.app) * sizeof(char **));
 		new_parse->in = malloc((1 + count.in) * sizeof(char **));
@@ -84,15 +90,15 @@ void	parser(t_token *tokens, t_parse **parse)
 			{
 				if (ft_strcmp(tokens->next->type, "WHITE") == 0)
 					tokens = tokens->next;
-				new_parse->in_dup = ft_strdup(tokens->next->value);
-				unlink(new_parse->in_dup);
+				new_parse->in_dup = ft_strjoin(ft_strdup(tokens->next->value), ft_itoa(new_parse->i));
 				fd = open(ft_strjoin("/tmp/", new_parse->in_dup), O_CREAT | O_RDWR | O_TRUNC, 0777);
+				// unlink(ft_strjoin("/tmp/", new_parse->in_dup));
 				while(1)
 				{
 					line = readline("> ");
 					if (!line)
 						break;
-					if  (ft_strcmp(new_parse->in_dup, line) == 0)
+					if  (ft_strcmp(tokens->next->value, line) == 0)
 						break;
 					write(fd, line, ft_strlen(line));
 					write(fd, "\n", 1);
