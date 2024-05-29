@@ -28,6 +28,7 @@ typedef    struct t_token
     int             flag;
     int             wh;
     int             here;
+    int             has_q;
     struct t_token   *next;
 }    t_token;
 

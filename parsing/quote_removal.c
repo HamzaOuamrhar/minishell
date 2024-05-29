@@ -13,6 +13,7 @@ void	quotes_removal(t_token *tokens)
 	j = 0;
 	if (ft_strcmp(tokens->type, "WORD") == 0 && (in_str(tokens->value, '\'') || in_str(tokens->value, '"')))
 	{
+		tokens->has_q = 1;
 		new_value = malloc(ft_strlen(tokens->value) + 1);
 		if (!new_value)
 			return ;
@@ -51,4 +52,6 @@ void	quotes_removal(t_token *tokens)
 		new_value[j] = '\0';
 		tokens->value = new_value;
 	}
+	else
+		tokens->has_q = 0;
 }

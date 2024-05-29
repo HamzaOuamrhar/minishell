@@ -101,7 +101,8 @@ void	parser(t_token *tokens, t_parse **parse)
 						break;
 					if (ft_strcmp(tokens->next->value, line) == 0)
 						break;
-					expand_line(&line);
+					if (!tokens->next->has_q)
+						expand_line(&line);
 					write(fd, line, ft_strlen(line));
 					write(fd, "\n", 1);
 				}
