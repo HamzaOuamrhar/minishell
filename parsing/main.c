@@ -27,47 +27,47 @@ int main(int argc, char **argv, char **env)
 		while (parse)
 		{
 			i = 0;
-			puts("-------cmd------");
+			printf("-------cmd------\n");
 			while (parse->cmd[i])
 			{
 				printf("%s\n", parse->cmd[i]);
 				i++;
 			}
-			puts("\n");
+			printf("\n");
 			i = 0;
-			puts("-------in-------\n");
+			printf("-------in-------\n");
 			while (parse->in[i])
 			{
 				printf("%s\n", parse->in[i]);
 				i++;
 			}
-			puts("\n");
+			printf("\n");
 			i = 0;
-			puts("-------out-------\n");
+			printf("-------out-------\n");
 			while (parse->out[i])
 			{
 				printf("%s\n", parse->out[i]);
 				i++;
 			}
-			puts("\n");
+			printf("\n");
 			i = 0;
-			puts("--------app-------\n");
+			printf("--------app-------\n");
 			while (parse->app[i])
 			{
 				printf("%s\n", parse->app[i]);
 				i++;
 			}
-			puts("\n");
-			puts("---------in_dup------");
+			printf("\n");
+			printf("---------in_dup------\n");
 			if (parse->in_dup)
 				printf("%s\n", parse->in_dup);
-			puts("\n");
-			puts("---------out_dup------");
+			printf("\n");
+			printf("---------out_dup------\n");
 			if (parse->out_dup)
 				printf("%s\n", parse->out_dup);
 			parse = parse->next;
 			if (parse)
-			puts("**********next********");
+			printf("**********next********");
 		}
 		tokens_reset(&token);
 	}

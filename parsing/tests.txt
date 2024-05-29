@@ -16,3 +16,4 @@ cat <<hi file
 var=" ls -l -a"
 var="        "
 editing the heredoc file while heredoc
+export v="export" && export v1="ls -l" | $v m=$v1

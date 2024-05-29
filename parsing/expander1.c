@@ -101,6 +101,8 @@ void	non_quotes_expander(t_token **token)
 	if ((*token)->value[i])
 		set_value(&n_t_v, (*token)->value, &i, token);
 	tmp->value = n_t_v;
+	if (white_word(tmp->value))
+		tmp->wh = 1;
 }
 
 void	expander(t_token *token)

@@ -74,6 +74,7 @@ void	parser(t_token *tokens, t_parse **parse)
 			{
 				if (ft_strcmp(tokens->next->type, "WHITE") == 0)
 					tokens = tokens->next;
+				// printf("%d\n", tokens->next->flag);
 				new_parse->out[k++] = ft_strdup(tokens->next->value);
 				new_parse->out_dup = new_parse->out[k - 1];
 				tokens = tokens->next;
