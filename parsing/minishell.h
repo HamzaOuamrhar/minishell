@@ -44,6 +44,12 @@ typedef struct t_parse
     struct  t_parse *next;
 }   t_parse;
 
+typedef struct t_garbage
+{
+    void    *p;
+    struct t_garbage *next;
+}   t_garbage;
+
 typedef struct t_decl
 {
     int still;
@@ -103,5 +109,7 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token);
 void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
 void	expand_line(char **line);
+void	garbage_collector(t_garbage **gr, void	*p);
+void	empty_garbage(t_garbage *gr);
 
 #endif
