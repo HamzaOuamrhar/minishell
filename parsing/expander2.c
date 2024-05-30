@@ -98,5 +98,8 @@ void	quotes_expander(t_token **token, char *t_v)
 	}
 	tmp->value = decl.n_t_v;
 	if (white_word(tmp->value))
+	{
+		tmp->flag = 1;
 		tmp->wh = 1;
+	}
 }

@@ -17,3 +17,4 @@ var=" ls -l -a"
 var="        "
 editing the heredoc file while heredoc
 export v="export" && export v1="ls -l" | $v m=$v1
+ls > out > $v2 ($v2="tt vv")

@@ -66,6 +66,8 @@ void	parser(t_token *tokens, t_parse **parse)
 			{
 				if (ft_strcmp(tokens->next->type, "WHITE") == 0)
 					tokens = tokens->next;
+				if (tokens->next->flag)
+					exit_syntax_error("bash: ambiguous redirect");
 				new_parse->in[j++] = ft_strdup(tokens->next->value);
 				new_parse->in_dup = new_parse->in[j - 1];
 				tokens = tokens->next;
@@ -74,7 +76,8 @@ void	parser(t_token *tokens, t_parse **parse)
 			{
 				if (ft_strcmp(tokens->next->type, "WHITE") == 0)
 					tokens = tokens->next;
-				// printf("%d\n", tokens->next->flag);
+				if (tokens->next->flag)
+					exit_syntax_error("bash: ambiguous redirect");
 				new_parse->out[k++] = ft_strdup(tokens->next->value);
 				new_parse->out_dup = new_parse->out[k - 1];
 				tokens = tokens->next;
@@ -83,6 +86,8 @@ void	parser(t_token *tokens, t_parse **parse)
 			{
 				if (ft_strcmp(tokens->next->type, "WHITE") == 0)
 					tokens = tokens->next;
+				if (tokens->next->flag)
+					exit_syntax_error("bash: ambiguous redirect");
 				new_parse->app[z++] = ft_strdup(tokens->next->value);
 				new_parse->out_dup = new_parse->app[z - 1];
 				tokens = tokens->next;
