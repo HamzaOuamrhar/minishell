@@ -124,6 +124,10 @@ void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
 void	expand_line(char **line);
 void	*ft_malloc(size_t size, int flag);
+int 	parse_input(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
+int	    parse_output(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
+int	    parse_append(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
+void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
 
 void	print(t_parse **parse);
 
