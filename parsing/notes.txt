@@ -5,11 +5,3 @@ heredoc : <<
 append : >>
 pipe : |
 word
-
-heredoc
-accept anything as delimiter and don't expand delimiter
-
-syntax error for redirections
-the input and output and append expand the variables ($var)
-
-remove env => env -i ./minishell

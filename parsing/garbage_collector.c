@@ -26,9 +26,7 @@ void	empty_garbage(t_garbage *gr)
 	{
 		tmp = gr->next;
 		free(gr->p);
-		// gr->p = NULL;
 		free(gr);
-		// gr = NULL;
 		gr = tmp;
 	}
 }

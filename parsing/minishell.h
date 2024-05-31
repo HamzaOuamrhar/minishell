@@ -1,8 +1,10 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include <libc.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -72,6 +74,18 @@ typedef struct t_decl2
     int     h;
 	int     still;
 }   t_decl2;
+
+typedef struct t_decl3
+{
+    int	i;
+	int j;
+	int k;
+	int z;
+	int	l;
+	char 	*line;
+	int		fd;
+	int		f_time;
+}   t_decl3;
 
 void     tokenize(t_token **token, char *line, int *q);
 char	**ft_split(char const *s, char c, int *still);

@@ -49,24 +49,6 @@ char	*ft_cpy(char const *str, char c)
 	return (copy);
 }
 
-// void	free_array(char **array)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (array)
-// 	{
-// 		while (array[i])
-// 		{
-// 			free(array[i]);
-// 			array[i] = NULL;
-// 			i++;
-// 		}
-// 	}
-// 	free(array);
-// 	array = NULL;
-// }
-
 char	**allocate_and_initialize_array(const char *s, char c, int w_count)
 {
 	char	**array;
