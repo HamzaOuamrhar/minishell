@@ -109,7 +109,6 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token);
 void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
 void	expand_line(char **line);
-void	garbage_collector(t_garbage **gr, void	*p);
-void	empty_garbage(t_garbage *gr);
+void	*ft_malloc(size_t size, int flag);
 
 #endif

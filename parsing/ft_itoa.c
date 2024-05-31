@@ -32,7 +32,7 @@ char	*ft_itoa(int n)
 		return (ft_strdup("0"));
 	i = int_len(n);
 	j = i;
-	str = (char *)malloc((i + 1) * sizeof(char));
+	str = ft_malloc((i + 1) * sizeof(char), 1);
 	if (str == 0)
 		return (0);
 	if (n < 0)

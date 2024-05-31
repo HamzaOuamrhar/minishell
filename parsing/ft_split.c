@@ -37,7 +37,7 @@ char	*ft_cpy(char const *str, char c)
 		w_len++;
 	}
 	str -= w_len;
-	copy = (char *)malloc((w_len + 1) * sizeof(char));
+	copy = ft_malloc((w_len + 1) * sizeof(char), 1);
 	if (copy == NULL)
 		return (NULL);
 	while (i < w_len)
@@ -49,28 +49,30 @@ char	*ft_cpy(char const *str, char c)
 	return (copy);
 }
 
-void	free_array(char **array)
-{
-	int	i;
+// void	free_array(char **array)
+// {
+// 	int	i;
 
-	i = 0;
-	if (array)
-	{
-		while (array[i])
-		{
-			free(array[i]);
-			i++;
-		}
-	}
-	free(array);
-}
+// 	i = 0;
+// 	if (array)
+// 	{
+// 		while (array[i])
+// 		{
+// 			free(array[i]);
+// 			array[i] = NULL;
+// 			i++;
+// 		}
+// 	}
+// 	free(array);
+// 	array = NULL;
+// }
 
 char	**allocate_and_initialize_array(const char *s, char c, int w_count)
 {
 	char	**array;
 	int		i;
 
-	array = (char **)malloc((w_count + 1) * sizeof(char *));
+	array = ft_malloc((w_count + 1) * sizeof(char *), 1);
 	if (array == NULL)
 		return (NULL);
 	i = 0;
@@ -80,10 +82,7 @@ char	**allocate_and_initialize_array(const char *s, char c, int w_count)
 			s++;
 		array[i] = ft_cpy(s, c);
 		if (array[i] == NULL)
-		{
-			free_array(array);
 			return (NULL);
-		}
 		i++;
 		while (*s && *s != c && *s != '\t' && *s != '\n')
 			s++;

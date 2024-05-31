@@ -82,7 +82,7 @@ void	tokenize(t_token **token, char *line)
 	i = 0;
 	while (line[i])
 	{
-		new_token = malloc(sizeof(t_token));
+		new_token = ft_malloc(sizeof(t_token), 1);
 		init_token(new_token, line, &i);
 		new_token->next = NULL;
 		new_token->wh = 0;

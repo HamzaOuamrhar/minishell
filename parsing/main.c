@@ -4,19 +4,14 @@ int main(int argc, char **argv, char **env)
 {
 	char *line;
 	t_token	*token;
-	// t_env	*env_vars;
 	t_parse	*parse;
 	int		i;
-	t_garbage	*gr;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
 	token = NULL;
-	// env_vars = NULL;
 	parse = NULL;
-	// set_env(&env_vars, env);
-	gr = NULL;
 	while (1)
 	{
 		line = readline("___Shellantics => ");
@@ -72,7 +67,8 @@ int main(int argc, char **argv, char **env)
 			if (parse)
 			printf("**********next********");
 		}
-		tokens_reset(&token);
+		free(line);
+		// tokens_reset(&token);
 	}
-	empty_garbage(gr);
+	ft_malloc(0, 3);
 }

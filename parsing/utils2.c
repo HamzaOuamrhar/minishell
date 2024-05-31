@@ -48,7 +48,6 @@ void	tokens_reset(t_token **token)
 		free(tmp->value);
 		free(tmp);
 	}
-	*token = NULL;
 }
 
 void	add_middle(t_token **token, char **arr)
@@ -57,11 +56,10 @@ void	add_middle(t_token **token, char **arr)
 	t_token	*new;
 	int		i;
 
-
 	i = 0;
 	while (arr[i])
 	{
-		new = malloc(sizeof(t_token));
+		new = ft_malloc(sizeof(t_token), 1);
 		new->next = NULL;
 		new->type = ft_strdup("WORD");
 		new->value = ft_strdup(arr[i]);
@@ -81,7 +79,7 @@ void	add_middle_n(t_token **token, char *value)
 
 
 	i = 0;
-	new = malloc(sizeof(t_token));
+	new = ft_malloc(sizeof(t_token), 1);
 	new->next = NULL;
 	new->type = ft_strdup("WORD");
 	new->value = value;

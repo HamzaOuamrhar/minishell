@@ -26,7 +26,29 @@ void	empty_garbage(t_garbage *gr)
 	{
 		tmp = gr->next;
 		free(gr->p);
+		// gr->p = NULL;
 		free(gr);
+		// gr = NULL;
 		gr = tmp;
 	}
+}
+
+void	*ft_malloc(size_t size, int flag)
+{
+	void				*p;
+	static t_garbage	*gr;
+
+	if (flag == 1 || flag == 0)
+	{
+		p = malloc(size);
+		if (!p)
+			return (NULL);
+		else
+			if (flag)
+				garbage_collector(&gr, p);
+		return (p);
+	}
+	else
+		empty_garbage(gr);
+	return (NULL);
 }

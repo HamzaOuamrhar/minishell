@@ -45,17 +45,17 @@ void	parser(t_token *tokens, t_parse **parse)
 		k = 0;
 		z = 0;
 		l = 0;
-		new_parse = malloc(sizeof(t_parse));
+		new_parse = ft_malloc(sizeof(t_parse), 1);
 		new_parse->next = NULL;
 		new_parse->i = 0;
 		if (f_time)
 			new_parse->i = ++(*parse)->i;
 		f_time ++;
 		count_things(&copie, &count);
-		new_parse->cmd = malloc((1 + count.words - count.in - count.out - count.app) * sizeof(char **));
-		new_parse->in = malloc((1 + count.in) * sizeof(char **));
-		new_parse->out = malloc((1 + count.out) * sizeof(char **));
-		new_parse->app = malloc((1 + count.app) * sizeof(char **));
+		new_parse->cmd = ft_malloc((1 + count.words - count.in - count.out - count.app) * sizeof(char **), 1);
+		new_parse->in = ft_malloc((1 + count.in) * sizeof(char **), 1);
+		new_parse->out = ft_malloc((1 + count.out) * sizeof(char **), 1);
+		new_parse->app = ft_malloc((1 + count.app) * sizeof(char **), 1);
 		new_parse->in_dup = NULL;
 		new_parse->out_dup = NULL;
 		while (tokens && ft_strcmp(tokens->type, "PIPE") != 0)
@@ -107,7 +107,7 @@ void	parser(t_token *tokens, t_parse **parse)
 						break;
 					if (ft_strcmp(tokens->next->value, line) == 0)
 						break;
-					if (!tokens->next->has_q)
+					if (!tokens->next->has_q && in_str(line, '$'))
 						expand_line(&line);
 					write(fd, line, ft_strlen(line));
 					write(fd, "\n", 1);

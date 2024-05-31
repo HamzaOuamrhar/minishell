@@ -14,7 +14,7 @@ char	*ft_strdup(const char *s1)
 		i++;
 		s++;
 	}
-	copy = (char *)malloc(i * sizeof(char) + 1);
+	copy = ft_malloc(i * sizeof(char) + 1, 1);
 	if (copy == NULL)
 		return (0);
 	c = copy;
@@ -40,7 +40,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (len > ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
 	i = 0;
-	substring = (char *)malloc((len + 1) * sizeof(char));
+	substring = ft_malloc((len + 1) * sizeof(char), 1);
 	if (substring == 0)
 		return (NULL);
 	while (len > 0)
@@ -73,8 +73,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	if (!s1)
 		s1 = ft_strdup("");
-	join_string = (char *)malloc
-		((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	join_string = ft_malloc
+		((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char), 1);
 	if (join_string == 0)
 		return (0);
 	join = join_string;
