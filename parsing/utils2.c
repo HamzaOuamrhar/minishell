@@ -64,6 +64,7 @@ void	add_middle(t_token **token, char **arr)
 		new->type = ft_strdup("WORD");
 		new->value = ft_strdup(arr[i]);
 		tmp = (*token)->next;
+		(*token)->flag = 1;
 		(*token)->next = new;
 		new->next = tmp;
 		*token = (*token)->next;
@@ -86,6 +87,7 @@ void	add_middle_n(t_token **token, char *value)
 	if (white_word(value))
 		new->wh = 1;
 	tmp = (*token)->next;
+	(*token)->flag = 1;
 	(*token)->next = new;
 	new->next = tmp;
 	*token = (*token)->next;
@@ -105,5 +107,4 @@ char	*get_env(char *key, t_env *env_vars)
 void	exit_syntax_error(char *error_msg)
 {
 	printf("%s\n", error_msg);
-	exit(1);
 }

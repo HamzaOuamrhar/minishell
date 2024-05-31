@@ -22,7 +22,7 @@ char	*get_type1(char *line, int *i)
 		return (NULL);
 }
 
-char	*get_type2(char *line, int *i)
+char	*get_type2(char *line, int *i, int *q)
 {
 	char	*type;
 	int		in_quote;
@@ -53,11 +53,14 @@ char	*get_type2(char *line, int *i)
 		}
 	}
 	if (in_quote)
+	{
 		exit_syntax_error("unclosed quotes syntax error");
+		*q = 1;
+	}
 	return (type);
 }
 
-void	init_token(t_token *new_token, char *line, int *i)
+void	init_token(t_token *new_token, char *line, int *i, int *q)
 {
 	char	*type;
 	int		start;
@@ -68,13 +71,13 @@ void	init_token(t_token *new_token, char *line, int *i)
 	else
 	{
 		start = *i;
-		type = get_type2(line, i);
+		type = get_type2(line, i, q);
 		new_token->value = ft_substr(line, start, (*i) - start);
 	}
 	new_token->type = type;
 }
 
-void	tokenize(t_token **token, char *line)
+void	tokenize(t_token **token, char *line, int *q)
 {
 	int	i;
 	t_token	*new_token;
@@ -83,7 +86,7 @@ void	tokenize(t_token **token, char *line)
 	while (line[i])
 	{
 		new_token = ft_malloc(sizeof(t_token), 1);
-		init_token(new_token, line, &i);
+		init_token(new_token, line, &i, q);
 		new_token->next = NULL;
 		new_token->wh = 0;
 		new_token->here = 0;

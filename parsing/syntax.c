@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	redirection_syntax(t_token *token)
+int	redirection_syntax(t_token *token)
 {
 	int	error;
 	t_token *tmp;
@@ -34,10 +34,14 @@ void	redirection_syntax(t_token *token)
 		token = token->next;
 	}
 	if (error)
+	{
 		exit_syntax_error("redirection syntax error");
+		return (1);
+	}
+	return (0);
 }
 
-void	pipe_syntax(t_token *token)
+int	pipe_syntax(t_token *token)
 {
 	int	error;
 
@@ -45,7 +49,10 @@ void	pipe_syntax(t_token *token)
 	if (token && ft_strcmp(token->type, "WHITE") == 0)
 		token = token->next;
 	if (token && ft_strcmp(token->type, "PIPE") == 0)
+	{
 		exit_syntax_error("syntax error near unexpected token `|'");
+		return (1);
+	}
 	while (token)
 	{
 		if (ft_strcmp(token->type, "PIPE") == 0)
@@ -68,11 +75,18 @@ void	pipe_syntax(t_token *token)
 			token = token->next;
 	}
 	if (error)
+	{
 		exit_syntax_error("syntax error near unexpected token `|'");
+		return (1);
+	}
+	return (0);
 }
 
-void	syntax(t_token *token)
+int	syntax(t_token *token)
 {
-	pipe_syntax(token);
-	redirection_syntax(token);
+	if (pipe_syntax(token))
+		return (1);
+	if (redirection_syntax(token))
+		return (1);
+	return (0);
 }

@@ -1,21 +1,4 @@
-<<$var
-export var='ls		-la' => echo $var => $var => touch $var
-ls | ""
-export var="ls -la"  =>  echo $var => touch $var => ls > $var
 export var="my		name" => export name=$var
-export my name=hamza
-
-cat <<end
-"$var"
-end
-
-cat <<hi file
-
-<< a | << b
-
-var=" ls -l -a"
-var="        "
-editing the heredoc file while heredoc
 export v="export" && export v1="ls -l" | $v m=$v1
 ls > out > $v2 ($v2="tt vv")
 ls > $FGHJKL

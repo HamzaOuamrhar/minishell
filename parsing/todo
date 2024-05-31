@@ -1,5 +1,4 @@
 reading writing in tty
-garbage collector
 expand $?
 reset tokens before new prompt
-free memory for line in heredoc
+fixing some memory leaks not the ones in garbage collector

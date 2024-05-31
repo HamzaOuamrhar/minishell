@@ -73,7 +73,7 @@ typedef struct t_decl2
 	int     still;
 }   t_decl2;
 
-void	tokenize(t_token **token, char *line);
+void     tokenize(t_token **token, char *line, int *q);
 char	**ft_split(char const *s, char c, int *still);
 char	*ft_strdup(const char *s1);
 int	    ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -85,7 +85,7 @@ int	    is_in_word(char c);
 int	    is_white(char c);
 int	    is_alph_num(char c);
 char	*ft_strjoin(char *s1, char *s2);
-void	syntax(t_token *token);
+int     syntax(t_token *token);
 void	tokens_reset(t_token **token);
 void	set_env(t_env **env_vars, char **env);
 void	expander(t_token *token);
@@ -94,7 +94,7 @@ int	    ft_strcmp(char *s1, char *s2);
 int	    in_str(char *str, char c);
 void	quotes_removal(t_token *tokens);
 int	    is_alph(char c);
-void    parser(t_token *tokens, t_parse **parse);
+int     parser(t_token *tokens, t_parse **parse);
 void	add_back_parse(t_parse **parse, t_parse *new);
 void	non_quotes_expander(t_token **token);
 void	get_var_key(char *token_value, int *i);
@@ -110,5 +110,7 @@ void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
 void	expand_line(char **line);
 void	*ft_malloc(size_t size, int flag);
+
+void	print(t_parse **parse);
 
 #endif
