@@ -5,3 +5,4 @@ fixing some memory leaks not the ones in garbage collector
 $FGHJKL
 ls > "" || ls > "    "
 ./minishell < /dev/urandom
+check the sequence of redirections
