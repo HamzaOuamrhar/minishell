@@ -42,6 +42,7 @@ typedef struct t_parse
     char    **app;
     char    *in_dup;
     char    *out_dup;
+    int     status;
     int     i;
     struct  t_parse *next;
 }   t_parse;
@@ -128,7 +129,7 @@ int 	parse_input(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
 int	    parse_output(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
 int	    parse_append(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
 void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
-
+void	is_in_quote(t_decl2 *decl, char *t_v);
 void	print(t_parse **parse);
 
 #endif
