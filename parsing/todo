@@ -2,3 +2,6 @@ reading writing in tty
 expand $?
 reset tokens before new prompt
 fixing some memory leaks not the ones in garbage collector
+$FGHJKL
+ls > "" || ls > "    "
+./minishell < /dev/urandom
