@@ -4,4 +4,3 @@ fix memory leaks
 $FGHJKL
 ls > "" || ls > $v (v = "     ")
 ./minishell < /dev/urandom
-check the sequence of redirections

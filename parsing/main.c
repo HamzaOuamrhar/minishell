@@ -25,8 +25,8 @@ int main(int argc, char **argv, char **env)
 			if (!syntax(token))
 			{
 				expander(token);
-				if (!parser(token, &parse))
-					print(&parse);
+				parser(token, &parse);
+				print(&parse);
 			}
 		}
 		free(line);

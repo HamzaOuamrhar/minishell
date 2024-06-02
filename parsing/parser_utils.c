@@ -1,45 +1,27 @@
 #include "minishell.h"
 
-int	parse_input(t_token **tokens, t_parse **new_parse)
+void	parse_input(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		*tokens = (*tokens)->next;
-	if ((*tokens)->next->flag)
-	{
-		exit_syntax_error("shellantics: ambiguous redirect");
-		return (1);
-	}
 	add_back_file(&(*new_parse)->files, 1, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
-	return (0);
 }
 
-int	parse_output(t_token **tokens, t_parse **new_parse)
+void	parse_output(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
-	if ((*tokens)->next->flag)
-	{
-		exit_syntax_error("shellantics: ambiguous redirect");
-		return (1);
-	}
 	add_back_file(&(*new_parse)->files, 2, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
-	return (0);
 }
 
-int	parse_append(t_token **tokens, t_parse **new_parse)
+void	parse_append(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
-	if ((*tokens)->next->flag)
-	{
-		exit_syntax_error("shellantics: ambiguous redirect");
-		return (1);
-	}
 	add_back_file(&(*new_parse)->files, 3, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
-	return (0);
 }
 
 void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
@@ -80,6 +62,10 @@ void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse)
 
 	new = ft_malloc(sizeof(t_files), 1);
 	new->file = ft_strdup(token->next->value);
+	if (token->next->flag)
+		new->is_amb = 1;
+	else
+		new->is_amb = 0;
 	new->type = type;
 	if (type == 1)
 		parse->in_dup = new->file;

@@ -17,7 +17,7 @@ void	print(t_parse **parse)
 		printf("-------files-------\n");
 		while ((*parse)->files)
 		{
-			printf("%s -> %d\n", (*parse)->files->file, (*parse)->files->type);
+			printf("%s -> %d | amb: %d\n", (*parse)->files->file, (*parse)->files->type, (*parse)->files->is_amb);
 			(*parse)->files = (*parse)->files->next;
 		}
 		printf("---------in_dup------\n");
