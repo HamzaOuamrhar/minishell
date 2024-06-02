@@ -25,20 +25,15 @@ void	count_things(t_token **tokens, t_count *count)
 void	initialize_parse(t_decl3 *decl, t_count *count, t_parse **new_parse, t_parse **parse)
 {
 	decl->i = 0;
-	decl->j = 0;
-	decl->k = 0;
-	decl->z = 0;
 	decl->l = 0;
 	(*new_parse) = ft_malloc(sizeof(t_parse), 1);
 	(*new_parse)->next = NULL;
 	(*new_parse)->i = 0;
+	(*new_parse)->files = NULL;
 	if (decl->f_time)
 		(*new_parse)->i = ++(*parse)->i;
 	decl->f_time ++;
 	(*new_parse)->cmd = ft_malloc((1 + count->words - count->in - count->out - count->app) * sizeof(char **), 1);
-	(*new_parse)->in = ft_malloc((1 + count->in) * sizeof(char **), 1);
-	(*new_parse)->out = ft_malloc((1 + count->out) * sizeof(char **), 1);
-	(*new_parse)->app = ft_malloc((1 + count->app) * sizeof(char **), 1);
 	(*new_parse)->in_dup = NULL;
 	(*new_parse)->out_dup = NULL;
 }
@@ -51,17 +46,17 @@ int parsing(t_token **tokens, t_parse **new_parse, t_decl3 *decl)
 			(*new_parse)->cmd[decl->i++] = ft_strdup((*tokens)->value);
 		else if ((*tokens) && ft_strcmp((*tokens)->type, "INPUT") == 0)
 		{
-			if (parse_input(decl, tokens, new_parse))
+			if (parse_input(tokens, new_parse))
 				return (1);
 		}
 		else if ((*tokens) && ft_strcmp((*tokens)->type, "OUTPUT") == 0)
 		{
-			if (parse_output(decl, tokens, new_parse))
+			if (parse_output(tokens, new_parse))
 				return (1);
 		}
 		else if ((*tokens) && ft_strcmp((*tokens)->type, "APPEND") == 0)
 		{
-			if (parse_append(decl, tokens, new_parse))
+			if (parse_append(tokens, new_parse))
 				return (1);
 		}
 		else if ((*tokens) && ft_strcmp((*tokens)->type, "HEREDOC") == 0)
@@ -88,9 +83,6 @@ int	parser(t_token *tokens, t_parse **parse)
 		if (parsing(&tokens, &new_parse, &decl))
 			return (1);
 		new_parse->cmd[decl.i] = NULL;
-		new_parse->in[decl.j] = NULL;
-		new_parse->out[decl.k] = NULL;
-		new_parse->app[decl.z] = NULL;
 		add_back_parse(parse, new_parse);
 		if (tokens)
 			tokens = tokens->next;

@@ -1,8 +1,7 @@
 reading writing in tty
 expand $?
-reset tokens before new prompt
-fixing some memory leaks not the ones in garbage collector
+fix memory leaks
 $FGHJKL
-ls > "" || ls > "    "
+ls > "" || ls > $v (v = "     ")
 ./minishell < /dev/urandom
 check the sequence of redirections

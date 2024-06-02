@@ -34,18 +34,6 @@ typedef    struct t_token
     struct t_token   *next;
 }    t_token;
 
-typedef struct t_parse
-{
-    char    **cmd;
-    char    **in;
-    char    **out;
-    char    **app;
-    char    *in_dup;
-    char    *out_dup;
-    int     status;
-    int     i;
-    struct  t_parse *next;
-}   t_parse;
 
 typedef struct t_garbage
 {
@@ -78,15 +66,31 @@ typedef struct t_decl2
 
 typedef struct t_decl3
 {
-    int	i;
-	int j;
-	int k;
-	int z;
 	int	l;
 	char 	*line;
 	int		fd;
+    int	i;
 	int		f_time;
 }   t_decl3;
+
+typedef struct t_files
+{
+    char    *file;
+    int     type;
+    struct t_files *next;
+}   t_files;
+
+typedef struct t_parse
+{
+    char    **cmd;
+    t_files *files;
+    char    *in_dup;
+    char    *out_dup;
+    int     in_fd;
+    int     status;
+    int     i;
+    struct  t_parse *next;
+}   t_parse;
 
 void     tokenize(t_token **token, char *line, int *q);
 char	**ft_split(char const *s, char c, int *still);
@@ -125,11 +129,13 @@ void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
 void	expand_line(char **line);
 void	*ft_malloc(size_t size, int flag);
-int 	parse_input(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
-int	    parse_output(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
-int	    parse_append(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
+int 	parse_input(t_token **tokens, t_parse **new_parse);
+int	    parse_output(t_token **tokens, t_parse **new_parse);
+int	    parse_append(t_token **tokens, t_parse **new_parse);
 void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
 void	is_in_quote(t_decl2 *decl, char *t_v);
+void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
+
 void	print(t_parse **parse);
 
 #endif

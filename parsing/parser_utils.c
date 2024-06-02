@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	parse_input(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
+int	parse_input(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		*tokens = (*tokens)->next;
@@ -9,13 +9,12 @@ int	parse_input(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
 		exit_syntax_error("shellantics: ambiguous redirect");
 		return (1);
 	}
-	(*new_parse)->in[decl->j++] = ft_strdup((*tokens)->next->value);
-	(*new_parse)->in_dup = (*new_parse)->in[decl->j - 1];
+	add_back_file(&(*new_parse)->files, 1, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
 	return (0);
 }
 
-int	parse_output(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
+int	parse_output(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
@@ -24,13 +23,12 @@ int	parse_output(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
 		exit_syntax_error("shellantics: ambiguous redirect");
 		return (1);
 	}
-	(*new_parse)->out[decl->k++] = ft_strdup((*tokens)->next->value);
-	(*new_parse)->out_dup = (*new_parse)->out[decl->k - 1];
+	add_back_file(&(*new_parse)->files, 2, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
 	return (0);
 }
 
-int	parse_append(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
+int	parse_append(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
@@ -39,8 +37,7 @@ int	parse_append(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
 		exit_syntax_error("shellantics: ambiguous redirect");
 		return (1);
 	}
-	(*new_parse)->app[decl->z++] = ft_strdup((*tokens)->next->value);
-	(*new_parse)->out_dup = (*new_parse)->app[decl->z - 1];
+	add_back_file(&(*new_parse)->files, 3, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
 	return (0);
 }
@@ -66,4 +63,31 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
 		write(decl->fd, "\n", 1);
 	}
 	(*tokens) = (*tokens)->next;
+}
+
+t_files	*last_node_files(t_files *files)
+{
+	t_files	*tmp;
+
+	tmp = files;
+	while (files->next)
+		files = files->next;
+	return (files);
+}
+void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse)
+{
+	t_files	*new;
+
+	new = ft_malloc(sizeof(t_files), 1);
+	new->file = ft_strdup(token->next->value);
+	new->type = type;
+	if (type == 1)
+		parse->in_dup = new->file;
+	else
+		parse->out_dup = new->file;
+	new->next = NULL;
+	if (!*files)
+		*files = new;
+	else
+		last_node_files(*files)->next = new;
 }
