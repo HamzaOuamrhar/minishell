@@ -1,6 +1,6 @@
+./minishell < /dev/urandom
 reading writing in tty
-expand $?
 fix memory leaks
+expand $?
 $FGHJKL
 ls > "" || ls > $v (v = "     ")
-./minishell < /dev/urandom

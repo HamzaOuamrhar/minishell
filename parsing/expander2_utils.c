@@ -69,12 +69,15 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token)
 		decl->z = 0;
 		decl->i += 1;
 		decl->start = decl->i;
-		if (t_v[decl->i] && (!is_alph(t_v[decl->i]) || t_v[decl->i] != '_'))
+		if (t_v[decl->i] && (!is_alph(t_v[decl->i]) || t_v[decl->i] != '_'  || t_v[decl->i] == '?'))
 			decl->i++;
 		while (t_v[decl->i] && (is_alph_num(t_v[decl->i])
 				|| t_v[decl->i] == '_'))
 			decl->i++;
-		decl->value = getenv(ft_substr(t_v, decl->start,
+		if (t_v[decl->start] == '?')
+			decl->value = ft_strdup("1");
+		else
+			decl->value = getenv(ft_substr(t_v, decl->start,
 					decl->i - decl->start));
 		if (decl->value)
 			out_quotes_value(decl, token);

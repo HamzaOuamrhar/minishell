@@ -3,4 +3,5 @@ export v="export" && export v1="ls -l" | $v m=$v1
 ls > out > $v2 ($v2="tt vv")
 ls > $FGHJKL
 $FGHJ | ls
+$1111z
 remove permission for file
