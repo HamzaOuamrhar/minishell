@@ -82,6 +82,8 @@ void	tokenize(t_token **token, char *line, int *q)
 	int	i;
 	t_token	*new_token;
 
+	if (white_word(line))
+		return ;
 	i = 0;
 	while (line[i])
 	{
