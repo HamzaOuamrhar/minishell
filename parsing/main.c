@@ -2,34 +2,34 @@
 
 int main(int argc, char **argv, char **env)
 {
-	char *line;
-	t_token	*token;
-	t_parse	*parse;
-	int		q;
+	t_token		*token;
+	t_parse		*parse;
+	t_params	params;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
 	token = NULL;
 	parse = NULL;
+	params.status = 0;
 	while (1)
 	{
-		q = 0;
-		line = readline("shellantics$ ");
-		if (!line)
+		params.q = 0;
+		params.line = readline("shellantics$ ");
+		if (!params.line)
 			break ;
-		add_history(line);
-		tokenize(&token, line, &q);
-		if (!q)
+		add_history(params.line);
+		tokenize(&token, params.line, &params.q);
+		if (!params.q)
 		{
 			if (!syntax(token))
 			{
-				expander(token);
+				expander(token, params);
 				parser(token, &parse);
 				print(&parse);
 			}
 		}
-		free(line);
+		free(params.line);
 		tokens_reset(&token);
 	}
 	// ft_malloc(0, 3);

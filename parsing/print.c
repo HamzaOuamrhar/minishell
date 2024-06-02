@@ -26,8 +26,6 @@ void	print(t_parse **parse)
 		printf("---------out_dup------\n");
 		if ((*parse)->out_dup)
 			printf("%s\n", (*parse)->out_dup);
-		printf("--------status---------\n");
-			printf("%d\n", (*parse)->status);
 		(*parse) = (*parse)->next;
 		if ((*parse))
 		printf("**********next********\n");

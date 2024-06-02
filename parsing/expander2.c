@@ -35,14 +35,14 @@ void	inside_single_quote(t_decl2 *decl, t_token **token, char *t_v)
 	}
 }
 
-void	double_quote_key(t_decl2 *decl, char *t_v)
+void	double_quote_key(t_decl2 *decl, char *t_v, t_params params)
 {
 	decl->i += 1;
 	decl->start = decl->i;
 	while (t_v[decl->i] && (is_alph_num(t_v[decl->i]) || t_v[decl->i] == '_' || t_v[decl->i] == '?'))
 		decl->i++;
 	if (t_v[decl->start] == '?')
-		decl->value = ft_strdup("1");
+		decl->value = ft_strdup(ft_itoa(params.status));
 	else
 		decl->value = getenv(ft_substr(t_v, decl->start, decl->i - decl->start));
 	if (decl->value)
@@ -51,14 +51,14 @@ void	double_quote_key(t_decl2 *decl, char *t_v)
 		decl->n_t_v = ft_strjoin(decl->n_t_v, "");
 }
 
-void	inside_quotes(t_decl2 *decl, char *t_v, t_token **token)
+void	inside_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params)
 {
 	if (decl->quote == '\'')
 		inside_single_quote(decl, token, t_v);
 	else
 	{
 		if (t_v[decl->i] == '$')
-			double_quote_key(decl, t_v);
+			double_quote_key(decl, t_v, params);
 		else
 		{
 			decl->start = decl->i;
@@ -80,7 +80,7 @@ void	inside_quotes(t_decl2 *decl, char *t_v, t_token **token)
 	}
 }
 
-void	quotes_expander(t_token **token, char *t_v)
+void	quotes_expander(t_token **token, char *t_v, t_params params)
 {
 	t_decl2	decl;
 	t_token	*tmp;
@@ -95,9 +95,9 @@ void	quotes_expander(t_token **token, char *t_v)
 	{
 		is_in_quote(&decl, t_v);
 		if (decl.in_quote)
-			inside_quotes(&decl, t_v, token);
+			inside_quotes(&decl, t_v, token, params);
 		else
-			out_quotes(&decl, t_v, token);
+			out_quotes(&decl, t_v, token, params);
 	}
 	tmp->value = decl.n_t_v;
 	if (white_word(tmp->value))

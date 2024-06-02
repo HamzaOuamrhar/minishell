@@ -28,7 +28,6 @@ void	initialize_parse(t_decl3 *decl, t_count *count, t_parse **new_parse, t_pars
 	decl->l = 0;
 	(*new_parse) = ft_malloc(sizeof(t_parse), 1);
 	(*new_parse)->next = NULL;
-	(*new_parse)->status = 0;
 	(*new_parse)->i = 0;
 	(*new_parse)->files = NULL;
 	if (decl->f_time)

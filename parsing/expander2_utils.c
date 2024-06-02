@@ -61,7 +61,7 @@ void	out_quotes_value(t_decl2 *decl, t_token **token)
 		(*token)->flag = 1;
 }
 
-void	out_quotes(t_decl2 *decl, char *t_v, t_token **token)
+void	out_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params)
 {
 	decl->start = decl->i;
 	if (t_v[decl->i] == '$')
@@ -75,7 +75,7 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token)
 				|| t_v[decl->i] == '_'))
 			decl->i++;
 		if (t_v[decl->start] == '?')
-			decl->value = ft_strdup("1");
+			decl->value = ft_strdup(ft_itoa(params.status));
 		else
 			decl->value = getenv(ft_substr(t_v, decl->start,
 					decl->i - decl->start));

@@ -41,7 +41,7 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		(*token)->flag = 1;
 }
 
-void	get_value(t_decl *decl, int *i, char *token_value)
+void	get_value(t_decl *decl, int *i, char *token_value, int status)
 {
 	decl->j = 0;
 	(*i)++;
@@ -53,7 +53,7 @@ void	get_value(t_decl *decl, int *i, char *token_value)
 		&& (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
 		(*i)++;
 	if (token_value[decl->first] == '?')
-		decl->value = ft_strdup("1");
+		decl->value = ft_strdup(ft_itoa(status));
 	else
 		decl->value = getenv(ft_substr(token_value,
 				decl->first, (*i) - decl->first));
@@ -62,13 +62,15 @@ void	get_value(t_decl *decl, int *i, char *token_value)
 void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 {
 	t_decl	decl;
+	int		status;
 
 	decl.still = 0;
 	while (token_value[*i])
 	{
 		if (token_value[*i] == '$')
 		{
-			get_value(&decl, i, token_value);
+			status = (*token)->status;
+			get_value(&decl, i, token_value, status);
 			if (!decl.value)
 				*n_t_v = ft_strjoin(*n_t_v, "");
 			else
@@ -88,12 +90,13 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 	}
 }
 
-void	non_quotes_expander(t_token **token)
+void	non_quotes_expander(t_token **token, t_params params)
 {
 	int		i;
 	char	*n_t_v;
 	t_token	*tmp;
 
+	(*token)->status = params.status;
 	i = 0;
 	n_t_v = NULL;
 	tmp = *token;
@@ -111,7 +114,7 @@ void	non_quotes_expander(t_token **token)
 	}
 }
 
-void	expander(t_token *token)
+void	expander(t_token *token, t_params params)
 {
 	while (token)
 	{
@@ -119,9 +122,9 @@ void	expander(t_token *token)
 		if (ft_strcmp(token->type, "WORD") == 0 && !token->here)
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
-				quotes_expander(&token, token->value);
+				quotes_expander(&token, token->value, params);
 			else if (in_str(token->value, '$'))
-				non_quotes_expander(&token);
+				non_quotes_expander(&token, params);
 		}
 		else if (token->here)
 			quotes_removal(token);
