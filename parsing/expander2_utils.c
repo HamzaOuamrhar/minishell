@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	out_quotes_not_key(t_decl2 *decl, char *t_v, t_token **token)
 {
@@ -8,15 +8,15 @@ void	out_quotes_not_key(t_decl2 *decl, char *t_v, t_token **token)
 		decl->i++;
 	if (!(*token)->flag && !decl->still)
 		decl->n_t_v = ft_strjoin(decl->n_t_v,
-				ft_substr(t_v, decl->start, decl->i - decl->start));
+				ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 	else
 	{
 		if (decl->still)
 			add_middle_n(token,
-				ft_substr(t_v, decl->start, decl->i - decl->start));
+				ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 		else
 			(*token)->value = ft_strjoin((*token)->value,
-					ft_substr(t_v, decl->start, decl->i - decl->start));
+					ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 	}
 }
 
@@ -28,14 +28,14 @@ void	out_quotes_value(t_decl2 *decl, t_token **token)
 			decl->z++;
 		if (!(*token)->flag && !decl->still)
 			decl->n_t_v = ft_strjoin(decl->n_t_v,
-					ft_substr(decl->value, 0, decl->z));
+					ft_mysubstr(decl->value, 0, decl->z));
 		else
 		{
 			if (decl->still)
-				add_middle_n(token, ft_substr(decl->value, 0, decl->z));
+				add_middle_n(token, ft_mysubstr(decl->value, 0, decl->z));
 			else
 				(*token)->value = ft_strjoin((*token)->value,
-						ft_substr(decl->value, 0, decl->z));
+						ft_mysubstr(decl->value, 0, decl->z));
 		}
 		decl->still = 0;
 		if (decl->value[decl->z] && no_rest(decl->value, decl->z))
@@ -48,9 +48,9 @@ void	out_quotes_value(t_decl2 *decl, t_token **token)
 		if (!(decl->n_t_v))
 		{
 			first_word_pos(decl->value, &decl->h, &decl->z);
-			decl->n_t_v = ft_substr(decl->value, decl->h, decl->z - decl->h);
+			decl->n_t_v = ft_mysubstr(decl->value, decl->h, decl->z - decl->h);
 		}
-		add_middle(token, ft_split(decl->value + decl->z, ' ', &decl->still));
+		add_middle(token, ft_mysplit(decl->value + decl->z, ' ', &decl->still));
 	}
 	if (!(*token)->flag && word_count(decl->value) > 1)
 		(*token)->flag = 1;
@@ -72,7 +72,7 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params)
 		if (t_v[decl->start] == '?')
 			decl->value = ft_strdup(ft_itoa(params.status));
 		else
-			decl->value = getenv(ft_substr(t_v, decl->start,
+			decl->value = getenv(ft_mysubstr(t_v, decl->start,
 					decl->i - decl->start));
 		if (decl->value)
 			out_quotes_value(decl, token);

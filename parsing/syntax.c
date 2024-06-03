@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	check_redirection(t_token *token, int *error)
 {

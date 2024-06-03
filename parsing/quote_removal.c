@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	set_new_value(t_decl2 *decl, t_token *tokens)
 {

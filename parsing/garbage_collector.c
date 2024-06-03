@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	garbage_collector(t_garbage **gr, void	*p)
 {

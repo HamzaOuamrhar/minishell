@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	expand_line(char **line)
 {
@@ -14,7 +14,7 @@ void	expand_line(char **line)
 		first = i;
 		while ((*line)[i] && (*line)[i] != '$')
 			i++;
-		n_l_v = ft_strjoin(n_l_v, ft_substr(*line, first, i - first));
+		n_l_v = ft_strjoin(n_l_v, ft_mysubstr(*line, first, i - first));
 		if ((*line)[i])
 			i++;
 		first = i;
@@ -22,7 +22,7 @@ void	expand_line(char **line)
 			i++;
 		while ((*line)[i] && (is_alph_num((*line)[i]) || (*line)[i] == '_'))
 			i++;
-		value = getenv(ft_substr(*line, first, i - first));
+		value = getenv(ft_mysubstr(*line, first, i - first));
 		if (value)
 			n_l_v = ft_strjoin(n_l_v, value);
 		else

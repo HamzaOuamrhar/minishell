@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 {
@@ -7,14 +7,14 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		while (decl->value[decl->j] && !is_white(decl->value[decl->j]))
 			decl->j++;
 		if (!(*token)->flag && !decl->still)
-			*n_t_v = ft_strjoin(*n_t_v, ft_substr(decl->value, 0, decl->j));
+			*n_t_v = ft_strjoin(*n_t_v, ft_mysubstr(decl->value, 0, decl->j));
 		else
 		{
 			if (decl->still)
-				add_middle_n(token, ft_substr(decl->value, 0, decl->j));
+				add_middle_n(token, ft_mysubstr(decl->value, 0, decl->j));
 			else
 				(*token)->value = ft_strjoin((*token)->value,
-						ft_substr(decl->value, 0, decl->j));
+						ft_mysubstr(decl->value, 0, decl->j));
 		}
 		if (decl->value[decl->j] && no_rest(decl->value, decl->j))
 			decl->still = 1;
@@ -28,9 +28,9 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		if (!(*n_t_v))
 		{
 			first_word_pos(decl->value, &decl->i, &decl->j);
-			*n_t_v = ft_substr(decl->value, decl->i, decl->j - decl->i);
+			*n_t_v = ft_mysubstr(decl->value, decl->i, decl->j - decl->i);
 		}
-		add_middle(token, ft_split(decl->value + decl->j, ' ', &decl->still));
+		add_middle(token, ft_mysplit(decl->value + decl->j, ' ', &decl->still));
 	}
 	if (!(*token)->flag && word_count(decl->value) > 1)
 		(*token)->flag = 1;
@@ -50,7 +50,7 @@ void	get_value(t_decl *decl, int *i, char *token_value, int status)
 	if (token_value[decl->first] == '?')
 		decl->value = ft_strdup(ft_itoa(status));
 	else
-		decl->value = getenv(ft_substr(token_value,
+		decl->value = getenv(ft_mysubstr(token_value,
 				decl->first, (*i) - decl->first));
 }
 
@@ -77,7 +77,7 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 			while (token_value[*i] && token_value[*i] != '$')
 				(*i)++;
 			if (!(*token)->flag && !decl.still)
-				*n_t_v = ft_strjoin(*n_t_v, ft_substr(token_value,
+				*n_t_v = ft_strjoin(*n_t_v, ft_mysubstr(token_value,
 							decl.first, *i - decl.first));
 			else
 				comp(decl, token, token_value, i);
@@ -98,7 +98,7 @@ void	non_quotes_expander(t_token **token, t_params params)
 	while ((*token)->value[i] && (*token)->value[i] != '$')
 		i++;
 	if (i)
-		n_t_v = ft_substr((*token)->value, 0, i);
+		n_t_v = ft_mysubstr((*token)->value, 0, i);
 	if ((*token)->value[i])
 		set_value(&n_t_v, (*token)->value, &i, token);
 	tmp->value = n_t_v;

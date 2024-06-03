@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	is_in_quote(t_decl2 *decl, char *t_v)
 {
@@ -23,15 +23,15 @@ void	inside_single_quote(t_decl2 *decl, t_token **token, char *t_v)
 		decl->i++;
 	if (!(*token)->flag && !decl->still)
 		decl->n_t_v = ft_strjoin(decl->n_t_v,
-				ft_substr(t_v, decl->start, decl->i - decl->start));
+				ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 	else
 	{
 		if (decl->still)
 			add_middle_n(token,
-				ft_substr(t_v, decl->start, decl->i - decl->start));
+				ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 		else
 			(*token)->value = ft_strjoin((*token)->value,
-					ft_substr(t_v, decl->start, decl->i - decl->start));
+					ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 	}
 }
 
@@ -44,7 +44,7 @@ void	double_quote_key(t_decl2 *decl, char *t_v, t_params params)
 	if (t_v[decl->start] == '?')
 		decl->value = ft_strdup(ft_itoa(params.status));
 	else
-		decl->value = getenv(ft_substr(t_v, decl->start, decl->i - decl->start));
+		decl->value = getenv(ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 	if (decl->value)
 		decl->n_t_v = ft_strjoin(decl->n_t_v, decl->value);
 	else
@@ -66,15 +66,15 @@ void	inside_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params)
 				decl->i++;
 			if (!(*token)->flag && !decl->still)
 				decl->n_t_v = ft_strjoin(decl->n_t_v,
-						ft_substr(t_v, decl->start, decl->i - decl->start));
+						ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 			else
 			{
 				if (decl->still)
-					add_middle_n(token, ft_substr(t_v,
+					add_middle_n(token, ft_mysubstr(t_v,
 							decl->start, decl->i - decl->start));
 				else
 					(*token)->value = ft_strjoin((*token)->value,
-							ft_substr(t_v, decl->start, decl->i - decl->start));
+							ft_mysubstr(t_v, decl->start, decl->i - decl->start));
 			}
 		}
 	}

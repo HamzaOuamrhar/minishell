@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	words_count(char const *s, char c, int *still)
 {
@@ -23,7 +23,7 @@ static int	words_count(char const *s, char c, int *still)
 	return (count);
 }
 
-char	*ft_cpy(char const *str, char c)
+static char	*ft_cpy(char const *str, char c)
 {
 	char	*copy;
 	int		w_len;
@@ -49,7 +49,7 @@ char	*ft_cpy(char const *str, char c)
 	return (copy);
 }
 
-char	**allocate_and_initialize_array(const char *s, char c, int w_count)
+static char	**allocate_and_initialize_array(const char *s, char c, int w_count)
 {
 	char	**array;
 	int		i;
@@ -73,7 +73,7 @@ char	**allocate_and_initialize_array(const char *s, char c, int w_count)
 	return (array);
 }
 
-char	**ft_split(char const *s, char c, int *still)
+char	**ft_mysplit(char const *s, char c, int *still)
 {
 	int		w_count;
 	char	**array;

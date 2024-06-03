@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*get_type1(char *line, int *i)
 {
@@ -72,7 +72,7 @@ void	init_token(t_token *new_token, char *line, int *i, int *q)
 	{
 		start = *i;
 		type = get_type2(line, i, q);
-		new_token->value = ft_substr(line, start, (*i) - start);
+		new_token->value = ft_mysubstr(line, start, (*i) - start);
 	}
 	new_token->type = type;
 }

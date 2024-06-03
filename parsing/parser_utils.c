@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	parse_input(t_token **tokens, t_parse **new_parse)
 {

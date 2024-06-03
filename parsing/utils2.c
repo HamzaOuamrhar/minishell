@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*last_node(t_token *token)
 {
@@ -90,17 +90,6 @@ void	add_middle_n(t_token **token, char *value)
 	(*token)->next = new;
 	new->next = tmp;
 	*token = (*token)->next;
-}
-
-char	*get_env(char *key, t_env *env_vars)
-{
-	while (env_vars)
-	{
-		if (ft_strcmp(key, env_vars->key) == 0)
-			return (env_vars->value);
-		env_vars = env_vars->next;
-	}
-	return (NULL);
 }
 
 void	exit_syntax_error(char *error_msg)
