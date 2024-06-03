@@ -17,7 +17,12 @@ M_OBJECTS = ${M_SOURCES:.c=.o}
 %.o : %.c ../minishell.h
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-# all : $(NAME)
+all : $(NAME)
+
+
+test :
+	echo hello
+
 
 $(NAME) : $(M_OBJECTS)
 	@$(CC) $(M_OBJECTS) -lreadline  -o $(NAME)
