@@ -108,10 +108,7 @@ void	non_quotes_expander(t_token **token, t_params params)
 		set_value(&n_t_v, (*token)->value, &i, token);
 	tmp->value = n_t_v;
 	if (white_word(tmp->value))
-	{
 		tmp->flag = 1;
-		tmp->wh = 1;
-	}
 }
 
 void	expander(t_token *token, t_params params)
@@ -119,15 +116,18 @@ void	expander(t_token *token, t_params params)
 	while (token)
 	{
 		token->flag = 0;
-		if (ft_strcmp(token->type, "WORD") == 0 && !token->here)
+		if (ft_strcmp(token->type, "WORD") == 0 && !token->here && in_str(token->value, '$'))
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
 				quotes_expander(&token, token->value, params);
-			else if (in_str(token->value, '$'))
+			else
 				non_quotes_expander(&token, params);
 		}
-		else if (token->here)
+		else
+		{
+			token->wh = 1;
 			quotes_removal(token);
+		}
 		token = token->next;
 	}
 }
