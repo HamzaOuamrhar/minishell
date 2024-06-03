@@ -42,12 +42,7 @@ void	out_quotes_value(t_decl2 *decl, t_token **token)
 			decl->still = 1;
 	}
 	if (white_word(decl->value))
-	{
-		if (!decl->n_t_v)
-			decl->n_t_v = ft_strdup(decl->value);
-		else
-			add_middle_n(token, ft_strdup(decl->value));
-	}
+		decl->n_t_v = ft_strjoin(decl->n_t_v, decl->value);
 	else
 	{
 		if (!(decl->n_t_v))
