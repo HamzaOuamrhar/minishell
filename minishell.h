@@ -142,6 +142,7 @@ typedef struct t_parse
 
 // parsing
 
+
 char	*ft_strdup(const char *s1);
 void     tokenize(t_token **token, char *line, int *q);
 char	**ft_mysplit(char const *s, char c, int *still);
