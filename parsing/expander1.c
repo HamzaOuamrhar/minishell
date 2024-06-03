@@ -22,12 +22,7 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 			decl->still = 0;
 	}
 	if (white_word(decl->value))
-	{
-		if (!(*n_t_v))
-			*n_t_v = ft_strdup(decl->value);
-		else
-			add_middle_n(token, ft_strdup(decl->value));
-	}
+		*n_t_v = ft_strjoin(*n_t_v, ft_strdup(decl->value));
 	else
 	{
 		if (!(*n_t_v))
