@@ -133,6 +133,7 @@ typedef struct t_params
 	int				export_f;
 	int				q;
 	int				status;
+	char			*line;
 }   t_params;
 
 typedef struct t_parse
@@ -200,10 +201,11 @@ void	parse_append(t_token **tokens, t_parse **new_parse);
 void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
 void	is_in_quote(t_decl2 *decl, char *t_v);
 void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
-void	print(t_parse **parse);
+void	print(t_parse *parse);
+void	parser_reset(t_parse **st);
 
 // execution
-void	wait_prompt1(t_params *params, t_parse *st);
+void	wait_prompt1(t_params *params);
 char	*get_acc_path(char **paths, char *com);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);

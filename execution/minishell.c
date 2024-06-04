@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 19:47:49 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:39:35 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	leaks(void)
 int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[], char *env[])
 {
 	t_params	params;
-	t_parse		st;
 
 
 
@@ -36,7 +35,7 @@ int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[]
 	params.env2 = list2array(params.env,  &params);
 	sort_env(params.sorted_env);
 	ft_free(params.env3);
-	wait_prompt1(&params, &st);
+	wait_prompt1(&params);
 }
 
 void	error(t_parse *st, int y, t_params *params)
