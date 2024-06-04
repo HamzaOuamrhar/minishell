@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 19:46:07 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:47:49 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[]
 {
 	t_params	params;
 	t_parse		st;
+
+
 
 	// atexit(leaks);
 	if (!env || !env[0])
