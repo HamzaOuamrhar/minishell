@@ -152,11 +152,11 @@ typedef struct t_parse
 	// t_env			*sorted_env;
 	// t_env			*env;
 	// int				export_f;
-	t_files         *files;
-    char            *in_dup;
-    char            *out_dup;
-    int             in_fd;
-    int             i;
+	t_files			*files;
+    char   			*in_dup;
+    char   			*out_dup;
+    int    			in_fd;
+    int    			i;
 	struct t_parse *next;
 }		t_parse;
 
@@ -203,7 +203,7 @@ void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
 void	print(t_parse **parse);
 
 // execution
-void	wait_prompt1(t_params *params);
+void	wait_prompt1(t_params *params, t_parse *st);
 char	*get_acc_path(char **paths, char *com);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
