@@ -2,6 +2,9 @@
 
 void	wait_prompt1(t_params *params, t_parse *st)
 {
+
+
+	
 	t_token		*token;
 	token = NULL;
 	params->status = 0;
