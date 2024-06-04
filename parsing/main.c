@@ -1,20 +1,18 @@
 #include "../minishell.h"
 
-void wait_prompt1(t_params *params)
+void	wait_prompt1(t_params *params, t_parse *st)
 {
 	t_token		*token;
-	t_parse		st;
-
 	token = NULL;
 	params->status = 0;
 	while (1)
 	{
 		params->q = 0;
-		st.arr = readline("• Shellantics$ ");
-		if (!st.arr)
+		st->arr = readline("• Shellantics$ ");
+		if (!st->arr)
 			break ; // exit with 1
-		add_history(st.arr);
-		tokenize(&token, st.arr, &params->q);
+		add_history(st->arr);
+		tokenize(&token, st->arr, &params->q);
 		while (token)
 		{
 			printf("%s\n", token->value);
@@ -26,29 +24,29 @@ void wait_prompt1(t_params *params)
 			{
 				expander(token, *params);
 				parser(token, &st);
-				if (checking_cmd(&st, params))
+				if (checking_cmd(st, params))
 				{
 					tokens_reset(&token);
 					continue ;
 				}
-				st.com_path = get_acc_path(params->paths_array, st.cmd[0]);
+				st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 				if (!params->path)
 				{
-					printf("Shellantics: %s: No such file or directory\n", st.cmd[0]);
-					// freeing2(&st, params);
+					printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
+					// freeing2(st, params);
 					tokens_reset(&token);
 					continue ;
 				}
-				if (checking_cmd2(&st, params))
+				if (checking_cmd2(st, params))
 				{
-					free(st.com_path);
+					free(st->com_path);
 					tokens_reset(&token);
 					continue ;
 				}
-				if (!st.com_path)
-					printf("%s :command not found\n", st.cmd[0]);
+				if (!st->com_path)
+					printf("%s :command not found\n", st->cmd[0]);
 				else
-					excute_cmd(&st, params);
+					excute_cmd(st, params);
 			}
 		}
 		tokens_reset(&token);
