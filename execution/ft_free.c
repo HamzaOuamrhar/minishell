@@ -20,28 +20,28 @@ void	free_list(t_env *env)
 	}
 }
 
-void	freeing(t_parse *st)
+void	freeing(t_parse *st, t_params *params)
 {
-	free(st->path);
-	free_list(st->env);
-	free_list(st->sorted_env);
+	free(params->path);
+	free_list(params->env);
+	free_list(params->sorted_env);
 	if (st->cmd)
 		ft_free(st->cmd);
-	if (st->paths_array)
-		ft_free(st->paths_array);
-	ft_free(st->env2);
+	if (params->paths_array)
+		ft_free(params->paths_array);
+	ft_free(params->env2);
 	free(st->arr);
 	free (st);
 }
 
 void	freeing2(t_parse *st)
 {
-	// free(st->path);
+	// free(params->path);
 	free(st->com_path);
 	if (st->cmd)
 		ft_free(st->cmd);
-	// if (st->paths_array)
-	// 	ft_free(st->paths_array);
+	// if (params->paths_array)
+	// 	ft_free(params->paths_array);
 	free(st->arr);
 }
 
