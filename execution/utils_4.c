@@ -14,26 +14,26 @@ int ft_strchr(char *s, char c)
 	return (0);
 }
 
-void	check_join(char **s, t_parse *st)
+void	check_join(char **s, t_parse *st, t_params *params)
 {
 	int	i;
 
 	i = 0;
-	st->export_f = 0;
+	params->export_f = 0;
 	while ((*s)[i])
 	{
 		if ((*s)[i] == '=')
 			if ((*s)[i - 1] == '+')
 			{
-				st->export_f = 1;
-				ft_join_value(s, st);
+				params->export_f = 1;
+				ft_join_value(s, st, params);
 				return ;
 			}
 		i++;
 	}
 }
 
-void	ft_join_value(char **s, t_parse *st)
+void	ft_join_value(char **s, t_parse *st, t_params *params)
 {
 	int		i;
 	int		j;
@@ -43,7 +43,7 @@ void	ft_join_value(char **s, t_parse *st)
 	j = 0;
 	res = malloc (ft_strlen(*s));
 	if (!res)
-		error(st, 2); //more portection
+		error(st, 2, params); //more portection
 	while ((*s)[i])
 	{
 		if ((*s)[i] == '+')
@@ -58,17 +58,17 @@ void	ft_join_value(char **s, t_parse *st)
 	*s = res;
 }
 
-void	free_update(char **res, t_parse *st)
+void	free_update(char **res, t_params *params)
 {
 	free (res);
-	ft_free(st->env2);
-	st->env2 = list2array(st->env, st);
-	free(st->path);
-	st->path = ft_copy(get_key("PATH", st->env)); //handle empty path or else
-	if (!st->path)
+	ft_free(params->env2);
+	params->env2 = list2array(params->env, params);
+	free(params->path);
+	params->path = ft_copy(get_key("PATH", params->env)); //handle empty path or else
+	if (!params->path)
 		return ;
-	ft_free(st->paths_array);
-	st->paths_array = ft_split(st->path, ':');
+	ft_free(params->paths_array);
+	params->paths_array = ft_split(params->path, ':');
 }
 
 char	**export_checker(char *s)

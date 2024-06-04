@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/03 17:12:33 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:06:40 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	export_cmd(t_parse *st, char **s, char *res)
+void	export_cmd(char **s, char *res, t_params *params)
 {
 	if (count_args(s) == 1)
 	{
 		if (ft_strchr(res, '='))
 		{
 			s[1] = ft_copy("");
-			search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(st->env), 0);
-			search_and_replace(s[0], s[1], &(st->sorted_env), 0);
+			search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->env), 0);
+			search_and_replace(s[0], s[1], &(params->sorted_env), 0);
 		}
 		else
-			search_and_replace2(s[0], &(st->sorted_env));
-		sort_env(st->sorted_env);
-		free_update(s, st);
+			search_and_replace2(s[0], &(params->sorted_env));
+		sort_env(params->sorted_env);
+		free_update(s, params);
 		return ;
 	}
-	if (st->export_f)
-		ft_join(s,st);
-	search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(st->sorted_env), 0);
-	search_and_replace(s[0], s[1], &(st->env), 0);
-	free_update(s, st);
+	if (params->export_f)
+		ft_join(s, params);
+	search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->sorted_env), 0);
+	search_and_replace(s[0], s[1], &(params->env), 0);
+	free_update(s, params);
 }
 
 void	search_and_replace(char *env, char *value, t_env **envi, int flag)
@@ -90,7 +90,7 @@ void	add_key(char *key, char *value, t_env **env) //pass the head  of the list
 	last_var((*env))->next = new_key;
 }
 
-char	*get_pwd(t_parse *st)
+char	*get_pwd(t_params *params)
 {
 	char	*pwd;
 
@@ -101,7 +101,7 @@ char	*get_pwd(t_parse *st)
 	{
 		printf("cd: error retrieving current directory: getcwd\n");
 		free (pwd);
-		return (ft_strjoin(get_key("PWD", st->env), "/.."));
+		return (ft_strjoin(get_key("PWD", params->env), "/.."));
 	}
 	return (pwd);
 }

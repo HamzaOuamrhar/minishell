@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/03 17:12:33 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:14:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	change_pwd_value(t_parse *st)
+void	change_pwd_value(t_params *params)
 {
-	search_and_replace("OLDPWD", ft_copy(get_key("PWD", st->env)), &(st->env), 1);
-	search_and_replace("PWD", get_pwd(st), &(st->env), 1);
+	search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)), &(params->env), 1);
+	search_and_replace("PWD", get_pwd(params), &(params->env), 1);
 }
 
 t_env	*before_last_node(t_env *env)
@@ -62,11 +62,11 @@ void	sort_env(t_env *env)
 	}
 }
 
-void	just_export(t_parse *st)
+void	just_export(t_params *params)
 {
 	t_env	*tmp;
 
-	tmp = st->sorted_env;
+	tmp = params->sorted_env;
 	while (tmp)
 	{
 		if (!tmp->value)
@@ -77,14 +77,14 @@ void	just_export(t_parse *st)
 	}
 }
 
-void	export_cmd1(t_parse *st)
+void	export_cmd1(t_parse *st, t_params *params)
 {
 	int		i;
 	char	**res;
 
 	if (count_args(st->cmd) == 1) //handle the "export" yooo i am here
 	{
-		just_export(st);
+		just_export(params);
 		return ;
 	}
 	i = 1;
@@ -94,11 +94,11 @@ void	export_cmd1(t_parse *st)
 			printf("Shellantics: export: `%s': not a valid identifier\n", st->cmd[i]);
 		else
 		{
-			check_join(&(st->cmd[i]), st);
+			check_join(&(st->cmd[i]), st, params);
 			res = export_checker(st->cmd[i]);
 			if (!res)
-				error(st, 7);
-			export_cmd(st, res, st->cmd[i]);
+				error(st, 7, params);
+			export_cmd(res, st->cmd[i], params);
 		}
 		i++;
 	}

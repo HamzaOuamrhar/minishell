@@ -10,7 +10,7 @@ int	count_args(char **s)
 	return (i);
 }
 
-void	change_dir(t_parse *st, char *s)
+void	change_dir(t_params *params, char *s)
 {
 	struct stat the_path;
 
@@ -26,5 +26,5 @@ void	change_dir(t_parse *st, char *s)
 		return ;
 	}
 	else
-		change_pwd_value(st);
+		change_pwd_value(params);
 }

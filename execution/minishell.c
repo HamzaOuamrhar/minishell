@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/03 18:51:30 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:27:02 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,31 @@ void	leaks(void)
 
 int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[], char *env[])
 {
-	t_parse *st;
+	t_params	params;
 
 	// atexit(leaks);
-	st = malloc(sizeof(t_parse));
-	if (!st)
-		error(st, 2);
 	if (!env || !env[0])
-	 	empty_env(st); //return double char pointer
+	 	empty_env(&params); //return double char pointer
 	else
-		st->env3 = copy_env(env);
-	st->env = set_env(st->env3);
-	st->path = ft_copy(get_key("PATH", st->env));
-	st->paths_array = ft_split(st->path, ':');
-	st->sorted_env = set_env(st->env3);// the ctrl+c status=130 remember
-	st->env2 = list2array(st->env, st);
-	sort_env(st->sorted_env);
-	ft_free(st->env3);
-	wait_prompt1(st);
+		params.env3 = copy_env(env);
+	params.env = set_env(params.env3);
+	params.path = ft_copy(get_key("PATH", params.env));
+	params.paths_array = ft_split(params.path, ':');
+	params.sorted_env = set_env(params.env3);// the ctrl+c status=130 remember
+	params.env2 = list2array(params.env,  &params);
+	sort_env(params.sorted_env);
+	ft_free(params.env3);
+	wait_prompt1(&params);
 }
 
-void	error(t_parse *st, int y)
+void	error(t_parse *st, int y, t_params *params)
 {
 	if (y == 1)
 		printf("an error accored in the forking operation !\n");
 	else if (y == 2)
 		printf("allocation failure\n");
 	else if (y == 3)
-		ft_free(st->paths_array);
+		ft_free(params->paths_array);
 	else if (y == 4)
 		printf("%s :command not found\n", st->arr);
 	else if (y == 5)
@@ -58,58 +55,26 @@ void	error(t_parse *st, int y)
 	exit(1);
 }
 
-void	signal_handler(int signum, t_parse *st)
+void	signal_handler(int signum, t_parse *st, t_params *params)
 {
 	if (signum == SIGINT)
 	{
 		puts("hello there\n");
 		printf("\n");
-		// wait_prompt(st);
 	}
 	else if (signum == SIGQUIT)
 	{
-		freeing(st);
+		freeing(st, params);
 		exit(0);
 	}
 }
 
-void	wait_prompt(t_parse *st)
-{
-	while (1)
-	{
-		signal(SIGTERM, (void *)signal_handler);
-		// st->arr = readline("• Shellantics-1.0$ ");
-		// if (!st->arr)
-		// 	error(st, 3);
-		// add_history(st->arr);
-		if (checking_cmd(st))
-			continue ;
-		st->com_path = get_acc_path(st->paths_array, st->cmd[0]);
-		if (!st->path)
-		{
-			printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
-			freeing2(st);
-			continue ;
-		}
-		if (checking_cmd2(st))
-		{
-			free(st->com_path);
-			continue ;
-		}
-		if (!st->com_path)
-			printf("%s :command not found\n", st->cmd[0]);
-		else
-			excute_cmd(st);
-		freeing2(st);
-	}
-}
-
-void	ft_join(char **res, t_parse *st)
+void	ft_join(char **res, t_params *params)
 {
 	char	*res1;
 	char	*res2;
 
-	res1 = get_key(res[0], st->env);
+	res1 = get_key(res[0], params->env);
 	if (!res1)
 		return ;
 	res2 = ft_strjoin(res1, res[1]);
