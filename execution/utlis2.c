@@ -6,27 +6,15 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 18:17:40 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:15:36 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// int	ft_strcmp(const char *s1, const char *s2)
-// {
-// 	while (*s1 && *s2
-// 			&& *s1 == *s2)
-// 	{
-// 		s1++;
-// 		s2++;
-// 	}
-// 	return (*s1 - *s2);
-// }
-
 int	checking_cmd(t_parse *st, t_params *params)
 {
-	// if (ft_strlen(st->arr) == 0)
-	// 	return (1);
+
 	if (!(ft_strcmp(st->cmd[0], "exit")))
 	{
 		terminate_shell(st, params);
@@ -35,13 +23,13 @@ int	checking_cmd(t_parse *st, t_params *params)
 	if (!ft_strcmp(st->cmd[0], "export"))
 	{
 		export_cmd1(st, params);
-		ft_free2(st);
+		// ft_free2(st);
 		return (1);
 	}
-	if (st->arr[0] == '.' && st->arr[1] == '/')
+	if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
 	{
 		excute_file(st, params);
-		ft_free2(st);
+		// ft_free2(st);
 		return (1);
 	}
 	if (checking_cmd3(st, params))
