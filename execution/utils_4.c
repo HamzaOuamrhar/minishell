@@ -65,9 +65,9 @@ void	free_update(char **res, t_params *params)
 	params->env2 = list2array(params->env, params);
 	free(params->path);
 	params->path = ft_copy(get_key("PATH", params->env)); //handle empty path or else
+	ft_free(params->paths_array);
 	if (!params->path)
 		return ;
-	ft_free(params->paths_array);
 	params->paths_array = ft_split(params->path, ':');
 }
 

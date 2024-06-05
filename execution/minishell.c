@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 21:39:35 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:42:50 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	leaks(void)
 int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[], char *env[])
 {
 	t_params	params;
-
-
 
 	// atexit(leaks);
 	if (!env || !env[0])

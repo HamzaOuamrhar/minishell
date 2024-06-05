@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 18:15:02 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:49:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,24 @@ int	check_syntax(char *s)
 void	pwd_cmd(t_params *params)
 {
 	char	*pwd;
-	// DIR		*dir;
-
-	// dir = opendir(get_key("PWD", params->env));
-	// if (!dir)
-	// {
-	// 	// search_and_replace("PWD", "..", params->env);
-	// 	pwd = ft_strjoin(get_key("PWD", params->env), "..");
+	// DIR		*dir;s->env), "..");
 	// 	printf("%s\n", pwd);
 	// 	free (pwd);
 	// 	return ;
 	// }
 	pwd = malloc (1024);
+
+	// dir = opendir(get_key("PWD", params->env));
+	// if (!dir)
+	// {
+	// 	// search_and_replace("PWD", "..", params->env);
+	// 	pwd = ft_strjoin(get_key("PWD", param
 	if (!pwd)
 		return ; // more protection
 	if (!(getcwd(pwd, 1024)))
 	{
 		// printf("cd: error retrieving current directory: getcwd\n");
 		printf("%s\n", get_key("PWD", params->env));
-
 	}
 	else
 		printf("%s\n", pwd);
@@ -99,19 +98,16 @@ int	checking_cmd3(t_parse *st, t_params *params)
 	if (!ft_strcmp(st->cmd[0], "pwd")) // enter with deleted directory
 	{
 		pwd_cmd(params);
-		ft_free2(st);
 		return (1);
 	}
 	if (!ft_strcmp(st->cmd[0], "unset")) // enter with deleted directory
 	{
 		unset_cmd(st, params);
-		ft_free2(st);
 		return (1);
 	}
 	if (ft_strncmp(st->cmd[0], "cd", 2) == 0)
 	{
 		change_directory(st, params);
-		ft_free2(st);
 		return (1);
 	}
 	return (0);

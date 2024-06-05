@@ -2,7 +2,7 @@
 
 void	ft_free2(t_parse *st)
 {
-	free(st->arr);
+	// free(st->arr);
 	ft_free(st->cmd);
 }
 

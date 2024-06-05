@@ -36,13 +36,6 @@ typedef struct t_env
 	struct t_env *next;
 }		t_env;
 
-// {
-// 	char **cmd;
-// 	char **in;
-// 	char **out;
-// 	char **app;
-// }
-
 typedef struct t_count
 {
     int in;
@@ -110,18 +103,6 @@ typedef struct t_files
     struct t_files *next;
 }   t_files;
 
-// typedef struct t_env2
-// {
-// 	char			**paths_array;
-// 	char			*path;
-// 	char			*com_path;
-// 	char			**env2;
-// 	char			**env3;
-// 	t_env			*sorted_env;
-// 	t_env			*env;
-// 	int				export_f;
-// }	t_env2;
-
 typedef struct t_params
 {
 	char			**paths_array;
@@ -138,21 +119,9 @@ typedef struct t_params
 
 typedef struct t_parse
 {
-	// t_var			*env; // pointer to linked list of variables
 	char			*arr;
 	char			*com_path;
-	// char			**cmd;// {"cat", NULL}  {"-l", NULL}
-	// t_data			*h;
-	// char			*type;// command  flag  pipe  <  >  << || >> ...
 	char			**cmd;
-	// char			**paths_array;
-	// char			*path;
-	// char			*com_path;
-	// char			**env2;
-	// char			**env3;
-	// t_env			*sorted_env;
-	// t_env			*env;
-	// int				export_f;
 	t_files			*files;
     char   			*in_dup;
     char   			*out_dup;
@@ -162,7 +131,6 @@ typedef struct t_parse
 }		t_parse;
 
 // parsing
-
 
 char	*ft_strdup(const char *s1);
 void     tokenize(t_token **token, char *line, int *q);

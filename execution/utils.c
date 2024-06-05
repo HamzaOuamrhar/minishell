@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 17:41:45 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:52:41 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	terminate_shell(t_parse *st, t_params *params)
 	if ((numbered_arg(st->cmd[1])))
 	{
 		printf("exit\nShellantics: exit: %s: numeric argument required\n", st->cmd[1]);
-		freeing(st, params);
+		// freeing(st, params);
 		exit (255);
 	}
 }

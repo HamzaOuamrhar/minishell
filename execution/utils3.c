@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 18:02:19 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:52:49 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ void	ft_exit(t_parse *st, int args_n, t_params *params)
 
 	if (args_n == 1)
 	{
-		freeing(st, params);
+		// freeing(st, params);
 		printf ("exit\n");
 		exit (0);
 	}
 	if (args_n == 2 && !(numbered_arg(st->cmd[1])))
 	{
 		n = ft_atol(st->cmd[1], st, params);
-		freeing(st, params);
+		// freeing(st, params);
 		printf ("exit\n");
 		exit (n);
 	}

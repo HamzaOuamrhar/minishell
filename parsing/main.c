@@ -40,14 +40,13 @@ void	wait_prompt1(t_params *params)
 				if (!params->path)
 				{
 					printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
-					// freeing2(st, params);
 					tokens_reset(&token);
 					parser_reset(&st);
 					continue ;
 				}
 				if (checking_cmd2(st, params))
 				{
-					free(st->com_path);
+
 					tokens_reset(&token);
 					parser_reset(&st);
 					continue ;
