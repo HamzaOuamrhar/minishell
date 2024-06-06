@@ -72,8 +72,8 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params)
 		if (t_v[decl->start] == '?')
 			decl->value = ft_strdup(ft_itoa(params.status));
 		else
-			decl->value = getenv(ft_mysubstr(t_v, decl->start,
-					decl->i - decl->start));
+			decl->value = get_key(ft_mysubstr(t_v, decl->start,
+					decl->i - decl->start), params.env);
 		if (decl->value)
 			out_quotes_value(decl, token);
 		else

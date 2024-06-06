@@ -24,7 +24,7 @@ void	parse_append(t_token **tokens, t_parse **new_parse)
 	(*tokens) = (*tokens)->next;
 }
 
-void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
+void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
 {
 	(*new_parse)->i ++;
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
@@ -40,7 +40,7 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse)
 		if (ft_strcmp((*tokens)->next->value, decl->line) == 0)
 			break;
 		if (!(*tokens)->next->has_q && in_str(decl->line, '$'))
-			expand_line(&decl->line);
+			expand_line(&decl->line, params);
 		write(decl->fd, decl->line, ft_strlen(decl->line));
 		write(decl->fd, "\n", 1);
 	}

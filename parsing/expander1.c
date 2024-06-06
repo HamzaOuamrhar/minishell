@@ -50,8 +50,8 @@ void	get_value(t_decl *decl, int *i, char *token_value, int status)
 	if (token_value[decl->first] == '?')
 		decl->value = ft_strdup(ft_itoa(status));
 	else
-		decl->value = getenv(ft_mysubstr(token_value,
-				decl->first, (*i) - decl->first));
+		decl->value = get_key(ft_mysubstr(token_value,
+				decl->first, (*i) - decl->first), decl->env);
 }
 
 void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
@@ -60,6 +60,7 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 	int		status;
 
 	decl.still = 0;
+	decl.env = (*token)->env;
 	while (token_value[*i])
 	{
 		if (token_value[*i] == '$')
@@ -99,6 +100,7 @@ void	non_quotes_expander(t_token **token, t_params params)
 		i++;
 	if (i)
 		n_t_v = ft_mysubstr((*token)->value, 0, i);
+	(*token)->env = params.env;
 	if ((*token)->value[i])
 		set_value(&n_t_v, (*token)->value, &i, token);
 	tmp->value = n_t_v;

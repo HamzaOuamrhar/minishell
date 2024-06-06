@@ -38,7 +38,7 @@ void	initialize_parse(t_decl3 *decl, t_count *count, t_parse **new_parse, t_pars
 	(*new_parse)->out_dup = NULL;
 }
 
-void parsing(t_token **tokens, t_parse **new_parse, t_decl3 *decl)
+void parsing(t_token **tokens, t_parse **new_parse, t_decl3 *decl, t_params *params)
 {
 	while ((*tokens) && ft_strcmp((*tokens)->type, "PIPE") != 0)
 	{
@@ -51,13 +51,13 @@ void parsing(t_token **tokens, t_parse **new_parse, t_decl3 *decl)
 		else if ((*tokens) && ft_strcmp((*tokens)->type, "APPEND") == 0)
 			parse_append(tokens, new_parse);
 		else if ((*tokens) && ft_strcmp((*tokens)->type, "HEREDOC") == 0)
-			parse_heredoc(decl, tokens, new_parse);
+			parse_heredoc(decl, tokens, new_parse, params);
 		if ((*tokens))
 			(*tokens) = (*tokens)->next;
 	}
 }
 
-void	parser(t_token *tokens, t_parse **parse)
+void	parser(t_token *tokens, t_parse **parse, t_params *params)
 {
 	t_parse	*new_parse;
 	t_token	*copie;
@@ -70,7 +70,7 @@ void	parser(t_token *tokens, t_parse **parse)
 	{
 		count_things(&copie, &count);
 		initialize_parse(&decl, &count, &new_parse, parse);
-		parsing(&tokens, &new_parse, &decl);
+		parsing(&tokens, &new_parse, &decl, params);
 		new_parse->cmd[decl.i] = NULL;
 		add_back_parse(parse, new_parse);
 		if (tokens)
