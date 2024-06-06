@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/05 19:52:49 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:31:49 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,14 @@ int	checking_cmd2(t_parse *st, t_params *params)
 	if (!ft_strcmp(st->cmd[0], ".."))
 	{
 		printf("%s: command not found\n",st->cmd[0]);
-		ft_free2(st);
+		// ft_free2(st);
 		return (1);
 	}
 	if (!ft_strcmp("env", st->cmd[0]))
 	{
 		if (env_cmd(st, params))
 		{
-			ft_free2(st);
+			// ft_free2(st);
 			return (1);
 		}
 	}
@@ -122,7 +122,7 @@ char	**copy_env(char **env)
 	char	**res;
 	int		i;
 
-	res = malloc (sizeof(char *) * count_args(env) + 1);
+	res = malloc (sizeof(char *) * (count_args(env) + 1));
 	if (!res)
 		return (NULL);//more protection
 	i = 0;
@@ -133,4 +133,5 @@ char	**copy_env(char **env)
 	}
 	res[i] = NULL;
 	return (res);
+	
 }

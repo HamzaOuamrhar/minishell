@@ -233,5 +233,8 @@ void	pwd_cmd(t_params *params);
 void	unset_cmd(t_parse *st, t_params *params);
 void	unset_cmd1(t_env **env, char *s);
 int		checking_cmd3(t_parse *st, t_params *params);
-
+void	update(t_params *params);
+int		ft_shell_atoi(char *s);
+void	update_shlvl(t_params *params);
+char	*ft_shell_itoa(int n);
 #endif

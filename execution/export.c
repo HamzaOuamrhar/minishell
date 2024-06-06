@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/04 18:06:40 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:36:51 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	export_cmd(char **s, char *res, t_params *params)
 	}
 	if (params->export_f)
 		ft_join(s, params);
+	sort_env(params->sorted_env);
 	search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->sorted_env), 0);
 	search_and_replace(s[0], s[1], &(params->env), 0);
 	free_update(s, params);

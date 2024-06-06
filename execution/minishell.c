@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/05 15:42:50 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:23:21 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[]
 	t_params	params;
 
 	// atexit(leaks);
+	// puts("here");
+	// int i = 0;
+	// while (env[i])
+	// {
+	// 	printf("%s\n", env[i++]);
+	// }
+	// puts("here\n\n\n\n");
 	if (!env || !env[0])
 	 	empty_env(&params); //return double char pointer
 	else
@@ -32,7 +39,9 @@ int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[]
 	params.sorted_env = set_env(params.env3);// the ctrl+c status=130 remember
 	params.env2 = list2array(params.env,  &params);
 	sort_env(params.sorted_env);
+	sort_env(params.env);
 	ft_free(params.env3);
+	update(&params);
 	wait_prompt1(&params);
 }
 
