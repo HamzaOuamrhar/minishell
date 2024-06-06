@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	expand_line(char **line)
+void	expand_line(char **line, t_params *params)
 {
 	int	i;
 	char	*value;
@@ -22,7 +22,7 @@ void	expand_line(char **line)
 			i++;
 		while ((*line)[i] && (is_alph_num((*line)[i]) || (*line)[i] == '_'))
 			i++;
-		value = getenv(ft_mysubstr(*line, first, i - first));
+		value = get_key(ft_mysubstr(*line, first, i - first), params->env);
 		if (value)
 			n_l_v = ft_strjoin(n_l_v, value);
 		else
