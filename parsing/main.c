@@ -4,7 +4,8 @@ void	parser_reset(t_parse **st)
 {
 	while (*st)
 	{
-		// close((*st)->in_fd);
+		if ((*st)->in_fd)
+			close((*st)->in_fd);
 		(*st) = (*st)->next;
 	}
 }
