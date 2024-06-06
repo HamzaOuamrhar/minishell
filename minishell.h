@@ -239,4 +239,6 @@ void	update(t_params *params);
 int		ft_shell_atoi(char *s);
 void	update_shlvl(t_params *params);
 char	*ft_shell_itoa(int n);
+char	**export_checker2(char **res, char *s, int i);
+
 #endif
