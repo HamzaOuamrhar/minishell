@@ -5,7 +5,7 @@ RESET_TEXT =\033[0m
 
 NAME = minishell
 N = -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror $(N)
 CC = cc
 EXECUTION_DIR = execution
 PARSING_DIR = parsing
@@ -21,7 +21,7 @@ all : $(NAME)
 
 
 $(NAME) : $(M_OBJECTS)
-	@$(CC) $(M_OBJECTS) -lreadline  -o $(NAME)
+	@$(CC) $(M_OBJECTS) -lreadline $(CFLAGS) -o $(NAME)
 	@echo "$(GREEN_TEXT)[the executable created successfully]$(RESET_TEXT)"
 
 clean :
