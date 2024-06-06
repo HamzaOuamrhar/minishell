@@ -29,7 +29,7 @@ void	wait_prompt1(t_params *params)
 			if (!syntax(token))
 			{
 				expander(token, *params);
-				parser(token, &st);
+				parser(token, &st, params);
 				if (checking_cmd(st, params))
 				{
 					tokens_reset(&token);

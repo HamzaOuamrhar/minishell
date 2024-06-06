@@ -53,6 +53,7 @@ typedef    struct t_token
     int             here;
     int             has_q;
     int             status;
+	t_env			*env;
     struct t_token   *next;
 }    t_token;
 
@@ -70,6 +71,7 @@ typedef struct t_decl
     int j;
     int i;
     char    *value;
+	t_env	*env;
 }   t_decl;
 
 typedef struct t_decl2
@@ -148,7 +150,7 @@ void	expander(t_token *token, t_params params);
 int	    in_str(char *str, char c);
 void	quotes_removal(t_token *tokens);
 int	    is_alph(char c);
-void    parser(t_token *tokens, t_parse **parse);
+void    parser(t_token *tokens, t_parse **parse, t_params *params);
 void	add_back_parse(t_parse **parse, t_parse *new);
 void	non_quotes_expander(t_token **token, t_params params);
 void	add_middle(t_token **token, char **arr);
@@ -161,12 +163,12 @@ void	comp(t_decl decl, t_token **token, char *token_value, int *i);
 void	out_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params);
 void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
-void	expand_line(char **line);
+void	expand_line(char **line, t_params *params);
 void	*ft_malloc(size_t size, int flag);
 void 	parse_input(t_token **tokens, t_parse **new_parse);
 void	parse_output(t_token **tokens, t_parse **new_parse);
 void	parse_append(t_token **tokens, t_parse **new_parse);
-void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse);
+void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params);
 void	is_in_quote(t_decl2 *decl, char *t_v);
 void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
 void	print(t_parse *parse);
