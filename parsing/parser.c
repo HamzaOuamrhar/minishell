@@ -30,6 +30,7 @@ void	initialize_parse(t_decl3 *decl, t_count *count, t_parse **new_parse, t_pars
 	(*new_parse)->next = NULL;
 	(*new_parse)->i = 0;
 	(*new_parse)->files = NULL;
+	(*new_parse)->in_fd = 0;
 	if (decl->f_time)
 		(*new_parse)->i = ++(*parse)->i;
 	decl->f_time ++;
