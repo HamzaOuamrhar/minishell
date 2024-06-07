@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/05 16:48:53 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:45:34 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	checking_cmd(t_parse *st, t_params *params)
 {
-
+	if (!st)
+		return (1);
+	if ((!ft_strlen(st->cmd[0])))
+		printf(" :command not found\n");
 	if (!(ft_strcmp(st->cmd[0], "exit")))
 	{
 		terminate_shell(st, params);

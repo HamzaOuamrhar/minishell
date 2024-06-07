@@ -67,7 +67,10 @@ void	free_update(char **res, t_params *params)
 	params->path = ft_copy(get_key("PATH", params->env)); //handle empty path or else
 	ft_free(params->paths_array);
 	if (!params->path)
+	{
+		params->paths_array = NULL;
 		return ;
+	}
 	params->paths_array = ft_split(params->path, ':');
 }
 
@@ -77,12 +80,10 @@ char	**export_checker(char *s)
 	char	**res;
 
 	i = 0;
-
 	while (s[i] && s[i] != '=')
 		i++;
-	res = malloc (sizeof(char *) * 2 + 1);
+	res = malloc (sizeof(char *) * (3));
 	res[0] = malloc (i + 1);
-	res[1] = NULL;
 	if (!res || !res[0])
 		return (NULL);//need more protection
 	i = 0;
@@ -91,8 +92,18 @@ char	**export_checker(char *s)
 		res[0][i] = s[i];
 		i++;
 	}
-	i++;
+	res[0][i++] = '\0';
+	return (export_checker2(res, s, i));
+}
+
+char	**export_checker2(char **res, char *s, int i)
+{
 	if (i < (int)ft_strlen(s))
+	{
 		res[1] = ft_copy(&s[i]);
+		res[2] = NULL;
+	}
+	else
+		res[1] = NULL;//possible a leak here be carefull
 	return (res);
 }
