@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 16:29:49 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:39:30 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	signal_handler(int signum, t_parse *st, t_params *params)
 		freeing(st, params);
 		exit(0);
 	}
+	else
+		return ;
 }
 
 void	ft_join(char **res, t_params *params)

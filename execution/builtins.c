@@ -16,13 +16,12 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 	char		*tmp;
 	
 	stat(s, &the_path);
-	if (access(st->cmd[0], X_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
+	if (access(get_key("PWD", params->env), X_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
 	{
 		tmp = get_key("OLPDWD", params->env);
-		printf("%s\n", tmp);
 		chdir(tmp);
-		free (tmp);
-		change_pwd_value(params);
+		search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)), &(params->env), 1);
+		search_and_replace("PWD", tmp, &(params->env), 1);
 		return ;
 	}
 	if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
