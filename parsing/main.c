@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	parser_reset(t_parse **st)
+void	parser_reset(t_parse **st, t_token **token)
 {
 	while (*st)
 	{
@@ -8,13 +8,12 @@ void	parser_reset(t_parse **st)
 			close((*st)->in_fd);
 		(*st) = (*st)->next;
 	}
+	*st = NULL;
+	*token = NULL;
 }
 
 void	wait_prompt1(t_params *params)
 {
-
-
-
 	t_token		*token;
 	t_parse		*st;
 	token = NULL;
@@ -36,23 +35,25 @@ void	wait_prompt1(t_params *params)
 				parser(token, &st, params);
 				if (checking_cmd(st, params))
 				{
-					tokens_reset(&token);
-					parser_reset(&st);
+					parser_reset(&st, &token);
+					ft_malloc(0, 3);
+					free(params->line);
 					continue ;
 				}
 				st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 				if (!params->path)
 				{
 					printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
-					tokens_reset(&token);
-					parser_reset(&st);
+					parser_reset(&st, &token);
+					ft_malloc(0, 3);
+					free(params->line);
 					continue ;
 				}
 				if (checking_cmd2(st, params))
 				{
-
-					tokens_reset(&token);
-					parser_reset(&st);
+					parser_reset(&st, &token);
+					ft_malloc(0, 3);
+					free(params->line);
 					continue ;
 				}
 				if (!st->com_path)
@@ -61,7 +62,8 @@ void	wait_prompt1(t_params *params)
 					excute_cmd(st, params);
 			}
 		}
-		tokens_reset(&token);
-		parser_reset(&st);
+		parser_reset(&st, &token);
+		ft_malloc(0, 3);
+		free(params->line);
 	}
 }

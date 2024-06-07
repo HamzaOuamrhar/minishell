@@ -40,11 +40,15 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_param
 		if (!decl->line)
 			break;
 		if (ft_strcmp((*tokens)->next->value, decl->line) == 0)
+		{
+			free(decl->line);
 			break;
+		}
 		if (!(*tokens)->next->has_q && in_str(decl->line, '$'))
 			expand_line(&decl->line, params);
 		write(decl->fd, decl->line, ft_strlen(decl->line));
 		write(decl->fd, "\n", 1);
+		free(decl->line);
 	}
 	(*tokens) = (*tokens)->next;
 }

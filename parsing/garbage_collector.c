@@ -19,15 +19,16 @@ void	garbage_collector(t_garbage **gr, void	*p)
 	}
 }
 
-void	empty_garbage(t_garbage *gr)
+void	empty_garbage(t_garbage **gr)
 {
 	t_garbage	*tmp;
-	while (gr)
+
+	while (*gr)
 	{
-		tmp = gr->next;
-		free(gr->p);
-		free(gr);
-		gr = tmp;
+		tmp = *gr;
+		*gr = (*gr)->next;
+		free(tmp->p);
+		free(tmp);
 	}
 }
 
@@ -47,6 +48,6 @@ void	*ft_malloc(size_t size, int flag)
 		return (p);
 	}
 	else
-		empty_garbage(gr);
+		empty_garbage(&gr);
 	return (NULL);
 }
