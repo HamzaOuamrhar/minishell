@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 00:11:39 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:20:13 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	empty_env(t_params *params)
 	if (getcwd(pwd, 1024))
 	{
 		tmp = pwd;
-		pwd = ft_strjoin("PWD=", pwd);
+		pwd = ft_strjoin2("PWD=", pwd);
 		free (tmp);
 		params->env3[1] = pwd;
 	}
