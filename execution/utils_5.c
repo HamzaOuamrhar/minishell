@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/05 16:49:03 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:19:52 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	pwd_cmd(t_params *params)
 	// if (!dir)
 	// {
 	// 	// search_and_replace("PWD", "..", params->env);
-	// 	pwd = ft_strjoin(get_key("PWD", param
+	// 	pwd = ft_strjoin2(get_key("PWD", param
 	if (!pwd)
 		return ; // more protection
 	if (!(getcwd(pwd, 1024)))

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 11:01:33 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:20:05 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	*get_acc_path(char **paths, char *com)
 	i = 0;
 	while (paths[i])
 	{
-		r = ft_strjoin(paths[i], "/");
-		rr = ft_strjoin(r, com);
+		r = ft_strjoin2(paths[i], "/");
+		rr = ft_strjoin2(r, com);
 		free(r);
 		if (access(rr, F_OK | X_OK) == 0)
 			return (rr);

@@ -239,5 +239,7 @@ int		ft_shell_atoi(char *s);
 void	update_shlvl(t_params *params);
 char	*ft_shell_itoa(int n);
 char	**export_checker2(char **res, char *s, int i);
+char	*ft_strjoin2(char *s1, char *s2);
+char	*ft_strdup2(const char *s1);
 
 #endif

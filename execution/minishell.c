@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 10:11:31 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:19:45 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_join(char **res, t_params *params)
 	res1 = get_key(res[0], params->env);
 	if (!res1)
 		return ;
-	res2 = ft_strjoin(res1, res[1]);
+	res2 = ft_strjoin2(res1, res[1]);
 	free (res[1]);
 	res[1] = res2;
 }
