@@ -30,7 +30,6 @@ void	freeing(t_parse *st, t_params *params)
 	if (params->paths_array)
 		ft_free(params->paths_array);
 	ft_free(params->env2);
-	free(st->arr);
 	free (st);
 }
 
@@ -42,7 +41,6 @@ void	freeing2(t_parse *st)
 		ft_free(st->cmd);
 	// if (params->paths_array)
 	// 	ft_free(params->paths_array);
-	free(st->arr);
 }
 
 void	ft_free(char **s)

@@ -121,7 +121,6 @@ typedef struct t_params
 
 typedef struct t_parse
 {
-	char			*arr;
 	char			*com_path;
 	char			**cmd;
 	t_files			*files;
@@ -176,7 +175,6 @@ void	print(t_parse *parse);
 // execution
 void	wait_prompt1(t_params *params);
 char	*get_acc_path(char **paths, char *com);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
 void	error(t_parse *st, int y, t_params *params);
@@ -216,7 +214,7 @@ void	change_pwd_value(t_params *params);
 t_env	*before_last_node(t_env *env);
 void	ft_free2(t_parse *st);
 void	freeing2(t_parse *st);
-void	change_dir(t_params *params, char *s);
+void	change_dir(t_parse *st, t_params *params, char *s);
 void	sort_env(t_env *env);
 void	just_export(t_params *params);
 void	ft_swap(t_env *a, t_env *b);

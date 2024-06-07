@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/05 19:52:41 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:49:50 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ void change_directory(t_parse *st, t_params *params)
 		if (!home)
 		{
 			printf("Shellantics: cd: HOME not set\n");
-			// ft_free(st->cmd);
 			return ;
 		}
-		change_dir(params, home);
+		change_dir(st, params, home);
 		return ;
 	}
-	change_dir(params, st->cmd[1]);
+	change_dir(st, params, st->cmd[1]);
 }
 
 void	excute_file(t_parse *st, t_params *params)

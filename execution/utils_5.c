@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 15:19:52 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:34:45 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	checking_cmd3(t_parse *st, t_params *params)
 		unset_cmd(st, params);
 		return (1);
 	}
-	if (ft_strncmp(st->cmd[0], "cd", 2) == 0)
+	if (ft_strcmp(st->cmd[0], "cd") == 0)
 	{
 		change_directory(st, params);
 		return (1);

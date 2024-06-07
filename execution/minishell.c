@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 15:19:45 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:29:49 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	error(t_parse *st, int y, t_params *params)
 	else if (y == 3)
 		ft_free(params->paths_array);
 	else if (y == 4)
-		printf("%s :command not found\n", st->arr);
+		printf("%s :command not found\n", st->cmd[0]);
 	else if (y == 5)
 		printf("exit\nShellantics: exit: %s: numeric argument required\n", st->cmd[1]);
 	else if (y == 6)
 		printf("error while geting working path\n");
-	else if (y == 7)
+	else if (y == 7)	
 		printf("something went wrong !\n");
 	exit(1);
 }
