@@ -49,6 +49,8 @@ void	ft_free(char **s)
 {
 	int	i;
 
+	if (!s)
+		return ;
 	i = 0;
 	while (s[i])
 		free (s[i++]);

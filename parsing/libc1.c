@@ -94,20 +94,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (join_string);
 }
 
-// int	ft_strncmp(const char *s1, const char *s2, size_t n)
-// {
-// 	if (n == 0)
-// 		return (0);
-// 	while (*s1 && *s2 && (n - 1) > 0
-// 		&& *(unsigned char*)s1 == *(unsigned char*)s2)
-// 	{
-// 		s1++;
-// 		s2++;
-// 		n--;
-// 	}
-// 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
-// }
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)

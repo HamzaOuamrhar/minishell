@@ -67,7 +67,10 @@ void	free_update(char **res, t_params *params)
 	params->path = ft_copy(get_key("PATH", params->env)); //handle empty path or else
 	ft_free(params->paths_array);
 	if (!params->path)
+	{
+		params->paths_array = NULL;
 		return ;
+	}
 	params->paths_array = ft_split(params->path, ':');
 }
 
@@ -101,6 +104,6 @@ char	**export_checker2(char **res, char *s, int i)
 		res[2] = NULL;
 	}
 	else
-		res[1] = NULL;
+		res[1] = NULL;//possible a leak here be carefull
 	return (res);
 }
