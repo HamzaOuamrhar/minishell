@@ -50,7 +50,6 @@ void	wait_prompt1(t_params *params)
 				}
 				if (checking_cmd2(st, params))
 				{
-
 					tokens_reset(&token);
 					parser_reset(&st);
 					continue ;

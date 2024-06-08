@@ -25,10 +25,10 @@
 # define GREEN_TEXT "\033[1;32m"
 # define YELLOW_TEXT "\033[1;33"
 # define RESET_TEXT "\033[0m"
-# define BLUE_TEXT "\033[1;34m"
+# define BLUE_TEXT "\033[1;34m"	
 
 
-typedef struct t_env
+typedef	struct	t_env
 {
 	// name=hamza
 	char		*key; // $name
@@ -36,27 +36,26 @@ typedef struct t_env
 	struct t_env *next;
 }		t_env;
 
-typedef struct t_count
+typedef	struct	t_count
 {
-    int in;
-    int out;
-    int app;
-    int words;
+	int in;
+	int out;
+	int app;
+	int words;
 }   t_count;
 
-typedef    struct t_token
+typedef	struct t_token
 {
-    char            *value;
-    char            *type;
-    int             flag;
-    int             wh;
-    int             here;
-    int             has_q;
-    int             status;
+	char			*value;
+	char			*type;
+	int 			flag;
+	int 			wh;
+	int 			here;
+	int 			has_q;
+	int 			status;
 	t_env			*env;
-    struct t_token   *next;
-}    t_token;
-
+	struct t_token	*next;
+}	t_token;
 
 typedef struct t_garbage
 {
@@ -173,6 +172,7 @@ void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
 void	print(t_parse *parse);
 
 // execution
+
 void	wait_prompt1(t_params *params);
 char	*get_acc_path(char **paths, char *com);
 char	*ft_strjoin(char *s1, char *s2);
