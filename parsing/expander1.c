@@ -44,9 +44,12 @@ void	get_value(t_decl *decl, int *i, char *token_value, int status)
 	if (token_value[*i] && (!is_alph(token_value[*i])
 			|| token_value[*i] != '_' || token_value[*i] == '?'))
 		(*i)++;
-	while (token_value[*i] && token_value[*i] != '$'
-		&& (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
-		(*i)++;
+	else
+	{
+		while (token_value[*i] && token_value[*i] != '$'
+			&& (is_alph_num(token_value[*i]) || token_value[*i] == '_'))
+			(*i)++;
+	}
 	if (token_value[decl->first] == '?')
 		decl->value = ft_strdup(ft_itoa(status));
 	else

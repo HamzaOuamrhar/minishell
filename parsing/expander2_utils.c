@@ -66,9 +66,12 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params)
 		decl->start = decl->i;
 		if (t_v[decl->i] && (!is_alph(t_v[decl->i]) || t_v[decl->i] != '_'  || t_v[decl->i] == '?'))
 			decl->i++;
-		while (t_v[decl->i] && (is_alph_num(t_v[decl->i])
-				|| t_v[decl->i] == '_'))
-			decl->i++;
+		else
+		{
+			while (t_v[decl->i] && (is_alph_num(t_v[decl->i])
+					|| t_v[decl->i] == '_'))
+				decl->i++;
+		}
 		if (t_v[decl->start] == '?')
 			decl->value = ft_strdup(ft_itoa(params.status));
 		else
