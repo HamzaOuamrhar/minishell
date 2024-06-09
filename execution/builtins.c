@@ -35,8 +35,12 @@ void	no_permissions(t_params *params)
 	char	*tmp2;
 	int		i;
 
-	if (check_deleted(params ))
+	if (access(get_key("PWD", params->env), X_OK) != -1)
+	{
+		puts("here delete");
+		check_deleted(params);
 		return ;
+	}
 	tmp = ft_copy(get_key("PWD", params->env));
 	i = ft_strlen(tmp);
 	i--;
@@ -62,10 +66,13 @@ void	no_permissions(t_params *params)
 void	change_dir(t_parse *st, t_params *params, char *s)
 {
 	struct stat the_path;
+
 	
 	stat(s, &the_path);
-	if (access(get_pwd(params), X_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
+
+	if (access(get_key("PWD", params->env), X_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
 	{
+		puts("here nega 2");
 		no_permissions(params);
 	} 
 	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1)
