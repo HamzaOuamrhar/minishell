@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/08 13:57:17 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/09 14:02:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,14 @@ void	unset_cmd(t_parse *st, t_params *params)
 	i = 1;
 	while (st->cmd[i])
 	{
-		unset_cmd1(&(params->env), st->cmd[i]);
-		unset_cmd1(&(params->sorted_env), st->cmd[i++]);
+		if (check_syntax(st->cmd[i]))
+			printf("Shellantics: export: `%s': not a valid identifier\n", st->cmd[i]);
+		else
+		{ 
+			unset_cmd1(&(params->env), st->cmd[i]);
+			unset_cmd1(&(params->sorted_env), st->cmd[i]);
+		}
+		i++;
 	}
 	free_update(NULL, params);
 }

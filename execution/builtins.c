@@ -10,6 +10,24 @@ int	count_args(char **s)
 	return (i);
 }
 
+int	check_deleted(t_params *params)
+{
+	struct stat the_path;
+	char		*tmp;
+
+	tmp = get_key("PWD", params->env);
+	stat(tmp, &the_path);
+	if (!S_ISDIR(the_path.st_mode))
+	{
+		chdir("..");
+		printf("cd: error retrieving current directory: getcwd: cannot ");
+		printf("access parent directories: No such file or directory\n");
+		search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)), &(params->env), 1);
+		search_and_replace("PWD", ft_strjoin2(tmp, "/.."), &(params->env), 1);
+		return (1);
+	}
+	return (0);
+}
 
 void	no_permissions(t_params *params)
 {
@@ -17,6 +35,8 @@ void	no_permissions(t_params *params)
 	char	*tmp2;
 	int		i;
 
+	if (check_deleted(params ))
+		return ;
 	tmp = ft_copy(get_key("PWD", params->env));
 	i = ft_strlen(tmp);
 	i--;
@@ -37,7 +57,6 @@ void	no_permissions(t_params *params)
 	}
 	search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)), &(params->env), 1);
 	search_and_replace("PWD", tmp2, &(params->env), 1);
-	return ;
 }
 
 void	change_dir(t_parse *st, t_params *params, char *s)
@@ -46,25 +65,13 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 	
 	stat(s, &the_path);
 	if (access(get_key("PWD", params->env), X_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
-	{
 		no_permissions(params);
-		return ;
-	}
-	if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1)
-	{
+	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1)
 		printf("shellantics: cd: %s: Permission denied\n", s);
-		return ;
-	}
-	if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
-	{
+	else if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
 		printf("cd: not a directory: %s\n", s);
-		return ;
-	}
-	if (chdir(s) == -1)
-	{
+	else if (chdir(s) == -1)
 		printf("cd: no such file or directory: %s\n", s);
-		return ;
-	}
 	else
 		change_pwd_value(params);
 }
