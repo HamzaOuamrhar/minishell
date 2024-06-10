@@ -4,6 +4,11 @@ void	parse_input(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		*tokens = (*tokens)->next;
+	if ((*new_parse)->in_fd)
+	{
+		close ((*new_parse)->in_fd);
+		(*new_parse)->in_fd = 0;
+	}
 	add_back_file(&(*new_parse)->files, 1, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
 }
