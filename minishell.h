@@ -99,8 +99,8 @@ typedef struct t_decl3
 typedef struct t_files
 {
     char    *file;
-    int     type;
-    int     is_amb;
+    int		type;
+    int		is_amb;
     struct t_files *next;
 }   t_files;
 
@@ -123,10 +123,10 @@ typedef struct t_parse
 	char			*com_path;
 	char			**cmd;
 	t_files			*files;
-    char   			*in_dup;
-    char   			*out_dup;
-    int    			in_fd;
-    int    			i;
+	char			*in_dup;
+	char			*out_dup;
+	int				in_fd;
+	int				i;
 	struct t_parse *next;
 }		t_parse;
 
@@ -240,5 +240,5 @@ char	**export_checker2(char **res, char *s, int i);
 char	*ft_strjoin2(char *s1, char *s2);
 char	*ft_strdup2(const char *s1);
 int		back_cmd(t_parse *st, int it, t_params *params);
-
+int		in_out_dup(t_parse *st);
 #endif

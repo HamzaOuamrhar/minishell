@@ -87,7 +87,7 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 		check_deleted(params, tmp);
 		i++;
 	}
-	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1)
+	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1) //give another try to handle the permissions
 		printf("shellantics: cd: %s: Permission denied\n", s);
 	else if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
 		printf("cd: not a directory: %s\n", s);
@@ -100,6 +100,3 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 		i = 0;
 	}
 }
- 
-// X_ok checkes for permessions  it go inside
-// X_ok checkes for exentence  it go inside

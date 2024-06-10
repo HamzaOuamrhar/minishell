@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/09 14:22:38 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:46:08 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	checking_cmd(t_parse *st, t_params *params)
 {
-	if (!st || !st->cmd[0])
+	if (!st || (!st->cmd[0] && !st->files && !st->in_fd))
+		return (1);
+	if (st->files && in_out_dup(st))
 		return (1);
 	if ((!ft_strlen(st->cmd[0])))
 		printf(" :command not found\n");
