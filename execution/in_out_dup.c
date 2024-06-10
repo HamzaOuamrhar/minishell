@@ -20,13 +20,31 @@ int	check_ins(t_parse *st)
 			return (1);
 		}
 		close (fd);
+		tmp = tmp->next;
 	}
 	return (0);
 }
 
-int	in_out_dup(t_parse *st)
+void	excute_cmd_dup(t_parse *st, t_params *params)
 {
-	if(check_ins(st))
+	int	pid;
+	int	fd;
+
+	fd = open(st->in_dup, O_RDONLY);
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(fd, STDIN_FILENO);
+		execve(st->com_path, st->cmd, params->env2); //protection
+		close (fd);
+	}
+	wait(0);
+}
+
+int	in_out_dup(t_parse *st, t_params *params)
+{
+	if (check_ins(st))
 		return (1);
+	excute_cmd_dup(st, params);
 	return (0);
 }

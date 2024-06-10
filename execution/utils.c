@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 16:49:50 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:29:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	excute_cmd(t_parse *st, t_params *params)
 {
 	int	pid;
 
-	ft_free(params->env2);
-	params->env2 = list2array(params->env, params);
+	// ft_free(params->env2);
+	// params->env2 = list2array(params->env, params);
 	pid = fork();
 	if (pid == 0)
 		execve(st->com_path, st->cmd, params->env2); //protection
 	wait(0);
-	return ;
 }
 
 void change_directory(t_parse *st, t_params *params)

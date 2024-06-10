@@ -240,5 +240,5 @@ char	**export_checker2(char **res, char *s, int i);
 char	*ft_strjoin2(char *s1, char *s2);
 char	*ft_strdup2(const char *s1);
 int		back_cmd(t_parse *st, int it, t_params *params);
-int		in_out_dup(t_parse *st);
+int		in_out_dup(t_parse *st, t_params *params);
 #endif
