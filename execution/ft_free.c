@@ -54,3 +54,17 @@ void	ft_free(char **s)
 		free (s[i++]);
 	free (s);
 }
+
+int	back_cmd(t_parse *st, int i, t_params *params)
+{
+	printf("%d\n", i);
+	if (ft_strcmp("..", st->cmd[1]))
+		return (1);
+	if (chdir("..") == -1)
+	{
+		printf ("problem in chdir func\n"); //needs protection 
+		exit (1);
+	}
+	change_pwd_value(params);
+	return (0);
+}
