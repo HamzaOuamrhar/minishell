@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/09 14:02:03 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:02:33 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_syntax(char *s)
 {
 	int	i;
-
+//_ in beging   digits in middle no digits in beg
 	i = 0;
 	if (!((s[i] >= 'a' && s[i] <= 'z')
 			|| (s[i] >= 'A' && s[i] <= 'Z') || (s[i] == '_')))
