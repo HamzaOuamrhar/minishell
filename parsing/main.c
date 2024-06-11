@@ -12,11 +12,9 @@ void	parser_reset(t_parse **st)
 
 void	wait_prompt1(t_params *params)
 {
-
-
-
 	t_token		*token;
 	t_parse		*st;
+
 	token = NULL;
 	st = NULL;
 	params->status = 0;
