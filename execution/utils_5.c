@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/11 02:02:33 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:15:48 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	check_syntax(char *s)
 void	pwd_cmd(t_params *params)
 {
 	char	*pwd;
+	char	*tmp;
 	// DIR		*dir;s->env), "..");
 	// 	printf("%s\n", pwd);
 	// 	free (pwd);
@@ -52,7 +53,14 @@ void	pwd_cmd(t_params *params)
 	if (!(getcwd(pwd, 1024)))
 	{
 		// printf("cd: error retrieving current directory: getcwd\n");
-		printf("%s\n", get_key("PWD", params->env));
+		tmp = get_key("PWD", params->env);
+		if (tmp)
+		{
+			printf("we can't get the working directory at this time, ");
+			printf("this may caused by the permissions or beeing in a deleted dire\n");
+		}
+		else
+			printf("%s\n", get_key("PWD", params->env));
 	}
 	else
 		printf("%s\n", pwd);

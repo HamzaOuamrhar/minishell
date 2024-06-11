@@ -81,7 +81,7 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 	static int	i = 0;
 
 	stat(s, &the_path);
-	tmp = ft_spliter(get_key("PWD", params->env), i);
+	tmp = ft_spliter(get_key("PWD", params->env), i);// handle the unset of PWD neega
 	if (access(tmp, F_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
 	{
 		check_deleted(params, tmp);

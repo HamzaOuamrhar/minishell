@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/11 01:18:06 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:07:49 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	checking_cmd(t_parse *st, t_params *params)
 {
-	// print(st);
-	if (!st || (!st->files && !st->in_fd && !st->cmd))
+	params->status = 0;
+	print(st);
+	if (!st || (!st->files && !st->cmd))
 		return (1);
-	if (st->files)
+	if (st->files || st->in_dup)
 	{
+		puts("133333337\n\n");
 		if (in_out_dup(st, params))
 			return (1);
 	}
