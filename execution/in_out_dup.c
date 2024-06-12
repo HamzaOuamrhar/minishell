@@ -46,7 +46,6 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 
 	// fd = open(st->in_dup, O_RDONLY); //already protected
 	pid = fork();
-	lseek(fd, 0, SEEK_SET);
 	if (pid == 0)
 	{
 		if (check_builtins(st->cmd[0]))
@@ -66,8 +65,8 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 			printf("%s :command not found\n", st->cmd[0]);
 			exit (127);
 		}
-		close (fd);
-		close (st->out_fd);
+		// close (st->out_fd);//why this should not being closed
+		// close (fd);
 		execve(st->com_path, st->cmd, params->env2); //protection
 		exit(1);
 	}
