@@ -38,6 +38,8 @@ int	ft_shell_atoi(char *s)
 	int	i;
 	int	res;
 
+	if (!s)
+		return (-1);
 	res = 0;
 	i = 0;
 	if (s[i] == '-' || s[i] == '+')

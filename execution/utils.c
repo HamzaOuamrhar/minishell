@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/05 19:52:41 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:33:12 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	excute_cmd(t_parse *st, t_params *params)
 {
 	int	pid;
 
-	ft_free(params->env2);
-	params->env2 = list2array(params->env, params);
+	// ft_free(params->env2);
+	// params->env2 = list2array(params->env, params);
 	pid = fork();
 	if (pid == 0)
 		execve(st->com_path, st->cmd, params->env2); //protection
 	wait(0);
-	return ;
 }
 
 void change_directory(t_parse *st, t_params *params)
@@ -35,23 +34,35 @@ void change_directory(t_parse *st, t_params *params)
 		if (!home)
 		{
 			printf("Shellantics: cd: HOME not set\n");
-			// ft_free(st->cmd);
 			return ;
 		}
-		change_dir(params, home);
+		change_dir(st, params, home);
 		return ;
 	}
-	change_dir(params, st->cmd[1]);
+	change_dir(st, params, st->cmd[1]);
 }
 
 void	excute_file(t_parse *st, t_params *params)
 {
-	int	pid;
+	int		pid;
+	char	*tmp;
 
+	tmp = ft_substr(st->cmd[0] ,2 , ft_strlen(st->cmd[0]));
+	if (access(tmp, X_OK) == -1)
+	{
+		printf("%s: Permission denied\n", st->cmd[0]);
+		free (tmp);
+		params->status = 126;
+		return ;
+	}
 	pid = fork();
+	free (tmp);
 	if (pid == 0)
 		if (execve(st->cmd[0], st->cmd, params->env2) == -1)
+		{
+			params->status = 127;
 			printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
+		}
 	wait (0);
 }
 

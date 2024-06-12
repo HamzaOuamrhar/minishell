@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 15:19:52 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:15:48 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_syntax(char *s)
 {
 	int	i;
-
+//_ in beging   digits in middle no digits in beg
 	i = 0;
 	if (!((s[i] >= 'a' && s[i] <= 'z')
 			|| (s[i] >= 'A' && s[i] <= 'Z') || (s[i] == '_')))
@@ -35,6 +35,7 @@ int	check_syntax(char *s)
 void	pwd_cmd(t_params *params)
 {
 	char	*pwd;
+	char	*tmp;
 	// DIR		*dir;s->env), "..");
 	// 	printf("%s\n", pwd);
 	// 	free (pwd);
@@ -52,7 +53,14 @@ void	pwd_cmd(t_params *params)
 	if (!(getcwd(pwd, 1024)))
 	{
 		// printf("cd: error retrieving current directory: getcwd\n");
-		printf("%s\n", get_key("PWD", params->env));
+		tmp = get_key("PWD", params->env);
+		if (tmp)
+		{
+			printf("we can't get the working directory at this time, ");
+			printf("this may caused by the permissions or beeing in a deleted dire\n");
+		}
+		else
+			printf("%s\n", get_key("PWD", params->env));
 	}
 	else
 		printf("%s\n", pwd);
@@ -87,8 +95,14 @@ void	unset_cmd(t_parse *st, t_params *params)
 	i = 1;
 	while (st->cmd[i])
 	{
-		unset_cmd1(&(params->env), st->cmd[i]);
-		unset_cmd1(&(params->sorted_env), st->cmd[i++]);
+		if (check_syntax(st->cmd[i]))
+			printf("Shellantics: export: `%s': not a valid identifier\n", st->cmd[i]);
+		else
+		{ 
+			unset_cmd1(&(params->env), st->cmd[i]);
+			unset_cmd1(&(params->sorted_env), st->cmd[i]);
+		}
+		i++;
 	}
 	free_update(NULL, params);
 }
@@ -105,7 +119,7 @@ int	checking_cmd3(t_parse *st, t_params *params)
 		unset_cmd(st, params);
 		return (1);
 	}
-	if (ft_strncmp(st->cmd[0], "cd", 2) == 0)
+	if (ft_strcmp(st->cmd[0], "cd") == 0)
 	{
 		change_directory(st, params);
 		return (1);

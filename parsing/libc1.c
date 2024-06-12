@@ -59,7 +59,7 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i]) // added
 		i++;
 	return (i);
 }
@@ -96,6 +96,8 @@ char	*ft_strjoin(char *s1, char *s2)
 
 int	ft_strcmp(char *s1, char *s2)
 {
+	if (!s2 || !s1)
+		return (1);
 	while (*s1 && *s2 && *s1 == *s2)
 	{
 		s1++;

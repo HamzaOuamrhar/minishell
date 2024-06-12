@@ -4,32 +4,34 @@ void	print(t_parse *parse)
 {
 	int	i;
 
-	while (parse)
+	t_parse *tmp = parse;
+	while (tmp)
 	{
 		i = 0;
 		printf("-------cmd------\n");
-		while ((parse)->cmd[i])
+		while ((tmp)->cmd[i])
 		{
-			printf("%s\n", (parse)->cmd[i]);
+			printf("%s\n", (tmp)->cmd[i]);
 			i++;
 		}
 		i = 0;
 		printf("-------files-------\n");
-		while ((parse)->files)
+		t_files *tmp2 = tmp->files;
+		while (tmp2)
 		{
-			printf("%s -> %d | amb: %d\n", (parse)->files->file, (parse)->files->type, (parse)->files->is_amb);
-			(parse)->files = (parse)->files->next;
+			printf("%s -> %d | amb: %d\n", tmp2->file, tmp2->type, tmp2->is_amb);
+			tmp2 = tmp2->next;
 		}
 		printf("---------in_dup------\n");
-		if ((parse)->in_dup)
-			printf("%s\n", (parse)->in_dup);
+		if ((tmp)->in_dup)
+			printf("%s\n", (tmp)->in_dup);
 		printf("---------out_dup------\n");
-		if ((parse)->out_dup)
-			printf("%s\n", (parse)->out_dup);
+		if ((tmp)->out_dup)
+			printf("%s\n", (tmp)->out_dup);
 		printf("-------fd-------------\n");
-		printf("%d\n", parse->in_fd);
-		(parse) = (parse)->next;
-		if ((parse))
+		printf("%d\n", tmp->in_fd);
+		(tmp) = (tmp)->next;
+		if ((tmp))
 		printf("**********next********\n");
 	}
 }

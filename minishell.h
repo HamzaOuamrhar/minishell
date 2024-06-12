@@ -25,10 +25,10 @@
 # define GREEN_TEXT "\033[1;32m"
 # define YELLOW_TEXT "\033[1;33"
 # define RESET_TEXT "\033[0m"
-# define BLUE_TEXT "\033[1;34m"
+# define BLUE_TEXT "\033[1;34m"	
 
 
-typedef struct t_env
+typedef	struct	t_env
 {
 	// name=hamza
 	char		*key; // $name
@@ -36,27 +36,26 @@ typedef struct t_env
 	struct t_env *next;
 }		t_env;
 
-typedef struct t_count
+typedef	struct	t_count
 {
-    int in;
-    int out;
-    int app;
-    int words;
+	int in;
+	int out;
+	int app;
+	int words;
 }   t_count;
 
-typedef    struct t_token
+typedef	struct t_token
 {
-    char            *value;
-    char            *type;
-    int             flag;
-    int             wh;
-    int             here;
-    int             has_q;
-    int             status;
+	char			*value;
+	char			*type;
+	int 			flag;
+	int 			wh;
+	int 			here;
+	int 			has_q;
+	int 			status;
 	t_env			*env;
-    struct t_token   *next;
-}    t_token;
-
+	struct t_token	*next;
+}	t_token;
 
 typedef struct t_garbage
 {
@@ -100,8 +99,8 @@ typedef struct t_decl3
 typedef struct t_files
 {
     char    *file;
-    int     type;
-    int     is_amb;
+    int		type;
+    int		is_amb;
     struct t_files *next;
 }   t_files;
 
@@ -121,14 +120,14 @@ typedef struct t_params
 
 typedef struct t_parse
 {
-	char			*arr;
 	char			*com_path;
 	char			**cmd;
 	t_files			*files;
-    char   			*in_dup;
-    char   			*out_dup;
-    int    			in_fd;
-    int    			i;
+	char			*in_dup;
+	char			*out_dup;
+	int				in_fd;
+	int				out_fd;
+	int				i;
 	struct t_parse *next;
 }		t_parse;
 
@@ -174,9 +173,9 @@ void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
 void	print(t_parse *parse);
 
 // execution
+
 void	wait_prompt1(t_params *params);
 char	*get_acc_path(char **paths, char *com);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
 void	error(t_parse *st, int y, t_params *params);
@@ -216,7 +215,7 @@ void	change_pwd_value(t_params *params);
 t_env	*before_last_node(t_env *env);
 void	ft_free2(t_parse *st);
 void	freeing2(t_parse *st);
-void	change_dir(t_params *params, char *s);
+void	change_dir(t_parse *st, t_params *params, char *s);
 void	sort_env(t_env *env);
 void	just_export(t_params *params);
 void	ft_swap(t_env *a, t_env *b);
@@ -241,5 +240,6 @@ char	*ft_shell_itoa(int n);
 char	**export_checker2(char **res, char *s, int i);
 char	*ft_strjoin2(char *s1, char *s2);
 char	*ft_strdup2(const char *s1);
-
+int		back_cmd(t_parse *st, int it, t_params *params);
+int		in_out_dup(t_parse *st, t_params *params);
 #endif

@@ -54,7 +54,6 @@ void	ft_join_value(char **s, t_parse *st, t_params *params)
 		res[j++] = (*s)[i++];
 	}
 	res[j] = '\0';
-	free(*s);
 	*s = res;
 }
 

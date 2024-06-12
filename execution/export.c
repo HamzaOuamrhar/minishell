@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 15:18:51 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:03:58 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	add_key(char *key, char *value, t_env **env) //pass the head  of the list
 
 	new_key = malloc (sizeof(t_env));
 	if (!new_key)
-		return ;//more protection nega for this
+		return ; //more protection nega for this
 	new_key->key = key;
 	new_key->value = value;
 	new_key->next = NULL;
