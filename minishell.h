@@ -126,6 +126,7 @@ typedef struct t_parse
 	char			*in_dup;
 	char			*out_dup;
 	int				in_fd;
+	int				out_fd;
 	int				i;
 	struct t_parse *next;
 }		t_parse;
