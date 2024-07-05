@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/12 02:14:50 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:31:04 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,13 @@ int	checking_cmd(t_parse *st, t_params *params)
 {
 	params->status = 0;
 	// print(st);
-	if (!st || (!st->files && !st->cmd))
-	{
+	if (!st || !st->cmd[0] || (!st->files && !st->cmd))
 		return (1);
-	}
 	if (st->files || st->in_fd)
 	{
 		if (in_out_dup(st, params))
 			return (1);
 	}
-	if ((!ft_strlen(st->cmd[0])))
-		printf(" :command not found\n");
 	if (!(ft_strcmp(st->cmd[0], "exit")))
 	{
 		terminate_shell(st, params);
@@ -39,7 +35,7 @@ int	checking_cmd(t_parse *st, t_params *params)
 	}
 	if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
 	{
-		excute_file(st, params);
+		excute_file(st, params); 
 		return (1);
 	}
 	if (checking_cmd3(st, params))

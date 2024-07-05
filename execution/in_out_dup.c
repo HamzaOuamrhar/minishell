@@ -67,7 +67,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		if (!st->com_path)
 		{
 			printf("%s :command not found\n", st->cmd[0]);
-			exit (127);
+			exit (127); 
 		}
 		execve(st->com_path, st->cmd, params->env2); //protection
 		exit(1);

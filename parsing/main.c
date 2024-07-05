@@ -5,7 +5,7 @@ void	parser_reset(t_parse **st)
 	while (*st)
 	{
 		if ((*st)->in_fd)
-			close((*st)->in_fd);
+			close((*st)->in_fd);	
 		(*st) = (*st)->next;
 	}
 }
@@ -38,7 +38,10 @@ void	wait_prompt1(t_params *params)
 					parser_reset(&st);
 					continue ;
 				}
-				st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+				if (!(access(params->line, F_OK | X_OK) == 0))
+					st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+				else
+					st->com_path = ft_copy(params->line); 
 				if (!params->path)
 				{
 					printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
