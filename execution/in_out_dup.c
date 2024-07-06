@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	check_ins(t_parse *st)
+int	check_perms(t_parse *st)
 {
 	int		fd;
 	t_files	*tmp;
@@ -81,7 +81,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 
 int	in_out_dup(t_parse *st, t_params *params)
 {
-	if (check_ins(st))
+	if (check_perms(st))
 	{
 		params->status = 1;
 		return (1);

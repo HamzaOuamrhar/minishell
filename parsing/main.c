@@ -10,6 +10,15 @@ void	parser_reset(t_parse **st)
 	}
 }
 
+void	slash_path(t_parse *st, t_params *params)
+{
+	// printf("[%s]\n", st->cmd[0]);
+	if (access(st->cmd[0], X_OK))
+		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+	else
+		st->com_path = ft_copy(st->cmd[0]); 
+}
+
 void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
@@ -32,16 +41,19 @@ void	wait_prompt1(t_params *params)
 			{
 				expander(token, *params);
 				parser(token, &st, params);
+				// print(st);
+				slash_path(st, params);
 				if (checking_cmd(st, params))
 				{
 					tokens_reset(&token);
 					parser_reset(&st);
 					continue ;
 				}
-				if (!(access(params->line, F_OK | X_OK) == 0))
-					st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
-				else
-					st->com_path = ft_copy(params->line); 
+				// printf("[[%s]]\n", st->cmd[0]);
+				// if (access(st->cmd[0], F_OK | X_OK))
+				// 	st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+				// else
+				// 	st->com_path = ft_copy(params->line); 
 				if (!params->path)
 				{
 					printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
