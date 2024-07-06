@@ -42,13 +42,13 @@ void	wait_prompt1(t_params *params)
 				expander(token, *params);
 				parser(token, &st, params);
 				// print(st);
-				slash_path(st, params);
 				if (checking_cmd(st, params))
 				{
 					tokens_reset(&token);
 					parser_reset(&st);
 					continue ;
 				}
+				slash_path(st, params);
 				// printf("[[%s]]\n", st->cmd[0]);
 				// if (access(st->cmd[0], F_OK | X_OK))
 				// 	st->com_path = get_acc_path(params->paths_array, st->cmd[0]);

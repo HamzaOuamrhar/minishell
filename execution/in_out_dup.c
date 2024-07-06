@@ -63,7 +63,8 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 			dup2(st->out_fd, 1);
 			close (st->out_fd);
 		}
-		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+		slash_path(st, params);
+		// st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 		if (!st->com_path)
 		{
 			printf("%s :command not found\n", st->cmd[0]);
