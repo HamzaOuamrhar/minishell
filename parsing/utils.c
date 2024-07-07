@@ -22,6 +22,17 @@ char	*get_type1(char *line, int *i)
 		return (NULL);
 }
 
+void	quote_toggle(int *in_quote, char *quote, int i, char *line)
+{
+	if (*in_quote && line[i] == *quote)
+		*in_quote = 0;
+	else if (!*in_quote)
+	{
+		*quote = line[i];
+		*in_quote = 1;
+	}
+}
+
 char	*get_type2(char *line, int *i, int *q)
 {
 	char	*type;
@@ -33,15 +44,7 @@ char	*get_type2(char *line, int *i, int *q)
 	while (line[*i])
 	{
 		if (line[*i] == '\'' || line[*i] == '"')
-		{
-			if (in_quote && line[*i] == quote)
-				in_quote = 0;
-			else if (!in_quote)
-			{
-				quote = line[*i];
-				in_quote = 1;
-			}
-		}
+			quote_toggle(&in_quote, &quote, *i, line);
 		if (in_quote)
 			(*i)++;
 		else

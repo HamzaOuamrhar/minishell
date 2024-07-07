@@ -1,5 +1,24 @@
 #include "../minishell.h"
 
+void	redirection_error(t_token **token, t_token *tmp, int *error)
+{
+	if ((*token)->next)
+	{
+		*token = (*token) ->next;
+		if (ft_strcmp((*token)->type, "INPUT") == 0 || ft_strcmp((*token)->type, "OUTPUT") == 0
+			|| ft_strcmp((*token)->type, "APPEND") == 0 || ft_strcmp((*token)->type, "HEREDOC") == 0
+				|| ft_strcmp((*token)->type, "PIPE") == 0)
+			*error = 1;
+		else
+		{
+			if (ft_strcmp(tmp->type, "HEREDOC") == 0)
+				(*token)->here = 1;
+		}
+	}
+	else
+		*error = 1;
+}
+
 void	check_redirection(t_token *token, int *error)
 {
 	t_token	*tmp;
@@ -13,21 +32,7 @@ void	check_redirection(t_token *token, int *error)
 			if (token->next)
 				if (ft_strcmp(token->next->type, "WHITE") == 0)
 					token = token->next;
-			if (token->next)
-			{
-				token = token ->next;
-				if (ft_strcmp(token->type, "INPUT") == 0 || ft_strcmp(token->type, "OUTPUT") == 0
-					|| ft_strcmp(token->type, "APPEND") == 0 || ft_strcmp(token->type, "HEREDOC") == 0
-						|| ft_strcmp(token->type, "PIPE") == 0)
-					*error = 1;
-				else
-				{
-					if (ft_strcmp(tmp->type, "HEREDOC") == 0)
-						token->here = 1;
-				}
-			}
-			else
-				*error = 1;
+			redirection_error(&token, tmp, error);
 		}
 		token = token->next;
 	}
