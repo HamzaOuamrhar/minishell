@@ -1,5 +1,25 @@
 #include "../minishell.h"
 
+static void	not_w_first_i_2(t_decl2 *decl, t_token **token)
+{
+	while (decl->value[decl->z] && !is_white(decl->value[decl->z]))
+		decl->z++;
+	if (!(*token)->flag && !decl->still)
+		decl->n_t_v = ft_strjoin(decl->n_t_v,
+				ft_mysubstr(decl->value, 0, decl->z));
+	else
+	{
+		if (decl->still)
+			add_middle_n(token, ft_mysubstr(decl->value, 0, decl->z));
+		else
+			(*token)->value = ft_strjoin((*token)->value,
+					ft_mysubstr(decl->value, 0, decl->z));
+	}
+	decl->still = 0;
+	if (decl->value[decl->z] && no_rest(decl->value, decl->z))
+		decl->still = 1;
+}
+
 void	out_quotes_not_key(t_decl2 *decl, char *t_v, t_token **token)
 {
 	decl->start = decl->i;
@@ -23,24 +43,7 @@ void	out_quotes_not_key(t_decl2 *decl, char *t_v, t_token **token)
 void	out_quotes_value(t_decl2 *decl, t_token **token)
 {
 	if (!is_white(decl->value[0]))
-	{
-		while (decl->value[decl->z] && !is_white(decl->value[decl->z]))
-			decl->z++;
-		if (!(*token)->flag && !decl->still)
-			decl->n_t_v = ft_strjoin(decl->n_t_v,
-					ft_mysubstr(decl->value, 0, decl->z));
-		else
-		{
-			if (decl->still)
-				add_middle_n(token, ft_mysubstr(decl->value, 0, decl->z));
-			else
-				(*token)->value = ft_strjoin((*token)->value,
-						ft_mysubstr(decl->value, 0, decl->z));
-		}
-		decl->still = 0;
-		if (decl->value[decl->z] && no_rest(decl->value, decl->z))
-			decl->still = 1;
-	}
+		not_w_first_i_2(decl, token);
 	if (white_word(decl->value))
 		decl->n_t_v = ft_strjoin(decl->n_t_v, decl->value);
 	else

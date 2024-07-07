@@ -25,7 +25,7 @@
 # define GREEN_TEXT "\033[1;32m"
 # define YELLOW_TEXT "\033[1;33"
 # define RESET_TEXT "\033[0m"
-# define BLUE_TEXT "\033[1;34m"	
+# define BLUE_TEXT "\033[1;34m"
 
 
 typedef	struct	t_env
@@ -170,6 +170,7 @@ void	parse_append(t_token **tokens, t_parse **new_parse);
 void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params);
 void	is_in_quote(t_decl2 *decl, char *t_v);
 void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
+void	not_w_first_i(t_decl *decl, char **n_t_v, t_token **token);
 void	print(t_parse *parse);
 
 // execution

@@ -3,24 +3,7 @@
 void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 {
 	if (!is_white(decl->value[0]))
-	{
-		while (decl->value[decl->j] && !is_white(decl->value[decl->j]))
-			decl->j++;
-		if (!(*token)->flag && !decl->still)
-			*n_t_v = ft_strjoin(*n_t_v, ft_mysubstr(decl->value, 0, decl->j));
-		else
-		{
-			if (decl->still)
-				add_middle_n(token, ft_mysubstr(decl->value, 0, decl->j));
-			else
-				(*token)->value = ft_strjoin((*token)->value,
-						ft_mysubstr(decl->value, 0, decl->j));
-		}
-		if (decl->value[decl->j] && no_rest(decl->value, decl->j))
-			decl->still = 1;
-		else
-			decl->still = 0;
-	}
+		not_w_first_i(decl, n_t_v, token);
 	if (white_word(decl->value))
 		*n_t_v = ft_strjoin(*n_t_v, ft_strdup(decl->value));
 	else
@@ -60,7 +43,6 @@ void	get_value(t_decl *decl, int *i, char *token_value, int status)
 void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 {
 	t_decl	decl;
-	int		status;
 
 	decl.still = 0;
 	decl.env = (*token)->env;
@@ -68,8 +50,7 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 	{
 		if (token_value[*i] == '$')
 		{
-			status = (*token)->status;
-			get_value(&decl, i, token_value, status);
+			get_value(&decl, i, token_value, (*token)->status);
 			if (!decl.value)
 				*n_t_v = ft_strjoin(*n_t_v, "");
 			else
