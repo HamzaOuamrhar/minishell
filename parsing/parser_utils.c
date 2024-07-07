@@ -4,11 +4,6 @@ void	parse_input(t_token **tokens, t_parse **new_parse)
 {
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		*tokens = (*tokens)->next;
-	if ((*new_parse)->in_fd)
-	{
-		close ((*new_parse)->in_fd);
-		(*new_parse)->in_fd = 0;
-	}
 	add_back_file(&(*new_parse)->files, 1, *tokens, *new_parse);
 	(*tokens) = (*tokens)->next;
 }
@@ -34,11 +29,8 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_param
 	(*new_parse)->i ++;
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
-	(*new_parse)->in_dup = NULL;
-	if ((*new_parse)->in_fd > 0)
-		close((*new_parse)->in_fd);
-	((*new_parse)->in_fd) = open(ft_strjoin("/tmp/h", ft_itoa((*new_parse)->i)), O_CREAT | O_RDWR | O_TRUNC, 0777);
-	unlink(ft_strjoin("/tmp/h", ft_itoa((*new_parse)->i)));
+	(*new_parse)->in_dup = ft_strjoin("/tmp/h", ft_itoa((*new_parse)->i));
+	decl->fd = open(ft_strjoin("/tmp/h", ft_itoa((*new_parse)->i)), O_CREAT | O_RDWR | O_TRUNC, 0777);
 	while(1)
 	{
 		decl->line = readline("> ");
@@ -55,6 +47,7 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_param
 		write(decl->fd, "\n", 1);
 		free(decl->line);
 	}
+	close(decl->fd);
 	(*tokens) = (*tokens)->next;
 }
 

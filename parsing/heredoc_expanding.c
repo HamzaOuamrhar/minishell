@@ -2,31 +2,28 @@
 
 void	expand_line(char **line, t_params *params)
 {
-	int	i;
-	char	*value;
-	char	*n_l_v;
-	int		first;
+	t_decl2	decl;
 
-	n_l_v = NULL;
-	i = 0;
-	while ((*line)[i])
+	decl.n_t_v = NULL;
+	decl.i = 0;
+	while ((*line)[decl.i])
 	{
-		first = i;
-		while ((*line)[i] && (*line)[i] != '$')
-			i++;
-		n_l_v = ft_strjoin(n_l_v, ft_mysubstr(*line, first, i - first));
-		if ((*line)[i])
-			i++;
-		first = i;
-		if (!is_alph((*line)[i]) || (*line)[i] != '_')
-			i++;
-		while ((*line)[i] && (is_alph_num((*line)[i]) || (*line)[i] == '_'))
-			i++;
-		value = get_key(ft_mysubstr(*line, first, i - first), params->env);
-		if (value)
-			n_l_v = ft_strjoin(n_l_v, value);
+		decl.start = decl.i;
+		while ((*line)[decl.i] && (*line)[decl.i] != '$')
+			decl.i++;
+		decl.n_t_v = ft_strjoin(decl.n_t_v, ft_mysubstr(*line, decl.start, decl.i - decl.start));
+		if ((*line)[decl.i])
+			decl.i++;
+		decl.start = decl.i;
+		if (!is_alph((*line)[decl.i]) || (*line)[decl.i] != '_')
+			decl.i++;
+		while ((*line)[decl.i] && (is_alph_num((*line)[decl.i]) || (*line)[decl.i] == '_'))
+			decl.i++;
+		decl.value = get_key(ft_mysubstr(*line, decl.start, decl.i - decl.start), params->env);
+		if (decl.value)
+			decl.n_t_v = ft_strjoin(decl.n_t_v, decl.value);
 		else
-			n_l_v = ft_strjoin(n_l_v, "");
+			decl.n_t_v = ft_strjoin(decl.n_t_v, "");
 	}
-	*line = n_l_v;
+	*line = decl.n_t_v;
 }

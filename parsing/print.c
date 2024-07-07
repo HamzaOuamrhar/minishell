@@ -28,8 +28,6 @@ void	print(t_parse *parse)
 		printf("---------out_dup------\n");
 		if ((tmp)->out_dup)
 			printf("%s\n", (tmp)->out_dup);
-		printf("-------fd-------------\n");
-		printf("%d\n", tmp->in_fd);
 		(tmp) = (tmp)->next;
 		if ((tmp))
 		printf("**********next********\n");
