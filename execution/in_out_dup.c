@@ -54,7 +54,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		}
 		if (fd)
 		{
-			lseek(fd, 0, SEEK_SET);
+			lseek(fd, 0, SEEK_SET); //handele this
 			dup2(fd, 0);
 			close (fd);
 		}
@@ -95,6 +95,11 @@ int	in_out_dup(t_parse *st, t_params *params)
 	if (st->out_dup)
 	{
 		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777);//already checked in  first function
+		if (st->out_fd == -1)
+		{
+			puts("error"); // handele this later
+			return 1;
+		}
 	}
 	if (excute_cmd_dup(st, params, st->in_fd))
 		return (0);

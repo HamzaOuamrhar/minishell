@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/11 18:33:12 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/07 17:14:47 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	excute_cmd(t_parse *st, t_params *params)
 	// ft_free(params->env2);
 	// params->env2 = list2array(params->env, params);
 	pid = fork();
+	// if (pid < 0)
+		//handle the failure of for func
 	if (pid == 0)
 		execve(st->com_path, st->cmd, params->env2); //protection
 	wait(0);

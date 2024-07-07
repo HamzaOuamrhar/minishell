@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/06 14:01:28 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:25:07 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,19 @@ char	**list2array(t_env *env, t_params *params)
 }
 
 int	lstcounter(t_env	*env)
+{
+	int	counter;
+
+	counter = 0;
+	while (env)
+	{
+		env = env->next;
+		counter++;
+	}
+	return (counter);
+}
+
+int	lstsize(t_parse	*env)
 {
 	int	counter;
 
