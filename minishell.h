@@ -107,6 +107,7 @@ typedef struct t_files
 
 typedef struct t_params
 {
+	int				cmds;
 	char			**paths_array;
 	char			*path;
 	char			**env2;

@@ -23,11 +23,11 @@ void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
 	t_parse		*st;
-	int			fds[2];
 	bool		pipes;
-	int 		counter;
+	// int			i;
 
 	token = NULL;
+	// i = 0;
 	st = NULL;
 	pipes = true;
 	params->status = 0; //remember the last word on the "_" env
@@ -45,18 +45,19 @@ void	wait_prompt1(t_params *params)
 			{
 				expander(token, *params);
 				parser(token, &st, params);
-				counter = lstsize(st);
+				params->cmds = lstsize(st);
 				while (st)
 				{
 					if (lstsize(st) > 1)
 					{
-						if (pipes)
-						{
-							pipes = false;
-							pipe(fds);
-						}
-						
-					} 
+						// if
+						// 
+						// else
+						// {
+							// dup2(fds[1], STDOUT_FILENO);
+						// 	dup2(fds[0], STDIN_FILENO);
+						// }
+					}
 					if (checking_cmd(st, params))
 					{
 						tokens_reset(&token);
@@ -80,9 +81,16 @@ void	wait_prompt1(t_params *params)
 					if (!st->com_path)
 						printf("%s :command not found\n", st->cmd[0]);
 					else
+					{
+						// puts("here");
 						excute_cmd(st, params);
+					}
 					st = st->next;
+					// i++;
 				}
+				// close (fds[1]);
+				// close (fds[0]);
+				pipes = true;
 			}
 		}
 		tokens_reset(&token);
