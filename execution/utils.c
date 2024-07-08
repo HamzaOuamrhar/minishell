@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/08 20:27:32 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/08 23:45:57 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,50 +15,52 @@
 void	excute_cmd(t_parse *st, t_params *params)
 {
 	int			pid;
-	// int			fds[2];
-	// static int	i = 0;
+	int			fds[2];
 
 	// ft_free(params->env2);
-	// printf("[%d]\n", i);
 	// params->env2 = list2array(params->env, params);
-	// if (i != params->cmds - 1)
-	// 	pipe(fds);
+	if (params->i != params->cmds - 1)
+		pipe(fds);
 	pid = fork();
 	// if (pid < 0)
 		//handle the failure of for func
 	if (pid == 0)
 	{
-		// if (i == 0 && params->cmds > 1)
-		// {
-		// 	puts("here 1");
-		// 	close(fds[0]);
-		// 	dup2(fds[1], STDOUT_FILENO);
-		// 	close(fds[1]);
-		// }
-		// else if (i + 1 == params->cmds)
-		// {
-		// 	puts("here 2");
-		// 	close(fds[0]);
-		// 	close(fds[1]);
-		// 	i  = -1;
-		// }
-		// else
-		// {
-		// 	puts("here 3");
-		// 	close(fds[0]);
-		// 	dup2(fds[1], STDOUT_FILENO);
-		// }
-		// close (fds[1]);
+		printf(" i == [%d]\n", params->i);
+		printf(" counter  ==  [%d]\n", params->cmds);
+		if (params->i == 0 && params->cmds > 1)
+		{
+			params->i++;
+			puts("here 1");
+			close(fds[0]);
+			dup2(fds[1], STDOUT_FILENO);
+			close(fds[1]);
+		}
+		else if (params->i + 1 == params->cmds)
+		{
+			puts("here 2");
+			close(fds[0]);
+			close(fds[1]);
+			params->i = 0;
+		}
+		else
+		{
+			params->i++;
+			puts("here 3");
+			close(fds[0]);
+			dup2(fds[1], STDOUT_FILENO);
+		}
+		close (fds[1]);
 		execve(st->com_path, st->cmd, params->env2); //protection
 	}
-	//    if (i != 0) {
-	// 		puts("here 4");
-    //     close(fds[1]); // Close the write end
-    //     dup2(fds[0], STDIN_FILENO);
-    //     close(fds[0]); // Close the read end after duplicating
-    // }
+	   if (params->i != 0)
+	   {
+			puts("here 4");
+        	close(fds[1]); // Close the write end
+        	dup2(fds[0], STDIN_FILENO);
+        	close(fds[0]); // Close the read end after duplicating
+    	}
 	wait(0);
-	// i++;
 }
 
 void change_directory(t_parse *st, t_params *params)

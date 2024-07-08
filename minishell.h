@@ -118,6 +118,7 @@ typedef struct t_params
 	int				q;
 	int				status;
 	char			*line;
+	int				i;
 }   t_params;
 
 typedef struct t_parse

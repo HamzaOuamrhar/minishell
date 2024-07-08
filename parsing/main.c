@@ -24,6 +24,7 @@ void	wait_prompt1(t_params *params)
 	t_token		*token;
 	t_parse		*st;
 	bool		pipes;
+	params->i = 0;
 	// int			i;
 
 	token = NULL;
@@ -82,7 +83,7 @@ void	wait_prompt1(t_params *params)
 						printf("%s :command not found\n", st->cmd[0]);
 					else
 					{
-						// puts("here");
+						puts("here imad");
 						excute_cmd(st, params);
 					}
 					st = st->next;
