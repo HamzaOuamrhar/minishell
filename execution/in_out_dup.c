@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	check_ins(t_parse *st)
+int	check_perms(t_parse *st)
 {
 	int		fd;
 	t_files	*tmp;
@@ -43,7 +43,6 @@ int	check_builtins(char *s)
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
 	int	pid;
-
 	// fd = open(st->in_dup, O_RDONLY); //already protected
 	pid = fork();
 	if (pid == 0)
@@ -54,19 +53,23 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 			return (1);
 		}
 		if (fd)
+		{
+			lseek(fd, 0, SEEK_SET); //handele this
 			dup2(fd, 0);
+			close (fd);
+		}
 		if (st->out_fd)
 		{
 			dup2(st->out_fd, 1);
+			close (st->out_fd);
 		}
-		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+		slash_path(st, params);
+		// st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 		if (!st->com_path)
 		{
 			printf("%s :command not found\n", st->cmd[0]);
-			exit (127);
+			exit (127); 
 		}
-		// close (st->out_fd);//why this should not being closed
-		// close (fd);
 		execve(st->com_path, st->cmd, params->env2); //protection
 		exit(1);
 	}
@@ -79,7 +82,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 
 int	in_out_dup(t_parse *st, t_params *params)
 {
-	if (check_ins(st))
+	if (check_perms(st))
 	{
 		params->status = 1;
 		return (1);
@@ -92,6 +95,11 @@ int	in_out_dup(t_parse *st, t_params *params)
 	if (st->out_dup)
 	{
 		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777);//already checked in  first function
+		if (st->out_fd == -1)
+		{
+			puts("error"); // handele this later
+			return 1;
+		}
 	}
 	if (excute_cmd_dup(st, params, st->in_fd))
 		return (0);
