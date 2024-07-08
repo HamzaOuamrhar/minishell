@@ -7,6 +7,7 @@ void	parser_reset(t_parse **st)
 		if ((*st)->in_fd)
 			close((*st)->in_fd);
 		(*st) = (*st)->next;
+	}
 }
 
 void	slash_path(t_parse *st, t_params *params)
@@ -96,11 +97,3 @@ void	wait_prompt1(t_params *params)
 		parser_reset(&st);
 	}
 }
-
-// void	handle_pipes(t_parse *st, t_params *params)
-// {
-// 	int	fds[2];
-
-// 	pipe(fds);
-// 	while ( )
-// }
