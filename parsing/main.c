@@ -24,11 +24,10 @@ void	wait_prompt1(t_params *params)
 	t_token		*token;
 	t_parse		*st;
 	bool		pipes;
-	params->i = 0;
-	// int			i;
+	int			i;
 
 	token = NULL;
-	// i = 0;
+	i = 0;
 	st = NULL;
 	pipes = true;
 	params->status = 0; //remember the last word on the "_" env
@@ -49,8 +48,8 @@ void	wait_prompt1(t_params *params)
 				params->cmds = lstsize(st);
 				while (st)
 				{
-					if (lstsize(st) > 1)
-					{
+					// if (lstsize(st) > 1)
+					// {
 						// if
 						// 
 						// else
@@ -58,7 +57,7 @@ void	wait_prompt1(t_params *params)
 							// dup2(fds[1], STDOUT_FILENO);
 						// 	dup2(fds[0], STDIN_FILENO);
 						// }
-					}
+					// }
 					if (checking_cmd(st, params))
 					{
 						tokens_reset(&token);
@@ -83,15 +82,16 @@ void	wait_prompt1(t_params *params)
 						printf("%s :command not found\n", st->cmd[0]);
 					else
 					{
-						puts("here imad");
-						excute_cmd(st, params);
+						// puts("here imad");
+						excute_cmd(st, params, i);
 					}
 					st = st->next;
-					// i++;
+					i++;
 				}
 				// close (fds[1]);
 				// close (fds[0]);
 				pipes = true;
+				i = 0;
 			}
 		}
 		tokens_reset(&token);
