@@ -23,7 +23,6 @@ void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
 	t_parse		*st;
-	bool		pipes;
 	int			i;
 	static int stdin_copy;
    	static int stdout_copy;
@@ -34,14 +33,11 @@ void	wait_prompt1(t_params *params)
 	token = NULL;
 	i = 0;
 	st = NULL;
-	pipes = true;
 	params->status = 0; //remember the last word on the "_" env
 	while (1)
 	{
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
-
-		// puts("`here<--------");
 		if (!params->line)
 			break ; // exit with 1
 		add_history(params->line);
@@ -55,16 +51,6 @@ void	wait_prompt1(t_params *params)
 				params->cmds = lstsize(st);
 				while (st)
 				{
-					// if (lstsize(st) > 1)
-					// {
-						// if
-						//
-						// else
-						// {
-							// dup2(fds[1], STDOUT_FILENO);
-						// 	dup2(fds[0], STDIN_FILENO);
-						// }
-					// }
 					if (checking_cmd(st, params))
 					{
 						tokens_reset(&token);
@@ -88,31 +74,23 @@ void	wait_prompt1(t_params *params)
 					if (!st->com_path)
 						printf("%s :command not found\n", st->cmd[0]);
 					else
-					{
-						// puts("here imad");
 						excute_cmd(st, params, i);
-					}
 					st = st->next;
 					i++;
 				}
-				
 				if (i == params->cmds)
 				{
-					// puts ("here imad");
 					if (dup2(stdin_copy, 0) == -1 || (dup2(stdout_copy, 1) == -1))
 					{
-						// puts ("problem");
+						puts ("error in dup func");
+						return 1;
 					}
         			
 				}
-				// close (fds[1]);
-				// close (fds[0]);
 				i = 0;
 			}
 		}
 		tokens_reset(&token);
 		parser_reset(&st);
-		if (!isatty(STDIN_FILENO))
-			fprintf(stderr, "here 10\n");
 	}
 }

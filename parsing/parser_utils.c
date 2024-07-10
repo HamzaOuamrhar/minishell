@@ -53,9 +53,6 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_param
 
 t_files	*last_node_files(t_files *files)
 {
-	t_files	*tmp;
-
-	tmp = files;
 	while (files->next)
 		files = files->next;
 	return (files);

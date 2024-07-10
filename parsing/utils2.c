@@ -76,9 +76,7 @@ void	add_middle_n(t_token **token, char *value)
 {
 	t_token	*tmp;
 	t_token	*new;
-	int		i;
 
-	i = 0;
 	new = ft_malloc(sizeof(t_token), 1);
 	new->next = NULL;
 	new->type = ft_strdup("WORD");
