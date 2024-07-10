@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/09 14:31:54 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/10 09:16:45 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	excute_cmd(t_parse *st, t_params *params, int i)
 		close (fds[1]);
 		execve(st->com_path, st->cmd, params->env2); //protection
 	}
-	// if (i != 0)
-	// {
-	// 	puts("here 4");
-    //  	close(fds[1]); // Close the write end
-    //  	dup2(fds[0], STDIN_FILENO);
-    //  	close(fds[0]); // Close the read end after duplicating
-    // }
+	if (i != 0 && params->cmds)
+	{
+		puts("here 4");
+     	close(fds[1]); // Close the write end
+     	dup2(fds[0], STDIN_FILENO);
+     	close(fds[0]); // Close the read end after duplicating
+    }
 	wait(0);
 }
 

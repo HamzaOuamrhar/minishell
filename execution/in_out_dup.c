@@ -87,8 +87,6 @@ int	in_out_dup(t_parse *st, t_params *params)
 		params->status = 1;
 		return (1);
 	}
-	if (!st->cmd[0] || !st->cmd)
-		return (1);
 	if (!st->in_fd)
 		st->in_fd = open(st->in_dup, O_RDONLY);//already checked in  first function
 	st->out_fd = 0;
@@ -101,6 +99,8 @@ int	in_out_dup(t_parse *st, t_params *params)
 			return 1;
 		}
 	}
+	if (!st->cmd[0] || !st->cmd)
+		return (1);
 	if (excute_cmd_dup(st, params, st->in_fd))
 		return (0);
 	return (1);

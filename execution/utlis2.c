@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/08 15:36:03 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/10 09:35:26 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	checking_cmd(t_parse *st, t_params *params)
 {
 	params->status = 0;
 	// print(st);
-	if (!st || !st->cmd[0] || (!st->files && !st->cmd))
-		return (1);
 	if (st->files || st->in_fd) //add redidrection to the pipes
 	{
 		if (in_out_dup(st, params))
 			return (1);
 	}
+	if (!st || !st->cmd[0] || (!st->files && !st->cmd))
+		return (1);
 	if (!(ft_strcmp(st->cmd[0], "exit")))
 	{
 		terminate_shell(st, params);
