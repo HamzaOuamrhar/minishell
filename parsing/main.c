@@ -12,7 +12,6 @@ void	parser_reset(t_parse **st)
 
 void	slash_path(t_parse *st, t_params *params)
 {
-	// printf("[%s]\n", st->cmd[0]);
 	if (access(st->cmd[0], X_OK))
 		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 	else
@@ -29,7 +28,6 @@ void	wait_prompt1(t_params *params)
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
-
 	token = NULL;
 	i = 0;
 	st = NULL;
@@ -83,7 +81,7 @@ void	wait_prompt1(t_params *params)
 					if (dup2(stdin_copy, 0) == -1 || (dup2(stdout_copy, 1) == -1))
 					{
 						puts ("error in dup func");
-						return 1;
+						exit (1);
 					}
         			
 				}
