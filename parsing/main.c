@@ -7,16 +7,6 @@ void	parser_reset(t_parse **st)
 		if ((*st)->in_fd)
 			close((*st)->in_fd);
 		(*st) = (*st)->next;
-	}
-}
-
-void	slash_path(t_parse *st, t_params *params)
-{
-	// printf("[%s]\n", st->cmd[0]);
-	if (access(st->cmd[0], X_OK))
-		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
-	else
-		st->com_path = ft_copy(st->cmd[0]); 
 }
 
 void	wait_prompt1(t_params *params)
@@ -45,53 +35,30 @@ void	wait_prompt1(t_params *params)
 			{
 				expander(token, *params);
 				parser(token, &st, params);
-				params->cmds = lstsize(st);
-				while (st)
+				if (checking_cmd(st, params))
 				{
-					// if (lstsize(st) > 1)
-					// {
-						// if
-						// 
-						// else
-						// {
-							// dup2(fds[1], STDOUT_FILENO);
-						// 	dup2(fds[0], STDIN_FILENO);
-						// }
-					// }
-					if (checking_cmd(st, params))
-					{
-						tokens_reset(&token);
-						parser_reset(&st);
-						continue ;
-					}
-					slash_path(st, params);
-					if (!params->path)
-					{
-						printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
-						tokens_reset(&token);
-						parser_reset(&st);
-						continue ;
-					}
-					if (checking_cmd2(st, params))
-					{
-						tokens_reset(&token);
-						parser_reset(&st);
-						continue ;
-					}
-					if (!st->com_path)
-						printf("%s :command not found\n", st->cmd[0]);
-					else
-					{
-						// puts("here imad");
-						excute_cmd(st, params, i);
-					}
-					st = st->next;
-					i++;
+					tokens_reset(&token);
+					parser_reset(&st);
+					continue ;
 				}
-				// close (fds[1]);
-				// close (fds[0]);
-				pipes = true;
-				i = 0;
+				st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+				if (!params->path)
+				{
+					printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
+					tokens_reset(&token);
+					parser_reset(&st);
+					continue ;
+				}
+				if (checking_cmd2(st, params))
+				{
+					tokens_reset(&token);
+					parser_reset(&st);
+					continue ;
+				}
+				if (!st->com_path)
+					printf("%s :command not found\n", st->cmd[0]);
+				else
+					excute_cmd(st, params);
 			}
 		}
 		tokens_reset(&token);
