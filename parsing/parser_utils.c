@@ -43,8 +43,8 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_param
 		}
 		if (!(*tokens)->next->has_q && in_str(decl->line, '$'))
 			expand_line(&decl->line, params);
-		write((*new_parse)->in_fd, decl->line, ft_strlen(decl->line));
-		write((*new_parse)->in_fd, "\n", 1);
+		write(decl->fd, decl->line, ft_strlen(decl->line));
+		write(decl->fd, "\n", 1);
 		free(decl->line);
 	}
 	close(decl->fd);
