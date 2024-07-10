@@ -25,6 +25,11 @@ void	wait_prompt1(t_params *params)
 	t_parse		*st;
 	bool		pipes;
 	int			i;
+	static int stdin_copy;
+   	static int stdout_copy;
+
+	stdin_copy = dup(STDIN_FILENO);
+	stdout_copy = dup(STDOUT_FILENO);
 
 	token = NULL;
 	i = 0;
@@ -35,6 +40,8 @@ void	wait_prompt1(t_params *params)
 	{
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
+
+		// puts("`here<--------");
 		if (!params->line)
 			break ; // exit with 1
 		add_history(params->line);
@@ -88,13 +95,24 @@ void	wait_prompt1(t_params *params)
 					st = st->next;
 					i++;
 				}
+				
+				if (i == params->cmds)
+				{
+					// puts ("here imad");
+					if (dup2(stdin_copy, 0) == -1 || (dup2(stdout_copy, 1) == -1))
+					{
+						// puts ("problem");
+					}
+        			
+				}
 				// close (fds[1]);
 				// close (fds[0]);
-				pipes = true;
 				i = 0;
 			}
 		}
 		tokens_reset(&token);
 		parser_reset(&st);
+		if (!isatty(STDIN_FILENO))
+			fprintf(stderr, "here 10\n");
 	}
 }

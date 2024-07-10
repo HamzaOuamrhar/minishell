@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/10 12:44:49 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:48:45 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	excute_cmd(t_parse *st, t_params *params, int i)
 	int			pid;
 	int			fds[2];
 
+	// print(st);
 	// ft_free(params->env2);
 	// params->env2 = list2array(params->env, params);
 	if (i != params->cmds - 1)
@@ -33,36 +34,36 @@ void	excute_cmd(t_parse *st, t_params *params, int i)
 			// puts("here 1");
 			close(fds[0]);
 			dup2(fds[1], STDOUT_FILENO);
-			// close(fds[1]);
+			close(fds[1]);
 		}
 		else if (i + 1 == params->cmds)
 		{
-			// puts("her 2");
+			// puts("here2");
 			close(fds[1]); // Close the write end
 			dup2(fds[0], STDIN_FILENO);
 			close(fds[0]);
 			// close(fds[1]);
 			// params->i = 0;
 		}
-		else
-		{
-			// puts("here 3");
-			close(fds[0]);
-			dup2(fds[1], STDOUT_FILENO);
-		}
-		execve(st->com_path, st->cmd, params->env2); //
-		exit (0);
+		// else
+		// {
+		// 	puts("here 3");
+		// 	close(fds[0]);
+		// 	dup2(fds[1], STDOUT_FILENO);
+		// }
+		execve(st->com_path, st->cmd, params->env2);
 		// close (fds[1]);
 	}
 	else
     {
+    	wait(0);
         if (i != params->cmds - 1)
         {
+				// puts("here 4");
            		close(fds[1]); // Close the write end
             	dup2(fds[0], STDIN_FILENO);
-  			  	// close(fds[0]); // Close the read end after duplicating
+  			  	close(fds[0]); // Close the read end after duplicating
         }
-    	wait(0);
     }
 	// if (i > 0)
 	// {
