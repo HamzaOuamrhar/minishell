@@ -81,3 +81,4 @@ void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse)
 	else
 		last_node_files(*files)->next = new;
 }
+
