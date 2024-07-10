@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/10 09:35:26 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:34:01 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	checking_cmd(t_parse *st, t_params *params)
 	}
 	if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
 	{
-		excute_file(st, params); 
+		excute_file(st, params);//handle multiple slashes
 		return (1);
 	}
 	if (checking_cmd3(st, params))

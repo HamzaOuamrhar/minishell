@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/10 09:16:45 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:44:49 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,39 +26,51 @@ void	excute_cmd(t_parse *st, t_params *params, int i)
 		//handle the failure of for func
 	if (pid == 0)
 	{
-		printf("  i == [%d]\n", i);
+		// printf("  i == [%d]\n", i);
 		// printf("  counter  ==  [%d]\n", params->cmds);
 		if (i == 0 && params->cmds > 1)
 		{
-			puts("here 1");
+			// puts("here 1");
 			close(fds[0]);
 			dup2(fds[1], STDOUT_FILENO);
-			close(fds[1]);
+			// close(fds[1]);
 		}
 		else if (i + 1 == params->cmds)
 		{
-			puts("here 2");
+			// puts("her 2");
+			close(fds[1]); // Close the write end
+			dup2(fds[0], STDIN_FILENO);
 			close(fds[0]);
-			close(fds[1]);
+			// close(fds[1]);
 			// params->i = 0;
 		}
 		else
 		{
-			puts("here 3");
+			// puts("here 3");
 			close(fds[0]);
 			dup2(fds[1], STDOUT_FILENO);
 		}
-		close (fds[1]);
-		execve(st->com_path, st->cmd, params->env2); //protection
+		execve(st->com_path, st->cmd, params->env2); //
+		exit (0);
+		// close (fds[1]);
 	}
-	if (i != 0 && params->cmds)
-	{
-		puts("here 4");
-     	close(fds[1]); // Close the write end
-     	dup2(fds[0], STDIN_FILENO);
-     	close(fds[0]); // Close the read end after duplicating
+	else
+    {
+        if (i != params->cmds - 1)
+        {
+           		close(fds[1]); // Close the write end
+            	dup2(fds[0], STDIN_FILENO);
+  			  	// close(fds[0]); // Close the read end after duplicating
+        }
+    	wait(0);
     }
-	wait(0);
+	// if (i > 0)
+	// {
+	// 	puts("here 4");
+	// 	close(fds[1]); // Close the write end
+	// 	dup2(fds[0], STDIN_FILENO);
+	// 	close(fds[0]); // Close the read end after duplicating
+	// }
 }
 
 void change_directory(t_parse *st, t_params *params)
@@ -113,7 +125,7 @@ void	terminate_shell(t_parse *st, t_params *params)
 	if (!(numbered_arg(st->cmd[1])) && (count_args(st->cmd)) > 2)
 	{
 		printf("exit\nShellantics: exit: too many arguments\n");
-		return ;
+		return ;//its one 
 	}
 	if ((numbered_arg(st->cmd[1])))
 	{
