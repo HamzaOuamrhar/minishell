@@ -12,66 +12,59 @@
 
 #include "../minishell.h"
 
-void	excute_cmd(t_parse *st, t_params *params, int i)
+int	excute_cmd(t_parse *st, t_params *params, int i)
 {
 	int			pid;
 	int			fds[2];
 
-	// print(st);
-	// ft_free(params->env2);
-	// params->env2 = list2array(params->env, params);
 	if (i != params->cmds - 1)
 		pipe(fds);
 	pid = fork();
 	// if (pid < 0)
-		//handle the failure of for func
 	if (pid == 0)
 	{
-		// printf("  i == [%d]\n", i);
-		// printf("  counter  ==  [%d]\n", params->cmds);
 		if (i == 0 && params->cmds > 1)
 		{
-			// puts("here 1");
-			close(fds[0]);
-			dup2(fds[1], STDOUT_FILENO);
-			close(fds[1]);
+			if (first_cmd(fds))
+				return (1);
 		}
-		else if (i + 1 == params->cmds)
-		{
-			// puts("here2");
-			close(fds[1]); // Close the write end
-			dup2(fds[0], STDIN_FILENO);
-			close(fds[0]);
-			// close(fds[1]);
-			// params->i = 0;
-		}
-		// else
-		// {
-		// 	puts("here 3");
-		// 	close(fds[0]);
-		// 	dup2(fds[1], STDOUT_FILENO);
-		// }
+		else
+		{ // Middle or last command
+          if (i != 0)
+		  {
+              if (dup2(params->save_fd, STDIN_FILENO) == -1) {
+                  perror("dup2");
+                  return (1);
+              }
+              close(params->save_fd);
+          }
+          if (i != params->cmds - 1)
+		  {
+              close(fds[0]); // Close read end
+              if (dup2(fds[1], STDOUT_FILENO) == -1) {
+                  perror("dup2");
+                  return (1);
+              }
+              close(fds[1]);
+          }
+        }
 		execve(st->com_path, st->cmd, params->env2);
-		// close (fds[1]);
 	}
 	else
     {
     	wait(0);
+		if (i != 0)
+			close(params->save_fd);
         if (i != params->cmds - 1)
         {
-				// puts("here 4");
            		close(fds[1]); // Close the write end
-            	dup2(fds[0], STDIN_FILENO);
-  			  	close(fds[0]); // Close the read end after duplicating
+				params->save_fd = fds[0];
+				// puts("here 4");
+            	// dup2(fds[0], STDIN_FILENO);
+  			  	// close(fds[0]); // Close the read end after duplicating
         }
     }
-	// if (i > 0)
-	// {
-	// 	puts("here 4");
-	// 	close(fds[1]); // Close the write end
-	// 	dup2(fds[0], STDIN_FILENO);
-	// 	close(fds[0]); // Close the read end after duplicating
-	// }
+	return (0);
 }
 
 void change_directory(t_parse *st, t_params *params)

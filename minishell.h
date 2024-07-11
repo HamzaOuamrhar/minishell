@@ -120,6 +120,7 @@ typedef struct t_params
 	int				q;
 	int				status;
 	char			*line;
+	int				save_fd;
 	int				i;
 }   t_params;
 
@@ -188,7 +189,7 @@ void	error(t_parse *st, int y, t_params *params);
 void	signal_handler(int signum, t_parse *st, t_params *params);
 void	free_array(char **array);
 char	**ft_split(char const *s, char c);
-void	excute_cmd(t_parse *st, t_params *params, int i);
+int		excute_cmd(t_parse *st, t_params *params, int i);
 void	ft_free(char **s);
 void	change_directory(t_parse *st, t_params *params);
 void	excute_file(t_parse *st, t_params *params);
@@ -250,5 +251,6 @@ int		back_cmd(t_parse *st, int it, t_params *params);
 int		in_out_dup(t_parse *st, t_params *params);
 void	slash_path(t_parse *st, t_params *params);
 int		lstsize(t_parse	*env);
-
+int		first_cmd(int fds[2]);
+int 	last_cmd(int fds[2]);
 #endif

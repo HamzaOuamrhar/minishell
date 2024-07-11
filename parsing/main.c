@@ -23,8 +23,8 @@ void	wait_prompt1(t_params *params)
 	t_token		*token;
 	t_parse		*st;
 	int			i;
-	static int stdin_copy;
-   	static int stdout_copy;
+	int			stdin_copy;
+   	int			stdout_copy;
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
@@ -70,7 +70,10 @@ void	wait_prompt1(t_params *params)
 						continue ;
 					}
 					if (!st->com_path)
+					{
+						// reset_pipe(stdin_copy, stdout_copy);
 						printf("%s :command not found\n", st->cmd[0]);
+					}
 					else
 						excute_cmd(st, params, i);
 					st = st->next;
@@ -83,7 +86,6 @@ void	wait_prompt1(t_params *params)
 						puts ("error in dup func");
 						exit (1);
 					}
-        			
 				}
 				i = 0;
 			}
