@@ -25,7 +25,7 @@ void	wait_prompt1(t_params *params)
 	int			i;
 	int			stdin_copy;
    	int			stdout_copy;
-
+	params->flag = 0;
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
 	token = NULL;
@@ -71,8 +71,9 @@ void	wait_prompt1(t_params *params)
 					}
 					if (!st->com_path)
 					{
-						// reset_pipe(stdin_copy, stdout_copy);
+						params->flag = 1;
 						printf("%s :command not found\n", st->cmd[0]);
+						// reset_pipe(stdin_copy, stdout_copy);
 					}
 					else
 						excute_cmd(st, params, i);

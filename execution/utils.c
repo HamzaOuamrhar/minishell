@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/10 16:48:45 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/11 03:51:36 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	// if (pid < 0)
 	if (pid == 0)
 	{
+	// if (params->flag)
+	// {
+	// 	// close (params->sa÷ve_fd);
+	// 	params->save_fd = fds[0];
+	// 	params->flag= 0;
+	// }
 		if (i == 0 && params->cmds > 1)
 		{
 			if (first_cmd(fds))
@@ -34,6 +40,8 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		  {
               if (dup2(params->save_fd, STDIN_FILENO) == -1) {
                   perror("dup2");
+
+				  puts("herrrrrrr");
                   return (1);
               }
               close(params->save_fd);
