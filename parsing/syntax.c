@@ -60,20 +60,17 @@ void	check_pipeline(t_token *token, int *error)
 		{
 			*error = 1;
 			if (!token->next)
-				break ;
-			token = token->next;
-			while (token)
-			{
-				if (ft_strcmp(token->type, "WHITE") != 0 && ft_strcmp(token->type, "PIPE") != 0)
-				{
-					*error = 0;
-					break ;
-				}
+				break;
+			if (ft_strcmp(token->next->type, "WHITE") == 0)
+				token = token->next->next;
+			else
 				token = token->next;
-			}
+			if (!token || ft_strcmp(token->type, "PIPE") == 0)
+				break;
+			else
+				*error = 0;
 		}
-		if (token)
-			token = token->next;
+		token = token->next;
 	}
 }
 
