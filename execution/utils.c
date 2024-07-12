@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/11 17:24:59 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:06:21 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 			puts("here 0");
 			if (i != 0)
 			{
+				puts("here 10");
 				if (i != 0)
     				close(params->save_fd);  // Close saved read end if not first command
     			if (i != params->cmds - 1)
 				{
-    		  		close(fds[0]);           // Close read end of current pipe
-    		  		close(fds[1]);           // Close write end of current pipe
+    		  		close(fds[0]);// Close read end of current pipe
+    		  		close(fds[1]);// Close write end of current pipe
 				}
     		}
     		// exit(127);
@@ -48,20 +49,20 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		}
 		else
 		{ // Middle or last command
-			if (params->flag)
-			{
-				puts("just here");
-				dup2(fds[0], STDIN_FILENO);
-				close (fds[0]);
-			}
-         else if (i != 0)
+			// if (params->flag)
+			// {
+			// 	puts("just here");
+			// 	dup2(fds[0], STDIN_FILENO);
+			// 	close (fds[0]);
+			// }
+          if (i != 0)
 		  {
 			puts("here 2");
-              if (dup2(params->save_fd, STDIN_FILENO) == -1)
-			  {
-                perror("dup2");
-                return (1);
-              }
+            if (dup2(params->save_fd, STDIN_FILENO) == -1)
+			{
+              perror("dup2");
+              return (1);
+            }
             close(params->save_fd);
           }
           if (i != params->cmds - 1 && i < params->cmds)
@@ -85,11 +86,11 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		if (i != 0)
 			close(params->save_fd);
         if (i != params->cmds - 1)
-        {
+        { 
 			puts("here 4");
            	close(fds[1]); // Close the write end
 			params->save_fd = fds[0];
-			// puts("here 4");
+			// puts("here4");
             // dup2(fds[0], STDIN_FILENO);
   			// close(fds[0]); // Close the read end after duplicating
         }
