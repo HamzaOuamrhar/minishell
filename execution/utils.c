@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/12 08:44:20 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/12 09:01:40 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 {
 	int			pid;
 	int			fds[2];
+	ssize_t		r;
+	char		buffer[500];
 
 	if (i != params->cmds - 1)
 		pipe(fds);
@@ -25,11 +27,9 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	{
 	if (params->flag && i != 0)
 		{
-			char buffer[1024];
-  			ssize_t bytes_read;
-  			do {
-   			 bytes_read = read(params->save_fd, buffer, sizeof(buffer));
-  			} while (bytes_read > 0);
+			r = 1;
+  			while (r)
+   				r = read(params->save_fd, buffer, sizeof(buffer));
 		}
 		if (i == 0 && params->cmds > 1)
 		{
