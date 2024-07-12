@@ -19,44 +19,28 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 
 	if (i != params->cmds - 1)
 		pipe(fds);
-	puts("one");
 	pid = fork();
-	// if (pid < 0)
+	// if (pid < 0) //handle failure
 	if (pid == 0)
 	{
-	if (params->flag)
-	{
-		puts("here 0");
-		if (i != 0)
+	if (params->flag && i != 0)
 		{
-			if (i != 0)
-    			close(params->save_fd);  // Close saved read end if not first command
-    		if (i != params->cmds - 1)
-			{
-    	  		close(fds[0]);           // Close read end of current pipe
-    	  		close(fds[1]);           // Close write end of current pipe
-			}
-    	}
-    	// exit(127);
-		// params->save_fd = fds[0];
-	}
+			char buffer[1024];
+  			ssize_t bytes_read;
+  			do {
+   			 bytes_read = read(params->save_fd, buffer, sizeof(buffer));
+  			} while (bytes_read > 0);
+		}
 		if (i == 0 && params->cmds > 1)
 		{
-			puts("here 1");
 			if (first_cmd(fds))
 				return (1);
 		}
 		else
 		{ // Middle or last command
-			if (params->flag)
-			{
-				puts("just here");
-				dup2(fds[0], STDIN_FILENO);
-				close (fds[0]);
-			}
-         else if (i != 0)
+			
+          if (i != 0)
 		  {
-			puts("here 2");
               if (dup2(params->save_fd, STDIN_FILENO) == -1)
 			  {
                 perror("dup2");
@@ -66,7 +50,6 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
           }
           if (i != params->cmds - 1 && i < params->cmds)
 		  {
-			puts("here 3");
             close(fds[0]); // Close read end
             if (dup2(fds[1], STDOUT_FILENO) == -1)
 			{
@@ -86,12 +69,8 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 			close(params->save_fd);
         if (i != params->cmds - 1)
         {
-			puts("here 4");
-           	close(fds[1]); // Close the write end
+           	close(fds[1]);
 			params->save_fd = fds[0];
-			// puts("here 4");
-            // dup2(fds[0], STDIN_FILENO);
-  			// close(fds[0]); // Close the read end after duplicating
         }
     }
 	return (0);
