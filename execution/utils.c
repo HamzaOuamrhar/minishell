@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/12 09:01:40 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:22:12 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,37 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	// if (pid < 0) //handle failure
 	if (pid == 0)
 	{
-	if (params->flag && i != 0)
+		if (i == 1 && params->flag)
 		{
+			puts("here");
+			// close(fds[1]);
+			dup2(fds[0], STDIN_FILENO);
+			close (fds[0]);
+			puts("here");
+		}
+		else if (params->flag && i != 0)
+		{
+			// params->save_fd = fds[0];
 			r = 1;
   			while (r)
-   				r = read(params->save_fd, buffer, sizeof(buffer));
+   				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
 		}
 		if (i == 0 && params->cmds > 1)
 		{
+			// puts("here nega");
 			if (first_cmd(fds))
 				return (1);
 		}
 		else
 		{ // Middle or last command
-			
-          if (i != 0)
+          if (i != 0 && !params->flag)
 		  {
-              if (dup2(params->save_fd, STDIN_FILENO) == -1)
-			  {
-                perror("dup2");
-                return (1);
-              }
-            close(params->save_fd);
+			if (dup2(params->save_fd, STDIN_FILENO) == -1)
+		  	{
+			  	perror("dup2");
+		    	return (1);
+		  	}
+		  	close(params->save_fd);
           }
           if (i != params->cmds - 1 && i < params->cmds)
 		  {

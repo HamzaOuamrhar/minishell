@@ -25,6 +25,8 @@ void	wait_prompt1(t_params *params)
 	int			i;
 	int			stdin_copy;
    	int			stdout_copy;
+
+	params->save_fd = -1;
 	params->flag = 0;
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
@@ -88,6 +90,7 @@ void	wait_prompt1(t_params *params)
 						exit (1);
 					}
 				}
+				params->save_fd = -1;
 				i = 0;
 			}
 		}
