@@ -19,19 +19,26 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	ssize_t		r;
 	char		buffer[500];
 
+	// puts("hello world");
+	// printf("i == %d\n", i);
 	if (i != params->cmds)
 		pipe(fds);
 	if (i == params->cmds -1)
 		close(fds[1]);
 	pid = fork();
-	// if (pid < 0) //handle failure
+	if (pid < 0) 
+	{
+		perror("fork)");
+	}//handle failure
 	if (pid == 0)
 	{
-		if (params->flag && i > 1)
+		if (params->flag && i > 1 && params->flag_2)
 		{
+			// puts ("on read");
 			r = 1;
   			while (r)
    				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
+			// puts("read done");
 		}
 		if (i == 0 && params->cmds > 1)
 		{
@@ -43,9 +50,10 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		{ // Middle or last command
           if (i != 0)
 		  {
-			puts("test 1");
+			// puts("test 1");
 			if (params->flag)
 			{
+				// puts("hello there");
 				close(fds[1]);
 				// puts("test 2");
 				if (dup2(fds[0], STDIN_FILENO) == -1)
@@ -92,6 +100,7 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 			// puts ("hello ");
            	close(fds[1]);
 			params->save_fd = fds[0];
+			params->flag_2 = 1;
         }
     }
 	return (0);

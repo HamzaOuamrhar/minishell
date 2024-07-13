@@ -26,6 +26,7 @@ void	wait_prompt1(t_params *params)
 	int			stdin_copy;
    	int			stdout_copy;
 
+	params->flag_2 = 0;
 	params->save_fd = -1;
 	params->flag = 0;
 	stdin_copy = dup(STDIN_FILENO);

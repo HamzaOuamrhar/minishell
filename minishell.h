@@ -110,6 +110,7 @@ typedef struct t_files
 typedef struct t_params
 {
 	int				flag; //remove this later
+	int				flag_2;
 	int				cmds;
 	char			**paths_array;
 	char			*path;
