@@ -22,7 +22,6 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	if (i != params->cmds)
 		pipe(fds);
 	if (i == params->cmds -1)
-
 		close(fds[1]);
 	pid = fork();
 	// if (pid < 0) //handle failure
@@ -44,8 +43,8 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		{ // Middle or last command
           if (i != 0)
 		  {
-			// puts("test 1");
-			if (i == 1 && params->flag)
+			puts("test 1");
+			if (params->flag)
 			{
 				close(fds[1]);
 				// puts("test 2");
