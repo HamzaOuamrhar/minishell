@@ -19,43 +19,63 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	ssize_t		r;
 	char		buffer[500];
 
-	if (i != params->cmds - 1)
+	puts("hello world");
+	// printf("i == %d\n", i);
+	if (i != params->cmds)
 		pipe(fds);
+	if (i == params->cmds -1)
+		close(fds[1]);
 	pid = fork();
-	// if (pid < 0) //handle failure
+	if (pid < 0) 
+	{
+		perror("fork)");
+	}//handle failure
 	if (pid == 0)
 	{
-		if (i == 1 && params->flag)
+		if (params->flag && i > 1 && params->flag_2)
 		{
-			puts("here");
-			// close(fds[1]);
-			dup2(fds[0], STDIN_FILENO);
-			close (fds[0]);
-			puts("here");
-		}
-		else if (params->flag && i != 0)
-		{
-			// params->save_fd = fds[0];
+			puts ("on read");
 			r = 1;
   			while (r)
    				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
+			puts("read done");
 		}
 		if (i == 0 && params->cmds > 1)
 		{
-			// puts("here nega");
+			puts("here nega");
 			if (first_cmd(fds))
 				return (1);
 		}
 		else
 		{ // Middle or last command
-          if (i != 0 && !params->flag)
+          if (i != 0)
 		  {
-			if (dup2(params->save_fd, STDIN_FILENO) == -1)
-		  	{
-			  	perror("dup2");
-		    	return (1);
-		  	}
-		  	close(params->save_fd);
+			puts("test 1");
+			if (params->flag)
+			{
+				puts("hello there");
+				close(fds[1]);
+				// puts("test 2");
+				if (dup2(fds[0], STDIN_FILENO) == -1)
+		  		{
+					// puts("me you");
+			  		perror("dup2");
+		    		return (1);
+		  		}
+				close(fds[0]);
+				// puts("test for in");
+			}
+			else 
+			{
+				puts("ruigbrb");
+				if (dup2(params->save_fd, STDIN_FILENO) == -1)
+		  		{
+			  		perror("dup2");
+		    		return (1);
+		  		}
+				// puts("test 3");
+		  		close(params->save_fd);
+			}
           }
           if (i != params->cmds - 1 && i < params->cmds)
 		  {
@@ -73,13 +93,15 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	else
     {
     	wait(0);
-		params->flag = 0;
+		params->flag = 0; // this could cause a problem
 		if (i != 0)
 			close(params->save_fd);
         if (i != params->cmds - 1)
         {
+			puts ("hello ");
            	close(fds[1]);
 			params->save_fd = fds[0];
+			params->flag_2 = 1;
         }
     }
 	return (0);
