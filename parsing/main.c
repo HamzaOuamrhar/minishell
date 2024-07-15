@@ -23,14 +23,15 @@ void	wait_prompt1(t_params *params)
 	t_token		*token;
 	t_parse		*st;
 	int			i;
-	int			stdin_copy;
-   	int			stdout_copy;
+	// int			stdin_copy;
+   	// int			stdout_copy;
 
 	params->flag_2 = 0;
 	params->save_fd = -1;
 	params->flag = 0;
-	stdin_copy = dup(STDIN_FILENO);
-	stdout_copy = dup(STDOUT_FILENO);
+	// stdin_copy = dup(STDIN_FILENO);
+	// stdout_copy = dup(STDOUT_FILENO);
+	// printf("in == %d, out = %d\n", stdin_copy, stdout_copy);
 	token = NULL;
 	i = 0;
 	st = NULL;
@@ -83,15 +84,16 @@ void	wait_prompt1(t_params *params)
 					st = st->next;
 					i++;
 				}
-				if (i == params->cmds)
+				if (i == params->cmds && params->cmds > 1)
 				{
-					if (dup2(stdin_copy, 0) == -1 || (dup2(stdout_copy, 1) == -1))
+					if (dup2(0, 0) == -1 || (dup2(1, 1) == -1))
 					{
 						puts ("error in dup func");
 						exit (1);
 					}
 				}
 				params->save_fd = -1;
+				params->flag_2 = 0;
 				i = 0;
 			}
 		}
