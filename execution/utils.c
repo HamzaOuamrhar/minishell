@@ -90,7 +90,7 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		{
 			waitpid(pid, 0, 0);
 			close(fds[0]);
-			close(fds[1]);
+			// close(fds[1]); // this causes a problem
 		}
 		// waitpid(pid, &status, 0);
 		params->flag = 0; // this could cause a problem
