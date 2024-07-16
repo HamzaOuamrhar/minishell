@@ -22,6 +22,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <stdbool.h>
 
 # define RED_TEXT "\033[1;31m"

@@ -84,17 +84,19 @@ void	wait_prompt1(t_params *params)
 					st = st->next;
 					i++;
 				}
-				if (i == params->cmds && params->cmds > 1)
-				{
-					if (dup2(0, 0) == -1 || (dup2(1, 1) == -1))
-					{
-						puts ("error in dup func");
-						exit (1);
-					}
-				}
+				// if (i == params->cmds && params->cmds > 1)
+				// {
+				// 	if (dup2(0, 0) == -1 || (dup2(1, 1) == -1))
+				// 	{
+				// 		puts ("error in dup func");
+				// 		exit (1);
+				// 	}
+				// }
 				params->save_fd = -1;
 				params->flag_2 = 0;
 				i = 0;
+				while (wait(0) != -1 || errno != ECHILD)
+					;
 			}
 		}
 		tokens_reset(&token);

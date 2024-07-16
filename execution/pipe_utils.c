@@ -9,6 +9,7 @@ int first_cmd(int fds[2])
         return (1);
     }
 	close(fds[1]);
+	// close(fds[0]);
     return (0);
 }
 

@@ -19,10 +19,8 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	ssize_t		r;
 	char		buffer[500];
 
-	if (i != params->cmds)
+	if (i != params->cmds - 1)
 		pipe(fds);
-	// if (i == params->cmds -1)
-	// 	close(fds[1]);
 	pid = fork();
 	if (pid < 0) 
 	{
@@ -58,7 +56,7 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 				}
 				close(fds[0]);
 			}
-			else 
+			else
 			{
 				if (dup2(params->save_fd, STDIN_FILENO) == -1)
 		  		{
@@ -79,13 +77,22 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
             close(fds[1]);
           }
         }
-		execve(st->com_path, st->cmd, params->env2);
 		close(fds[1]);
+		// close(params->save_fd);
 		close(fds[0]);
+		execve(st->com_path, st->cmd, params->env2);
 	}
 	else
     {
-    	wait(0);
+		// int	status;
+    	// wait(0);
+		if (i == params->cmds -1)
+		{
+			waitpid(pid, 0, 0);
+			close(fds[0]);
+			close(fds[1]);
+		}
+		// waitpid(pid, &status, 0);
 		params->flag = 0; // this could cause a problem
 		if (i != 0)
 			close(params->save_fd);
