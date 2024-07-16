@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/12 11:22:12 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:36:28 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	ssize_t		r;
 	char		buffer[500];
 
-	// puts("hello world");
-	// printf("i == %d\n", i);
 	if (i != params->cmds)
 		pipe(fds);
 	// if (i == params->cmds -1)
@@ -34,15 +32,12 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 	{
 		if (params->flag && i > 1 && params->flag_2)
 		{
-			// puts ("on read");
 			r = 1;
   			while (r)
    				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
-			// puts("read done");
 		}
 		if (i == 0 && params->cmds > 1)
 		{
-			// puts("here nega");
 			if (first_cmd(fds))
 			{
 				close(fds[0]);
@@ -51,39 +46,31 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 			}
 		}
 		else
-		{ // Middle or last command
-          if (i != 0)
-		  {
-			// puts("test 1");
+		{
+			if (i != 0)
+			{
 			if (params->flag)
 			{
-				// puts("hello there");
-				// close(fds[1]);
-				// puts("test 2");
 				if (dup2(fds[0], STDIN_FILENO) == -1)
-		  		{
-					// puts("me you");
-			  		perror("dup2");
-		    		return (1);
-		  		}
+				{
+					perror("dup2");
+					return (1);
+				}
 				close(fds[0]);
-				// puts("test for in");
 			}
 			else 
 			{
-				// puts("ruigbrb");
 				if (dup2(params->save_fd, STDIN_FILENO) == -1)
 		  		{
 			  		perror("dup2");//remember to close the fds in failure cases
 		    		return (1);
 		  		}
-				// puts("test 3");
 		  		close(params->save_fd);
 			}
           }
           if (i != params->cmds - 1 && i < params->cmds)
 		  {
-            close(fds[0]); // Close read end
+            close(fds[0]);
             if (dup2(fds[1], STDOUT_FILENO) == -1)
 			{
                 perror("dup2");
@@ -104,7 +91,6 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 			close(params->save_fd);
         if (i != params->cmds - 1)
         {
-			// puts ("hello ");
            	close(fds[1]);
 			params->save_fd = fds[0];
 			params->flag_2 = 1;
