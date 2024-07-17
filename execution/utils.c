@@ -31,6 +31,7 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		if (params->flag && i > 1 && params->flag_2)
 		{
 			r = 1;
+			puts("here");
   			while (r)
    				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
 		}
@@ -43,11 +44,11 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 				return (1);
 			}
 		}
-		else
+		else //middle or last command
 		{
 			if (i != 0)
 			{
-			if (params->flag)
+			if (params->flag  && i != params->cmds - 1)
 			{
 				if (dup2(fds[0], STDIN_FILENO) == -1)
 				{
@@ -56,13 +57,15 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 				}
 				close(fds[0]);
 			}
-			else
+			else if (params->save_fd != -1)
 			{
+				// puts("before");
 				if (dup2(params->save_fd, STDIN_FILENO) == -1)
 		  		{
 			  		perror("dup2");//remember to close the fds in failure cases
 		    		return (1);
 		  		}
+				// puts("after");
 		  		close(params->save_fd);
 			}
           }
@@ -77,7 +80,7 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
             close(fds[1]);
           }
         }
-		close(fds[1]);
+		// close(fds[1]);
 		// close(params->save_fd);
 		close(fds[0]);
 		execve(st->com_path, st->cmd, params->env2);
@@ -89,8 +92,8 @@ int	excute_cmd(t_parse *st, t_params *params, int i)
 		if (i == params->cmds -1)
 		{
 			waitpid(pid, 0, 0);
-			close(fds[0]);
-			// close(fds[1]); // this causes a problem
+			// close(fds[0]);
+			// close(fds[1]);
 		}
 		// waitpid(pid, &status, 0);
 		params->flag = 0; // this could cause a problem

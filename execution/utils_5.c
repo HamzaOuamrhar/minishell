@@ -17,7 +17,7 @@ int	check_syntax(char *s)
 	int	i;
 //_ in beging   digits in middle no digits in beg
 	i = 0;
-	if (!((s[i] >= 'a' && s[i] <= 'z')
+	if (!((s[i] >= 'a' && s[i] <= 'z') //complete the checks  untill the end
 			|| (s[i] >= 'A' && s[i] <= 'Z') || (s[i] == '_')))
 		return (1);
 	return (0);
