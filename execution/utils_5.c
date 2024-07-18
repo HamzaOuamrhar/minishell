@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/18 15:15:06 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:01:11 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	unset_cmd1(t_env **env, char *s)
 	{
 		if (!(ft_strcmp(tmp->next->key, s)))
 		{
-			printf("[[%s]]\n", tmp->next->key);
 			tmp2 = tmp->next;
-			tmp->next = tmp->next->next;
+			if (tmp->next->next)
+				tmp->next = tmp->next->next;
 			free (tmp2->key);
 			free (tmp2->value);
 			free (tmp2);

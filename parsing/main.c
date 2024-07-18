@@ -53,6 +53,7 @@ void	wait_prompt1(t_params *params)
 				params->cmds = lstsize(st);
 				while (st)
 				{
+					update_(st, params);
 					if (!ft_strlen(st->cmd[0]))
 					{
 						printf("command not found\n");

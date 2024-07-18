@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/09 16:16:27 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:50:24 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	just_export(t_params *params)
 			tmp = tmp->next;
 			continue ;
 		}
-			
 		if (!tmp->value)
 			printf("declare -x %s\n", tmp->key);
 		else

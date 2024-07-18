@@ -256,4 +256,6 @@ void	slash_path(t_parse *st, t_params *params);
 int		lstsize(t_parse	*env);
 int		first_cmd(int fds[2]);
 int 	last_cmd(int fds[2]);
+void	update_(t_parse *st, t_params *params);
+
 #endif
