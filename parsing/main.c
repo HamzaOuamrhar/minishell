@@ -53,7 +53,13 @@ void	wait_prompt1(t_params *params)
 				params->cmds = lstsize(st);
 				while (st)
 				{
-					if (checking_cmd(st, params))
+					if (!ft_strlen(st->cmd[0]))
+					{
+						printf("command not found\n");
+						st = st->next;
+						continue ;
+					}
+					if ((params->cmds == 1) && checking_cmd(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
