@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/10 11:34:01 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/19 09:38:13 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	env_cmd(t_parse	*st, t_params *params)
 {
 	t_env	*tmp;
 
+	search_and_replace("_", get_acc_path(params->paths_array, "env"), &(params->env), 1);
 	if (count_args(st->cmd) > 1)
 	{
 		printf ("minishell: env: Too many arguments.\n");
@@ -61,6 +62,7 @@ int	env_cmd(t_parse	*st, t_params *params)
 			printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
+	search_and_replace("_", ft_copy("env"), &(params->env), 1);
 	return (1);
 }
 

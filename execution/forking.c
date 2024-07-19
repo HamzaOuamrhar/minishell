@@ -1,29 +1,33 @@
-#include "../minisehll.h"
+#include "../minishell.h"
 
-void    forking_piping(t_parse *st, t_params *params)
+int    forking_piping(t_params *params, int i)
 {
-if (i != params->cmds - 1)
-		pipe(fds);
-	pid = fork();
-	if (pid < 0) 
+	ssize_t		r;
+	char		buffer[500];
+
+	// printf("%")
+	if (i != params->cmds - 1)
+		pipe(params->fds);
+	params->pid = fork();
+	if (params->pid < 0) 
 	{
 		perror("fork)");
 	}//handle failure
-	if (pid == 0)
+	if (params->pid == 0)
 	{
 		if (params->flag && i > 1 && params->flag_2)
 		{
 			r = 1;
 			puts("here");
-  			while (r)
+  			while (r)	
    				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
 		}
 		if (i == 0 && params->cmds > 1)
 		{
-			if (first_cmd(fds))
+			if (first_cmd(params->fds))
 			{
-				close(fds[0]);
-				close(fds[1]);
+				close(params->fds[0]);
+				close(params->fds[1]);
 				return (1);
 			}
 		}
@@ -33,20 +37,20 @@ if (i != params->cmds - 1)
 			{
 			if (params->flag  && i != params->cmds - 1)
 			{
-				if (dup2(fds[0], STDIN_FILENO) == -1)
+				if (dup2(params->fds[0], STDIN_FILENO) == -1)
 				{
 					perror("dup2");
 					return (1);
 				}
-				close(fds[0]);
+				close(params->fds[0]);
 			}
 			else if (params->save_fd != -1)
 			{
 				// puts("before");
 				if (dup2(params->save_fd, STDIN_FILENO) == -1)
 		  		{
-			  		perror("dup2");//remember to close the fds in failure cases
-		    		return (1);
+			  		perror("dup2");//remember to close the params->fds in failure cases
+		    		// return (1);
 		  		}
 				// puts("after");
 		  		close(params->save_fd);
@@ -54,17 +58,18 @@ if (i != params->cmds - 1)
           }
           if (i != params->cmds - 1 && i < params->cmds)
 		  {
-            close(fds[0]);
-            if (dup2(fds[1], STDOUT_FILENO) == -1)
+            close(params->fds[0]);
+            if (dup2(params->fds[1], STDOUT_FILENO) == -1)
 			{
                 perror("dup2");
                 return (1);
             }
-            close(fds[1]);
+            close(params->fds[1]);
           }
         }
-		// close(fds[1]);
+		// close(params->fds[1]);
 		// close(params->save_fd);
-		close(fds[0]);
+		close(params->fds[0]);
     }
+	return (0);
 }

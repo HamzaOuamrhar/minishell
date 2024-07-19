@@ -23,15 +23,10 @@ void	wait_prompt1(t_params *params)
 	t_token		*token;
 	t_parse		*st;
 	int			i;
-	// int			stdin_copy;
-   	// int			stdout_copy;
 
 	params->flag_2 = 0;
 	params->save_fd = -1;
 	params->flag = 0;
-	// stdin_copy = dup(STDIN_FILENO);
-	// stdout_copy = dup(STDOUT_FILENO);
-	// printf("in == %d, out = %d\n", stdin_copy, stdout_copy);
 	token = NULL;
 	i = 0;
 	st = NULL;
@@ -60,7 +55,14 @@ void	wait_prompt1(t_params *params)
 						st = st->next;
 						continue ;
 					}
-					if ((params->cmds == 1) && checking_cmd(st, params))
+					// if (params->cmds > 1)
+					// {
+					// 	puts("here");
+					if (!(params->cmds == 1 && check_builtins(st->cmd[0]))){
+						forking_piping(params, i);
+					}
+					// }
+					if (!(params->pid) && checking_cmd(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
@@ -74,31 +76,55 @@ void	wait_prompt1(t_params *params)
 						parser_reset(&st);
 						continue ;
 					}
-					if (checking_cmd2(st, params))
+					if (!(params->pid) && checking_cmd2(st, params))
 					{
+						puts("here nega\n\n\n\n");
 						tokens_reset(&token);
 						parser_reset(&st);
 						continue ;
 					}
 					if (!st->com_path)
 					{
+						if (!params->pid)
+						{
+							close (params->fds[0]);
+							close (params->fds[1]);
+							exit (1);
+						}
 						params->flag = 1;
 						printf("%s :command not found\n", st->cmd[0]);
 						// reset_pipe(stdin_copy, stdout_copy);
 					}
 					else
-						excute_cmd(st, params, i);
+						excute_cmd(st, params);
+					// else
+   					// {
+						if (params->pid != 0)
+						{
+
+							// int	status;
+   						// wait(0);
+							if (i == params->cmds - 1)
+							{
+								waitpid(params->pid, 0, 0);
+								// close(fds[0]);
+								// close(fds[1]);
+							}
+							// waitpid(pid, &status, 0);
+							params->flag = 0; // this could cause a problem
+							if (i != 0)
+								close(params->save_fd);
+   					   		if (i != params->cmds - 1)
+   					  		{
+   					       		close(params->fds[1]);
+								params->save_fd = params->fds[0];
+								params->flag_2 = 1;
+   					   		}
+						}
+   					// }
 					st = st->next;
 					i++;
 				}
-				// if (i == params->cmds && params->cmds > 1)
-				// {
-				// 	if (dup2(0, 0) == -1 || (dup2(1, 1) == -1))
-				// 	{
-				// 		puts ("error in dup func");
-				// 		exit (1);
-				// 	}
-				// }
 				params->save_fd = -1;
 				params->flag_2 = 0;
 				i = 0;

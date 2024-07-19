@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/18 16:01:11 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:59:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	check_syntax(char *s)
 
 void	pwd_cmd(t_params *params)
 {
+	puts("pwd\n");
 	char	*pwd;
 	char	*tmp;
 	// DIR		*dir;s->env), "..");
