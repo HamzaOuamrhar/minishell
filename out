@@ -1,30 +1,3 @@
-Makefile
-a.out
-abcd
-cmds
-eriuehr
-example.txt
-execution
-forking.c
-hellool
-iehr
-imad4
-input.txt
-irugisubdf
-iubrubr
-jj
-jus
-just
-main.c
-minishell
-minishell.h
-minishell~f9c94d6a7e95650e7d933b11d32aed2ff7b94a82
-out
-parsing
-rtbrer
-rtuyufg
-test .tldr
-test.c
 RED_TEXT =\033[1;31m
 GREEN_TEXT =\033[1;32m
 YELLOW_TEXT =\033[1;33m

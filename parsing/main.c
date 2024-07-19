@@ -58,11 +58,10 @@ void	wait_prompt1(t_params *params)
 					// if (params->cmds > 1)
 					// {
 					// 	puts("here");
-					if (!(params->cmds == 1 && check_builtins(st->cmd[0]))){
+					if (!(params->cmds == 1 && check_builtins(st->cmd[0])))
 						forking_piping(params, i);
-					}
 					// }
-					if (!(params->pid) && checking_cmd(st, params))
+					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && checking_cmd(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
@@ -76,9 +75,8 @@ void	wait_prompt1(t_params *params)
 						parser_reset(&st);
 						continue ;
 					}
-					if (!(params->pid) && checking_cmd2(st, params))
+					if (((!(params->pid)) || (params->cmds == 1 && params->pid )) && checking_cmd2(st, params))
 					{
-						puts("here nega\n\n\n\n");
 						tokens_reset(&token);
 						parser_reset(&st);
 						continue ;

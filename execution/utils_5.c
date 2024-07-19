@@ -34,7 +34,6 @@ int	check_syntax(char *s)
 
 void	pwd_cmd(t_params *params)
 {
-	puts("pwd\n");
 	char	*pwd;
 	char	*tmp;
 	// DIR		*dir;s->env), "..");
