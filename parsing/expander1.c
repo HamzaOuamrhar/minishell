@@ -24,8 +24,7 @@ void	get_value(t_decl *decl, int *i, char *token_value, int status)
 	decl->j = 0;
 	(*i)++;
 	decl->first = *i;
-	if (token_value[*i] && (!is_alph(token_value[*i])
-			|| token_value[*i] == '_' || token_value[*i] == '?'))
+	if (token_value[*i] && !is_alph(token_value[*i]) && token_value[*i] != '_')
  		(*i)++;
 	else
 	{
