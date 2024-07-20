@@ -24,13 +24,8 @@ void	wait_prompt1(t_params *params)
 	t_parse		*st;
 	int			i;
 
-	params->flag_2 = 0;
-	params->save_fd = -1;
-	params->flag = 0;
-	token = NULL;
-	i = 0;
-	st = NULL;
-	params->status = 0; //remember the last word on the "_" env
+	//remember the last word on the "_" env
+	initialiaze_vars(params, &i, &token, 1);
 	while (1)
 	{
 		params->q = 0;
@@ -54,7 +49,9 @@ void	wait_prompt1(t_params *params)
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
-						if (params->pid)
+						if (!params->pid)
+							exit (0);
+						else
 							continue ;
 					}
 					slash_path(st, params);
@@ -63,14 +60,18 @@ void	wait_prompt1(t_params *params)
 						printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
 						tokens_reset(&token);
 						parser_reset(&st);
-						if (params->pid)
+						if (!params->pid)
+							exit (0);
+						else
 							continue ;
 					}
 					if (((!(params->pid)) || (params->cmds == 1 && params->pid )) && checking_cmd2(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
-						if (params->pid)
+						if (!params->pid)
+							exit (0);
+						else
 							continue ;
 					}
 					if (!st->com_path || !ft_strlen(st->cmd[0]))
@@ -107,9 +108,7 @@ void	wait_prompt1(t_params *params)
 					st = st->next;
 					i++;
 				}
-				params->save_fd = -1;
-				params->flag_2 = 0;
-				i = 0;
+				initialiaze_vars(params, &i, &token, 0);
 				while (wait(0) != -1 || errno != ECHILD)
 					;
 			}

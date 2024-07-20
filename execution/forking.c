@@ -77,10 +77,23 @@ void	forking_checker(t_parse *st, t_params *params, int i)
 {
 	// if (!st->cmd)
 	// 	return ;
-	if (!(params->cmds == 1 && check_builtins(st->cmd[0]))
-		|| (params->cmds == 1 && !check_builtins(st->cmd[0])) && ft_strlen(st->cmd[0]))
+	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
+		|| (params->cmds == 1 && !check_builtins(st->cmd[0]))) && ft_strlen(st->cmd[0]))
 	{
-		puts("forking here my friend");
+		// puts("forking here \n\n");
 		forking_piping(params, i);
 	}
+}
+
+void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
+{
+	if (f)
+	{
+		params->flag = 0;
+		*token = NULL;
+		params->status = 0;
+	}
+	params->flag_2 = 0;
+	params->save_fd = -1;
+	*i = 0;
 }

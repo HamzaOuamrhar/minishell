@@ -261,5 +261,6 @@ int 	last_cmd(int fds[2]);
 void	update_(t_parse *st, t_params *params);
 int		check_builtins(char *s);
 void	forking_checker(t_parse *st, t_params *params, int i);
+void	initialiaze_vars(t_params *params, int *i, t_token **token, int f);
 
 #endif
