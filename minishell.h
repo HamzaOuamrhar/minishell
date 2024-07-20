@@ -259,7 +259,7 @@ int		lstsize(t_parse	*env);
 int		first_cmd(int fds[2]);
 int 	last_cmd(int fds[2]);
 void	update_(t_parse *st, t_params *params);
-int	    forking_piping(t_params *params, int i);
 int		check_builtins(char *s);
+void	forking_checker(t_parse *st, t_params *params, int i);
 
 #endif

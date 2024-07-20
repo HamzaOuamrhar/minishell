@@ -49,23 +49,13 @@ void	wait_prompt1(t_params *params)
 				while (st)
 				{
 					update_(st, params);
-					if (!ft_strlen(st->cmd[0]))
-					{
-						printf("command not found\n");
-						st = st->next;
-						continue ;
-					}
-					// if (params->cmds > 1)
-					// {
-					// 	puts("here");
-					if (!(params->cmds == 1 && check_builtins(st->cmd[0])))
-						forking_piping(params, i);
-					// }
+					forking_checker(st, params, i);
 					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && checking_cmd(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
-						continue ;
+						if (params->pid)
+							continue ;
 					}
 					slash_path(st, params);
 					if (!params->path)
@@ -73,15 +63,17 @@ void	wait_prompt1(t_params *params)
 						printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
 						tokens_reset(&token);
 						parser_reset(&st);
-						continue ;
+						if (params->pid)
+							continue ;
 					}
 					if (((!(params->pid)) || (params->cmds == 1 && params->pid )) && checking_cmd2(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
-						continue ;
+						if (params->pid)
+							continue ;
 					}
-					if (!st->com_path)
+					if (!st->com_path || !ft_strlen(st->cmd[0]))
 					{
 						if (!params->pid)
 						{
@@ -90,36 +82,28 @@ void	wait_prompt1(t_params *params)
 							exit (1);
 						}
 						params->flag = 1;
-						printf("%s :command not found\n", st->cmd[0]);
-						// reset_pipe(stdin_copy, stdout_copy);
+						printf("shellantics: %s :command not found\n", st->cmd[0]);
 					}
 					else
 						excute_cmd(st, params);
-					// else
-   					// {
-						if (params->pid != 0)
+					if (params->pid != 0)
+					{
+						if (i == params->cmds - 1)
 						{
-
-							// int	status;
-   						// wait(0);
-							if (i == params->cmds - 1)
-							{
-								waitpid(params->pid, 0, 0);
-								// close(fds[0]);
-								// close(fds[1]);
-							}
-							// waitpid(pid, &status, 0);
-							params->flag = 0; // this could cause a problem
-							if (i != 0)
-								close(params->save_fd);
-   					   		if (i != params->cmds - 1)
-   					  		{
-   					       		close(params->fds[1]);
-								params->save_fd = params->fds[0];
-								params->flag_2 = 1;
-   					   		}
+							waitpid(params->pid, 0, 0);
+							// close(fds[0]);
+							// close(fds[1]);
 						}
-   					// }
+						params->flag = 0; // this could cause a problem
+						if (i != 0)
+							close(params->save_fd);
+   						if (i != params->cmds - 1)
+   						{
+   					   		close(params->fds[1]);
+							params->save_fd = params->fds[0];
+							params->flag_2 = 1;
+   						}
+					}
 					st = st->next;
 					i++;
 				}

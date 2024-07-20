@@ -1,11 +1,10 @@
 #include "../minishell.h"
 
-int    forking_piping(t_params *params, int i)
+int	forking_piping(t_params *params, int i)
 {
 	ssize_t		r;
 	char		buffer[500];
 
-	// printf("%")
 	if (i != params->cmds - 1)
 		pipe(params->fds);
 	params->pid = fork();
@@ -48,14 +47,14 @@ int    forking_piping(t_params *params, int i)
 			{
 				// puts("before");
 				if (dup2(params->save_fd, STDIN_FILENO) == -1)
-		  		{
+		  		{ 
 			  		perror("dup2");//remember to close the params->fds in failure cases
 		    		// return (1);
 		  		}
 				// puts("after");
 		  		close(params->save_fd);
 			}
-          }
+		}
           if (i != params->cmds - 1 && i < params->cmds)
 		  {
             close(params->fds[0]);
@@ -66,10 +65,22 @@ int    forking_piping(t_params *params, int i)
             }
             close(params->fds[1]);
           }
-        }
+		}
 		// close(params->fds[1]);
 		// close(params->save_fd);
 		close(params->fds[0]);
     }
 	return (0);
+}
+
+void	forking_checker(t_parse *st, t_params *params, int i)
+{
+	// if (!st->cmd)
+	// 	return ;
+	if (!(params->cmds == 1 && check_builtins(st->cmd[0]))
+		|| (params->cmds == 1 && !check_builtins(st->cmd[0])) && ft_strlen(st->cmd[0]))
+	{
+		puts("forking here my friend");
+		forking_piping(params, i);
+	}
 }

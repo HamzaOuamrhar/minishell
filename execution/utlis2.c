@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/19 09:38:13 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/20 10:25:08 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	checking_cmd(t_parse *st, t_params *params)
 {
 	params->status = 0;
+	// puts("here we go again");
 	// print(st);
 	if (st->files || st->in_fd) //add redidrection to the pipes
 	{

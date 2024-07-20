@@ -5,7 +5,7 @@ RESET_TEXT =\033[0m
 
 NAME = minishell
 N = -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
 CC = cc
 EXECUTION_DIR = execution
 PARSING_DIR = parsing
