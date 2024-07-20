@@ -26,6 +26,7 @@ void	wait_prompt1(t_params *params)
 
 	//remember the last word on the "_" env
 	initialiaze_vars(params, &i, &token, 1);
+	st = NULL;
 	while (1)
 	{
 		params->q = 0;
