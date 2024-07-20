@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/19 10:42:35 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:52:10 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,18 +127,18 @@ void change_directory(t_parse *st, t_params *params)
 void	excute_file(t_parse *st, t_params *params)
 {
 	int		pid;
-	char	*tmp;
+	// char	*tmp;
 
-	tmp = ft_substr(st->cmd[0] ,2 , ft_strlen(st->cmd[0]));
-	if (access(tmp, X_OK) == -1)
-	{
-		printf("%s: Permission denied\n", st->cmd[0]);
-		free (tmp);
-		params->status = 126;
-		return ;
-	}
+	// tmp = ft_substr(st->cmd[0] ,2 , ft_strlen(st->cmd[0]));
+	// if (access(tmp, X_OK) == -1)
+	// {
+	// 	printf("%s: cant access to file\n", st->cmd[0]);
+	// 	free (tmp);
+	// 	params->status = 126;
+	// 	return ;
+	// }
 	pid = fork();
-	free (tmp);
+	// free (tmp);
 	if (pid == 0)
 		if (execve(st->cmd[0], st->cmd, params->env2) == -1)
 		{

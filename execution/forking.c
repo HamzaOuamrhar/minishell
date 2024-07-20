@@ -18,8 +18,8 @@ int	forking_piping(t_params *params, int i)
 		{
 			r = 1;
 			puts("here");
-  			while (r)	
-   				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
+			while (r)	
+				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
 		}
 		if (i == 0 && params->cmds > 1)
 		{
@@ -47,40 +47,39 @@ int	forking_piping(t_params *params, int i)
 			{
 				// puts("before");
 				if (dup2(params->save_fd, STDIN_FILENO) == -1)
-		  		{ 
-			  		perror("dup2");//remember to close the params->fds in failure cases
-		    		// return (1);
-		  		}
+				{ 
+					perror("dup2");//remember to close the params->fds in failure cases
+					// return (1);
+				}
 				// puts("after");
-		  		close(params->save_fd);
+				close(params->save_fd);
 			}
-		}
-          if (i != params->cmds - 1 && i < params->cmds)
-		  {
-            close(params->fds[0]);
-            if (dup2(params->fds[1], STDOUT_FILENO) == -1)
+			}
+			if (i != params->cmds - 1 && i < params->cmds)
 			{
-                perror("dup2");
-                return (1);
-            }
-            close(params->fds[1]);
-          }
+			close(params->fds[0]);
+			if (dup2(params->fds[1], STDOUT_FILENO) == -1)
+			{
+				perror("dup2");
+					return (1);
+			}
+			close(params->fds[1]);
+			}
 		}
 		// close(params->fds[1]);
 		// close(params->save_fd);
 		close(params->fds[0]);
-    }
+	}
 	return (0);
 }
 
 void	forking_checker(t_parse *st, t_params *params, int i)
 {
-	// if (!st->cmd)
-	// 	return ;
+	slash_path(st, params);
 	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
-		|| (params->cmds == 1 && !check_builtins(st->cmd[0]))) && ft_strlen(st->cmd[0]))
+		|| (params->cmds == 1 && !check_builtins(st->cmd[0]))) && (ft_strlen(st->cmd[0]) && st->com_path))
 	{
-		// puts("forking here \n\n");
+		puts("forking here \n\n");
 		forking_piping(params, i);
 	}
 }
@@ -93,6 +92,7 @@ void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
 		*token = NULL;
 		params->status = 0;
 	}
+	params->pid = 1;
 	params->flag_2 = 0;
 	params->save_fd = -1;
 	*i = 0;
