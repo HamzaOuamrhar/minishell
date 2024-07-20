@@ -18,6 +18,18 @@ void	slash_path(t_parse *st, t_params *params)
 		st->com_path = ft_copy(st->cmd[0]);
 }
 
+int	just_a_checker(t_parse *st, t_params *params)
+{
+	if (st->files || st->in_fd) //add redidrection to the pipes
+	{
+		if (in_out_dup(st, params))
+			return (1);
+	}
+	if (!st || !st->cmd[0] || (!st->files && !st->cmd))
+		return (1);
+	return (0);
+}
+
 void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
@@ -27,6 +39,7 @@ void	wait_prompt1(t_params *params)
 	//remember the last word on the "_" env
 	initialiaze_vars(params, &i, &token, 1);
 	st = NULL;
+	token = NULL;
 	while (1)
 	{
 		params->q = 0;
@@ -42,9 +55,16 @@ void	wait_prompt1(t_params *params)
 				expander(token, *params);
 				parser(token, &st, params);
 				params->cmds = lstsize(st);
+				// print(st);
 				while (st)
 				{
 					update_(st, params);
+					if (just_a_checker(st, params))
+					{
+						tokens_reset(&token);
+						parser_reset(&st);
+						continue ;
+					}
 					forking_checker(st, params, i);
 					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && checking_cmd(st, params))
 					{
@@ -55,7 +75,7 @@ void	wait_prompt1(t_params *params)
 						else
 							continue ;
 					}
-					slash_path(st, params);
+					// slash_path(st, params);//no need here ,its on forking checker
 					if (!params->path)
 					{
 						printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
@@ -75,7 +95,7 @@ void	wait_prompt1(t_params *params)
 						else
 							continue ;
 					}
-					if (!st->com_path || !ft_strlen(st->cmd[0]))
+					if (!st->com_path || !ft_strlen(st->cmd[0])) //check the "." and ".."
 					{
 						if (!params->pid)
 						{
