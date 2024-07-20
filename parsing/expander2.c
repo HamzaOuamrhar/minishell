@@ -39,8 +39,13 @@ void	double_quote_key(t_decl2 *decl, char *t_v, t_params params)
 {
 	decl->i += 1;
 	decl->start = decl->i;
-	while (t_v[decl->i] && (is_alph_num(t_v[decl->i]) || t_v[decl->i] == '_' || t_v[decl->i] == '?'))
-		decl->i++;
+	if (t_v[decl->i] && !is_alph(t_v[decl->i]) && t_v[decl->i] != '_')
+			decl->i++;
+	else
+	{
+		while (t_v[decl->i] && (is_alph_num(t_v[decl->i]) || t_v[decl->i] == '_'))
+			decl->i++;
+	}
 	if (t_v[decl->start] == '?')
 		decl->value = ft_strdup(ft_itoa(params.status));
 	else

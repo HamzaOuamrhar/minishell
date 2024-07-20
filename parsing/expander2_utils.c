@@ -67,7 +67,7 @@ void	out_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params)
 		decl->z = 0;
 		decl->i += 1;
 		decl->start = decl->i;
-		if (t_v[decl->i] && (!is_alph(t_v[decl->i]) || t_v[decl->i] == '_'  || t_v[decl->i] == '?'))
+		if (t_v[decl->i] && !is_alph(t_v[decl->i]) && t_v[decl->i] != '_')
 			decl->i++;
 		else
 		{
