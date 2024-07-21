@@ -45,13 +45,11 @@ int	forking_piping(t_params *params, int i)
 			}
 			else if (params->save_fd != -1)
 			{
-				// puts("before");
 				if (dup2(params->save_fd, STDIN_FILENO) == -1)
 				{ 
 					perror("dup2");//remember to close the params->fds in failure cases
 					// return (1);
 				}
-				// puts("after");
 				close(params->save_fd);
 			}
 			}
@@ -78,7 +76,7 @@ void	forking_checker(t_parse *st, t_params *params, int i)
 	slash_path(st, params);
 	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
 		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //do not check for the command path
-			forking_piping(params, i);
+		forking_piping(params, i);
 }
 
 void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)

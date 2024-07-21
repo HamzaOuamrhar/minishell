@@ -24,6 +24,7 @@ int	just_a_checker(t_parse *st, t_params *params)
 {
 	if (st->files || st->in_fd) //add redidrection to the pipes
 	{
+		puts("in function");
 		if (in_out_dup(st, params))
 			return (1);
 	}
@@ -60,6 +61,7 @@ void	wait_prompt1(t_params *params)
 				// print(st);
 				while (st)
 				{
+						puts("here \n\n");
 					update_(st, params);
 					if (just_a_checker(st, params))
 					{
@@ -75,9 +77,10 @@ void	wait_prompt1(t_params *params)
 						if (!params->pid)
 							exit (0);
 						else
+						{
 							continue ;
+						}
 					}
-					// slash_path(st, params);//no need here ,its on forking checker
 					if (!params->path && params->pid)
 					{
 						while (st->next)

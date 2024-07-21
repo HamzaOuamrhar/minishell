@@ -36,9 +36,7 @@ int	check_builtins(char *s)
 		|| !(ft_strcmp(s, "unset"))
 		|| !(ft_strcmp(s, "env")) || !(ft_strcmp(s, "exit"))
 		||!(ft_strcmp(s, "pwd"))
-		||!(ft_strcmp(s, "."))
-		// ||!(ft_strcmp(s, "."))
-	)	
+		||!(ft_strcmp(s, ".")))
 		return (1);
 	return (0);
 }
@@ -46,7 +44,9 @@ int	check_builtins(char *s)
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
 	int	pid;
-	// fd = open(st->in_dup, O_RDONLY); //already protected
+	int	status;
+
+	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -67,16 +67,13 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 			close (st->out_fd);
 		}
 		slash_path(st, params);
-		// st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 		if (!st->com_path)
 		{
 			printf("%s :command not found\n", st->cmd[0]);
 			exit (127); 
 		}
 		execve(st->com_path, st->cmd, params->env2); //protection
-		exit(1);
 	}
-	int status = 0;
 	waitpid(pid, &status , 0);
 	if (WIFEXITED(status))
 		params->status = WEXITSTATUS(status);
@@ -91,11 +88,11 @@ int	in_out_dup(t_parse *st, t_params *params)
 		return (1);
 	}
 	if (!st->in_fd)
-		st->in_fd = open(st->in_dup, O_RDONLY);//already checked in  first function
+		st->in_fd = open(st->in_dup, O_RDONLY);
 	st->out_fd = 0;
 	if (st->out_dup)
 	{
-		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777);//already checked in  first function
+		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT, 0777);
 		if (st->out_fd == -1)
 		{
 			puts("error"); // handele this later
@@ -104,7 +101,11 @@ int	in_out_dup(t_parse *st, t_params *params)
 	}
 	if (!st->cmd[0] || !st->cmd)
 		return (1);
-	if (excute_cmd_dup(st, params, st->in_fd))
-		return (0);
+	excute_cmd_dup(st, params, st->in_fd);
+	// {
+		// puts("here");
+	// 	return (0);
+	// }
+	puts("hello \n");
 	return (1);
 }
