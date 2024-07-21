@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/21 16:06:37 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:16:56 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,16 @@ int	check_syntax(char *s)
 	return (0);
 }
 
-// void	pwd_cmd(t_parse *st)
-// {
-// 	char	*pwd;
-
-// 	pwd = get_pwd(st);
-// 	printf("%s\n", pwd);
-// 	free (pwd);
-// }
-
 void	pwd_cmd(t_params *params)
 {
 	char	*pwd;
 	char	*tmp;
-	// DIR		*dir;s->env), "..");
-	// 	printf("%s\n", pwd);
-	// 	free (pwd);
-	// 	return ;
-	// }
-	pwd = malloc (1024);
 
-	// dir = opendir(get_key("PWD", params->env));
-	// if (!dir)
-	// {
-	// 	// search_and_replace("PWD", "..", params->env);
-	// 	pwd = ft_strjoin2(get_key("PWD", param
+	pwd = malloc (1024);
 	if (!pwd)
 		return ; // more protection
 	if (!(getcwd(pwd, 1024)))
 	{
-		// printf("cd: error retrieving current directory: getcwd\n");
 		tmp = get_key("PWD", params->env);
 		if (tmp)
 		{
