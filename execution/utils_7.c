@@ -60,6 +60,15 @@ char	*ft_strdup2(const char *s1)
 
 void	update_(t_parse *st, t_params *params)
 {
-	search_and_replace("_", ft_copy(st->cmd[count_args(st->cmd) - 1]), &(params->env), 1);
+	if (!st->cmd)
+		return ;
+	if (!st->cmd[0])
+	{
+		search_and_replace("_", ft_copy(""), &(params->env), 1);
+	}
+	else if (st->cmd[0] && (ft_strcmp(st->cmd[0], "echo")))
+	{
+		search_and_replace("_", ft_copy(st->cmd[count_args(st->cmd) - 1]), &(params->env), 1);
+	}
 }
 

@@ -12,7 +12,9 @@ void	parser_reset(t_parse **st)
 
 void	slash_path(t_parse *st, t_params *params)
 {
-	if (access(st->cmd[0], X_OK))
+	if (!(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
+		st->com_path = NULL;
+	else if (access(st->cmd[0], X_OK))
 		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 	else
 		st->com_path = ft_copy(st->cmd[0]);
