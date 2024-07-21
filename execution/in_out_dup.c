@@ -37,6 +37,7 @@ int	check_builtins(char *s)
 		|| !(ft_strcmp(s, "env")) || !(ft_strcmp(s, "exit"))
 		||!(ft_strcmp(s, "pwd"))
 		||!(ft_strcmp(s, "."))
+		// ||!(ft_strcmp(s, "."))
 	)	
 		return (1);
 	return (0);

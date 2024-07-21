@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/07 15:20:13 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:53:42 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,6 @@ void	empty_env(t_params *params)
 
 int	checking_cmd2(t_parse *st, t_params *params)
 {
-	if (!ft_strcmp(st->cmd[0], ".."))
-	{
-		printf("%s: command not found\n",st->cmd[0]);
-		return (1);
-	}
 	if (!ft_strcmp("env", st->cmd[0]))
 	{
 		if (env_cmd(st, params))

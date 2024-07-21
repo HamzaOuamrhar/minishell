@@ -78,8 +78,10 @@ void	wait_prompt1(t_params *params)
 							continue ;
 					}
 					// slash_path(st, params);//no need here ,its on forking checker
-					if (!params->path)
+					if (!params->path && params->pid)
 					{
+						while (st->next)
+							st = st->next;
 						printf("Shellantics: %s: No such file or directory\n", st->cmd[0]);
 						tokens_reset(&token);
 						parser_reset(&st);
@@ -103,10 +105,11 @@ void	wait_prompt1(t_params *params)
 						{
 							close (params->fds[0]);
 							close (params->fds[1]);
-							exit (1);
+							exit (0);
 						}
 						params->flag = 1;
-						printf("shellantics: %s :command not found\n", st->cmd[0]);
+						params->status = 127;
+						printf("shellantics: %s :command not found\n", st->cmd[0]); //this is just a function
 					}
 					else
 						excute_cmd(st, params);

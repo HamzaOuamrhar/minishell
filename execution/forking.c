@@ -76,14 +76,9 @@ int	forking_piping(t_params *params, int i)
 void	forking_checker(t_parse *st, t_params *params, int i)
 {
 	slash_path(st, params);
-	printf("forking hell\n");
-	// printf("[[%s]]\n", st->com_path);
 	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
-		|| (params->cmds == 1 && !check_builtins(st->cmd[0]))) && (ft_strlen(st->cmd[0])))
-		{
-			puts("forknig here");
-		forking_piping(params, i);
-		}
+		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //do not check for the command path
+			forking_piping(params, i);
 }
 
 void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
@@ -93,7 +88,7 @@ void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
 		params->flag = 0;
 		*token = NULL;
 		params->status = 0;
-	}
+	}	
 	params->pid = 1;
 	params->flag_2 = 0;
 	params->save_fd = -1;
