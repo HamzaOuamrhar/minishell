@@ -94,7 +94,7 @@ int	in_out_dup(t_parse *st, t_params *params)
 		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT, 0777);
 		if (st->out_fd == -1)
 		{
-			puts("error"); // handele this later
+			perror("open"); // handele this later
 			return 1;
 		}
 	}
