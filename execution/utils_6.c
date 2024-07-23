@@ -12,24 +12,30 @@ void	update(t_params *params)
 
 void	update_shlvl(t_params *params)
 {
-	int	n;
+	int			n;
+	char		*lvl;
 
 	n = ft_shell_atoi(get_key("SHLVL", params->env));
+	// printf("[[env == %s]]", get_key("SHLVL", params->env));
 	if (n == -1)
 	{
 		search_and_replace("SHLVL", "1", &(params->sorted_env), 1);
 		search_and_replace("SHLVL", "1", &(params->env), 1);
 		return ;
 	}
-	if (n++ == 999)
+	// printf("[[%d]]\n",n);
+	n++;
+	if (n == 999)
 	{
 		search_and_replace("SHLVL", "", &(params->sorted_env), 1);
 		search_and_replace("SHLVL", "", &(params->env), 1);
 	}
-	if (!ft_shell_itoa(n))
+	lvl = ft_shell_itoa(n);
+	if (!lvl)
 		return ; // more protection here
-	search_and_replace("SHLVL", ft_shell_itoa(n), &(params->sorted_env), 1);
-	search_and_replace("SHLVL", ft_shell_itoa(n), &(params->env), 1);
+	// printf("[[%s]]\n", lvl);
+	search_and_replace("SHLVL", lvl, &(params->sorted_env), 1);
+	search_and_replace("SHLVL", lvl, &(params->env), 1);
 	
 }
 

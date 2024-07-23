@@ -61,7 +61,6 @@ void	wait_prompt1(t_params *params)
 				// print(st);
 				while (st)
 				{
-						puts("here \n\n");
 					update_(st, params);
 					if (just_a_checker(st, params))
 					{
