@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/23 10:34:01 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:39:56 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	signal_handler(int signum, t_parse *st, t_params *params)
 {
 	if (signum == SIGINT)
 	{
-		puts("hello there\n");
 		printf("\n");
 	}
 	else if (signum == SIGQUIT)

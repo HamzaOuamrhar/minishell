@@ -115,7 +115,6 @@ void	wait_prompt1(t_params *params)
 						excute_cmd(st, params);
 					if (params->pid != 0)
 					{
-						puts("hello there");
 						if (i == params->cmds - 1)
 						{
 							waitpid(params->pid, 0, 0);

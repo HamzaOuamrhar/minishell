@@ -16,7 +16,6 @@ int main() {
     //     close(fd);
     //     return 1;
     // }
-puts("heree\n\n\n\n");
     // Use the duplicated file descriptor
     write(fd, "Hello, World!\n", 14);
 

@@ -17,7 +17,6 @@ int	forking_piping(t_params *params, int i)
 		if (params->flag && i > 1 && params->flag_2)
 		{
 			r = 1;
-			puts("here\n\n\n");
 			while (r)	
 				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
 		}
@@ -76,10 +75,7 @@ void	forking_checker(t_parse *st, t_params *params, int i)
 	slash_path(st, params);
 	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
 		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //do not check for the command path
-		{
-			puts("forking");
 			forking_piping(params, i);
-		}
 }
 
 void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
