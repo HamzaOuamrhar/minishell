@@ -16,26 +16,25 @@ void	update_shlvl(t_params *params)
 	char		*lvl;
 
 	n = ft_shell_atoi(get_key("SHLVL", params->env));
-	// printf("[[env == %s]]", get_key("SHLVL", params->env));
 	if (n == -1)
 	{
 		search_and_replace("SHLVL", "1", &(params->sorted_env), 1);
-		search_and_replace("SHLVL", "1", &(params->env), 1);
+		search_and_replace("SHLVL", "1", &(params->env), 1);//should allocate here
 		return ;
 	}
-	// printf("[[%d]]\n",n);
-	n++;
-	if (n == 999)
+	if (n == -2)
+		lvl = ft_copy("0");
+	else if (++n == 999)
 	{
 		search_and_replace("SHLVL", "", &(params->sorted_env), 1);
 		search_and_replace("SHLVL", "", &(params->env), 1);
 	}
-	lvl = ft_shell_itoa(n);
+	if (n != -1 && n != -2)
+		lvl = ft_shell_itoa(n);
 	if (!lvl)
 		return ; // more protection here
-	// printf("[[%s]]\n", lvl);
 	search_and_replace("SHLVL", lvl, &(params->sorted_env), 1);
-	search_and_replace("SHLVL", lvl, &(params->env), 1);
+	search_and_replace("SHLVL", ft_copy(lvl), &(params->env), 1);
 	
 }
 
@@ -51,7 +50,12 @@ int	ft_shell_atoi(char *s)
 	if (s[i] == '-' || s[i] == '+')
 	{
 		if (s[i] == '-')
-			return (-1);
+		{
+			if (s[i + 1] >= '0' && s[i + 1] <= '9')
+				return (-2);
+			else
+				return (-1);
+		}
 		else
 			i++;
 	}

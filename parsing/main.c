@@ -62,13 +62,13 @@ void	wait_prompt1(t_params *params)
 				while (st)
 				{
 					update_(st, params);
+					forking_checker(st, params, i);
 					if (just_a_checker(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
 						continue ;
 					}
-					forking_checker(st, params, i);
 					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && checking_cmd(st, params))
 					{
 						tokens_reset(&token);

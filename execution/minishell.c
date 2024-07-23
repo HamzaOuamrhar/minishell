@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/21 14:51:24 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:34:01 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[]
 	params.path = ft_copy(get_key("PATH", params.env));
 	params.paths_array = ft_split(params.path, ':');
 	params.sorted_env = set_env(params.env3);// the ctrl+c status=130 remember
-	params.env2 = list2array(params.env,  &params);
 	sort_env(params.sorted_env);
-	sort_env(params.env);
+	// sort_env(params.env); // asking my self why this 
 	ft_free(params.env3);
 	update(&params);
+	params.env2 = list2array(params.env,  &params);
 	wait_prompt1(&params);
 }
 
