@@ -24,7 +24,6 @@ int	just_a_checker(t_parse *st, t_params *params)
 {
 	if (st->files || st->in_fd) //add redidrection to the pipes
 	{
-		puts("in function");
 		if (in_out_dup(st, params))
 			return (1);
 	}
@@ -63,7 +62,7 @@ void	wait_prompt1(t_params *params)
 				{
 					update_(st, params);
 					forking_checker(st, params, i);
-					if (just_a_checker(st, params))
+					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && just_a_checker(st, params))
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
@@ -76,9 +75,7 @@ void	wait_prompt1(t_params *params)
 						if (!params->pid)
 							exit (0);
 						else
-						{
 							continue ;
-						}
 					}
 					if (!params->path && params->pid)
 					{
@@ -117,6 +114,7 @@ void	wait_prompt1(t_params *params)
 						excute_cmd(st, params);
 					if (params->pid != 0)
 					{
+						puts("hello there");
 						if (i == params->cmds - 1)
 						{
 							waitpid(params->pid, 0, 0);

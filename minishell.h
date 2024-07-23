@@ -197,7 +197,6 @@ char	**ft_split(char const *s, char c);
 int		excute_cmd(t_parse *st, t_params *params);
 void	ft_free(char **s);
 void	change_directory(t_parse *st, t_params *params);
-void	excute_file(t_parse *st, t_params *params);
 void	terminate_shell(t_parse *st, t_params *params);
 int		ft_strcmp(char *s1, char *s2);
 int		count_args(char **s);

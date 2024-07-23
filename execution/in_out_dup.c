@@ -43,12 +43,10 @@ int	check_builtins(char *s)
 
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
-	int	pid;
 	int	status;
 
 	status = 0;
-	pid = fork();
-	if (pid == 0)
+	if (!params->pid)
 	{
 		if (check_builtins(st->cmd[0]))
 		{
@@ -64,6 +62,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		if (st->out_fd)
 		{
 			dup2(st->out_fd, 1);
+			// if (params->cmds > 1)
 			close (st->out_fd);
 		}
 		slash_path(st, params);
@@ -74,7 +73,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		}
 		execve(st->com_path, st->cmd, params->env2); //protection
 	}
-	waitpid(pid, &status , 0);
+	waitpid(params->pid, &status , 0);
 	if (WIFEXITED(status))
 		params->status = WEXITSTATUS(status);
 	return (0);
@@ -102,10 +101,5 @@ int	in_out_dup(t_parse *st, t_params *params)
 	if (!st->cmd[0] || !st->cmd)
 		return (1);
 	excute_cmd_dup(st, params, st->in_fd);
-	// {
-		// puts("here");
-	// 	return (0);
-	// }
-	puts("hello \n");
 	return (1);
 }

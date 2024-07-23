@@ -76,7 +76,10 @@ void	forking_checker(t_parse *st, t_params *params, int i)
 	slash_path(st, params);
 	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
 		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //do not check for the command path
-		forking_piping(params, i);
+		{
+			puts("forking");
+			forking_piping(params, i);
+		}
 }
 
 void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
