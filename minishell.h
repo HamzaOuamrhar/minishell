@@ -194,7 +194,7 @@ void	error(t_parse *st, int y, t_params *params);
 void	signal_handler(int signum, t_parse *st, t_params *params);
 void	free_array(char **array);
 char	**ft_split(char const *s, char c);
-int		excute_cmd(t_parse *st, t_params *params);
+void	excute_cmd(t_parse *st, t_params *params);
 void	ft_free(char **s);
 void	change_directory(t_parse *st, t_params *params);
 void	terminate_shell(t_parse *st, t_params *params);

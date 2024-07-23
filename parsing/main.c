@@ -22,6 +22,7 @@ void	slash_path(t_parse *st, t_params *params)
 
 int	just_a_checker(t_parse *st, t_params *params)
 {
+	// puts("hello from nothing");
 	if (st->files || st->in_fd) //add redidrection to the pipes
 	{
 		if (in_out_dup(st, params))

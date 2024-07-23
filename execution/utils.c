@@ -6,19 +6,16 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/23 15:53:59 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:03:24 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	excute_cmd(t_parse *st, t_params *params)
+void	excute_cmd(t_parse *st, t_params *params)
 {
 	if (params->pid == 0)
-	{
 		execve(st->com_path, st->cmd, params->env2);
-	}
-	return (0);
 }
 
 void change_directory(t_parse *st, t_params *params)
