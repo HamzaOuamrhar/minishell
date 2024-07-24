@@ -73,9 +73,9 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		}
 		execve(st->com_path, st->cmd, params->env2); //protection
 	}
-	waitpid(params->pid, &status , 0);
-	if (WIFEXITED(status))
-		params->status = WEXITSTATUS(status);
+	// waitpid(params->pid, &status , 0);
+	// if (WIFEXITED(status))
+	// 	params->status = WEXITSTATUS(status);
 	return (0);
 }
 
@@ -91,7 +91,7 @@ int	in_out_dup(t_parse *st, t_params *params)
 	st->out_fd = 0;
 	if (st->out_dup)
 	{
-		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT, 0777);
+		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		if (st->out_fd == -1)
 		{
 			perror("open"); // handele this later

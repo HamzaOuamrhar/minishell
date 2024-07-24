@@ -67,6 +67,8 @@ void	wait_prompt1(t_params *params)
 					{
 						tokens_reset(&token);
 						parser_reset(&st);
+						if (!params->pid)
+							exit (0);
 						continue ;
 					}
 					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && checking_cmd(st, params))
@@ -75,8 +77,7 @@ void	wait_prompt1(t_params *params)
 						parser_reset(&st);
 						if (!params->pid)
 							exit (0);
-						else
-							continue ;
+						continue ;
 					}
 					if (!params->path && params->pid)
 					{
@@ -87,8 +88,7 @@ void	wait_prompt1(t_params *params)
 						parser_reset(&st);
 						if (!params->pid)
 							exit (0);
-						else
-							continue ;
+						continue ;
 					}
 					if (((!(params->pid)) || (params->cmds == 1 && params->pid )) && checking_cmd2(st, params))
 					{
@@ -96,8 +96,7 @@ void	wait_prompt1(t_params *params)
 						parser_reset(&st);
 						if (!params->pid)
 							exit (0);
-						else
-							continue ;
+						continue ;
 					}
 					if (!st->com_path || !ft_strlen(st->cmd[0])) //check the "." and ".."
 					{
