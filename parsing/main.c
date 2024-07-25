@@ -40,7 +40,6 @@ void	wait_prompt1(t_params *params)
 	t_parse		*st;
 	int			i;
 
-	//remember the last word on the "_" env
 	initialiaze_vars(params, &i, &token, 1);
 	st = NULL;
 	token = NULL;
