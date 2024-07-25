@@ -81,6 +81,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 
 int	in_out_dup(t_parse *st, t_params *params)
 {
+	// printf("[[%s]]\n", st->in_dup);
 		if (check_perms(st, params))
 		{
 			params->status = 1;
