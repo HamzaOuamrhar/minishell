@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/23 16:39:56 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:32:36 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[]
 	params.paths_array = ft_split(params.path, ':');
 	params.sorted_env = set_env(params.env3);// the ctrl+c status=130 remember
 	sort_env(params.sorted_env);
-	// sort_env(params.env); // asking my self why this 
 	ft_free(params.env3);
 	update(&params);
 	params.env2 = list2array(params.env,  &params);
@@ -55,21 +54,6 @@ void	error(t_parse *st, int y, t_params *params)
 	else if (y == 7)	
 		printf("something went wrong !\n");
 	exit(1);
-}
-
-void	signal_handler(int signum, t_parse *st, t_params *params)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-	}
-	else if (signum == SIGQUIT)
-	{
-		freeing(st, params);
-		exit(0);
-	}
-	else
-		return ;
 }
 
 void	ft_join(char **res, t_params *params)

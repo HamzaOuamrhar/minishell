@@ -45,6 +45,7 @@ void	wait_prompt1(t_params *params)
 	token = NULL;
 	while (1)
 	{
+		signal_handle(st, params);
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
 		if (!params->line)

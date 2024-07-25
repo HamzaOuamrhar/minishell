@@ -187,11 +187,11 @@ void	print(t_parse *parse);
 // execution
 
 void	wait_prompt1(t_params *params);
+void	signal_handle(void);
 char	*get_acc_path(char **paths, char *com);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
 void	error(t_parse *st, int y, t_params *params);
-void	signal_handler(int signum, t_parse *st, t_params *params);
 void	free_array(char **array);
 char	**ft_split(char const *s, char c);
 void	excute_cmd(t_parse *st, t_params *params);
