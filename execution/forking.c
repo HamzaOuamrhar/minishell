@@ -37,32 +37,32 @@ int	forking_piping(t_params *params, int i)
 			{
 				if (dup2(params->fds[0], STDIN_FILENO) == -1)
 				{
-					perror("dup2");
-					return (1);
+						perror("dup2");
+						return (1);
+					}
+					close(params->fds[0]);
 				}
+				else if (params->save_fd != -1)
+				{
+					if (dup2(params->save_fd, STDIN_FILENO) == -1)
+					{ 
+						perror("dup2");//remember to close the params->fds in failure cases
+						// return (1);
+					}
+					close(params->save_fd);
+				}
+				}
+				if (i != params->cmds - 1 && i < params->cmds)
+				{
 				close(params->fds[0]);
-			}
-			else if (params->save_fd != -1)
-			{
-				if (dup2(params->save_fd, STDIN_FILENO) == -1)
-				{ 
-					perror("dup2");//remember to close the params->fds in failure cases
-					// return (1);
+				if (dup2(params->fds[1], STDOUT_FILENO) == -1)
+				{
+					perror("dup2");
+						return (1);
 				}
-				close(params->save_fd);
+				close(params->fds[1]);
+				}
 			}
-			}
-			if (i != params->cmds - 1 && i < params->cmds)
-			{
-			close(params->fds[0]);
-			if (dup2(params->fds[1], STDOUT_FILENO) == -1)
-			{
-				perror("dup2");
-					return (1);
-			}
-			close(params->fds[1]);
-			}
-		}
 		// close(params->fds[1]);
 		// close(params->save_fd);
 		close(params->fds[0]);

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	check_perms(t_parse *st)
+int	check_perms(t_parse *st, t_params *params)
 {
 	int		fd;
 	t_files	*tmp;
@@ -10,6 +10,8 @@ int	check_perms(t_parse *st)
 	{
 		if (access(tmp->file, R_OK) == -1 && access(tmp->file, F_OK) != -1)
 		{
+			if (!params->pid)
+				exit (0);
 			printf("shellantics: %s: Permission denied\n", tmp->file);
 			return (1);
 		}
@@ -21,6 +23,8 @@ int	check_perms(t_parse *st)
 		fd = open(tmp->file, O_RDONLY);
 		if (fd == -1)
 		{
+			if (!params->pid)
+				exit (0);
 			printf("shellantics: %s: No such file or directory\n", tmp->file);
 			return (1);
 		}
@@ -62,10 +66,9 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		if (st->out_fd)
 		{
 			dup2(st->out_fd, 1);
-			// if (params->cmds > 1)
+			// if (params->cmds > 1) //this is just a child
 			close (st->out_fd);
 		}
-		slash_path(st, params);
 		if (!st->com_path)
 		{
 			printf("%s :command not found\n", st->cmd[0]);
@@ -73,33 +76,36 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		}
 		execve(st->com_path, st->cmd, params->env2); //protection
 	}
-	// waitpid(params->pid, &status , 0);
-	// if (WIFEXITED(status))
-	// 	params->status = WEXITSTATUS(status);
 	return (0);
 }
 
 int	in_out_dup(t_parse *st, t_params *params)
 {
-	if (check_perms(st))
-	{
-		params->status = 1;
-		return (1);
-	}
-	if (!st->in_fd)
-		st->in_fd = open(st->in_dup, O_RDONLY);
-	st->out_fd = 0;
-	if (st->out_dup)
-	{
-		st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		if (st->out_fd == -1)
+		if (check_perms(st, params))
 		{
-			perror("open"); // handele this later
-			return 1;
+			params->status = 1;
+			if (!params->pid)
+				exit (0);
+			return (1);
 		}
-	}
-	if (!st->cmd[0] || !st->cmd)
-		return (1);
-	excute_cmd_dup(st, params, st->in_fd);
+		if (!st->in_fd)
+			st->in_fd = open(st->in_dup, O_RDONLY);
+		st->out_fd = 0;
+		if (st->out_dup)
+		{
+			// if () handle the append here, just the type on the struct
+			st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777); //get the offset to 0
+			if (st->out_fd == -1)
+			{
+				perror("open"); // handele this later
+				return 1;
+			}
+		}
+	// }
+	// if (!st->cmd[0] || !st->cmd)
+	// 	return (1);
+	// else
+	if (!params->pid)
+		excute_cmd_dup(st, params, st->in_fd);
 	return (1);
 }

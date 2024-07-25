@@ -12,7 +12,8 @@ void	parser_reset(t_parse **st)
 
 void	slash_path(t_parse *st, t_params *params)
 {
-	if (!(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
+	if (!st->cmd || !st->cmd[0]
+		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
 		st->com_path = NULL;
 	else if (access(st->cmd[0], X_OK))
 		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
@@ -22,8 +23,8 @@ void	slash_path(t_parse *st, t_params *params)
 
 int	just_a_checker(t_parse *st, t_params *params)
 {
-	// puts("hello from nothing");
-	if (st->files || st->in_fd) //add redidrection to the pipes
+	// print(st);
+	if (st->files || st->in_fd || st->in_dup) //add redidrection to the pipes
 	{
 		if (in_out_dup(st, params))
 			return (1);
