@@ -8,6 +8,7 @@ int	check_perms(t_parse *st, t_params *params)
 	tmp = st->files;
 	while (tmp)
 	{
+		// printf("[[file==%s]], type==%d\n", tmp->file, tmp->type);
 		if (access(tmp->file, R_OK) == -1 && access(tmp->file, F_OK) != -1)
 		{
 			if (!params->pid)
@@ -59,14 +60,12 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		}
 		if (fd)
 		{
-			lseek(fd, 0, SEEK_SET); //handele this
 			dup2(fd, 0);
 			close (fd);
 		}
 		if (st->out_fd)
 		{
 			dup2(st->out_fd, 1);
-			// if (params->cmds > 1) //this is just a child
 			close (st->out_fd);
 		}
 		if (!st->com_path)
@@ -79,33 +78,44 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 	return (0);
 }
 
+int	get_type(t_files *files, char *s)
+{
+	while (files)
+	{
+		if (!(ft_strcmp(files->file, s)))
+			return (files->type);
+		files = files->next;
+	}
+	return (0);
+}
+
 int	in_out_dup(t_parse *st, t_params *params)
 {
-	// printf("[[%s]]\n", st->in_dup);
-		if (check_perms(st, params))
-		{
-			params->status = 1;
-			if (!params->pid)
-				exit (0);
-			return (1);
-		}
-		if (!st->in_fd)
-			st->in_fd = open(st->in_dup, O_RDONLY);
-		st->out_fd = 0;
-		if (st->out_dup)
-		{
-			// if () handle the append here, just the type on the struct
+	if (check_perms(st, params))
+	{
+		params->status = 1;
+		if (!params->pid)
+			exit (0);
+		return (1);
+	}
+	if (!st->in_fd)
+		st->in_fd = open(st->in_dup, O_RDONLY);
+	st->out_fd = 0;
+	if (st->out_dup)
+	{
+		// if () handle the append here, just the type on the struct
+		if (get_type(st->files, st->out_dup) == 3)
+			st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_APPEND, 0777);
+		else
 			st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777); //get the offset to 0
-			if (st->out_fd == -1)
-			{
-				perror("open"); // handele this later
-				return 1;
-			}
+		if (st->out_fd == -1)
+		{
+			perror("open"); // handele this later
+			return 1;
 		}
-	// }
-	// if (!st->cmd[0] || !st->cmd)
-	// 	return (1);
-	// else
+	}
+	if (!st->cmd[0] || !st->cmd)
+		return (1);
 	if (!params->pid)
 		excute_cmd_dup(st, params, st->in_fd);
 	return (1);

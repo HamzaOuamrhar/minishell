@@ -69,44 +69,44 @@ typedef struct t_garbage
 
 typedef struct t_decl
 {
-    int still;
-    int first;
-    int j;
-    int i;
-    char    *value;
+	int still;
+	int first;
+	int j;
+	int i;
+	char    *value;
 	t_env	*env;
 }   t_decl;
 
 typedef struct t_decl2
 {
-    int     in_quote;
-	int     i;
-	char    quote;
-	char    *n_t_v;
-	int     start;
-	char    *value;
-	int     j;
-	int     z;
-    int     h;
-	int     still;
-}   t_decl2;
+	int		in_quote;
+	int		i;
+	char	quote;
+	char	*n_t_v;
+	int		start;
+	char	*value;
+	int		j;
+	int		z;
+	int		h;
+	int		still;
+}	t_decl2;
 
 typedef struct t_decl3
 {
-	int	l;
+	int		l;
 	char 	*line;
 	int		fd;
-    int	i;
+	int		i;
 	int		f_time;
-}   t_decl3;
+}	t_decl3;
 
 typedef struct t_files
 {
-    char    *file;
-    int		type;
-    int		is_amb;
-    struct t_files *next;
-}   t_files;
+	char	*file;
+	int		type;
+	int		is_amb;
+	struct t_files *next;
+}	t_files;
 
 typedef struct t_params
 {
@@ -138,6 +138,7 @@ typedef struct t_parse
 	char			*out_dup;
 	int				in_fd;
 	int				out_fd;
+	int				i;
 	struct t_parse *next;
 }		t_parse;
 
