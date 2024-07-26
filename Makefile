@@ -11,7 +11,7 @@ EXECUTION_DIR = execution
 SIGNALS_DIR = signals
 PARSING_DIR = parsing
 
-M_SOURCES = $(wildcard $(EXECUTION_DIR)/*.c $(PARSING_DIR)/*.c $(SIGNALS_DIR)/*.)
+M_SOURCES = $(wildcard $(EXECUTION_DIR)/*.c $(PARSING_DIR)/*.c $(SIGNALS_DIR)/*.c)
 
 M_OBJECTS = ${M_SOURCES:.c=.o}
 

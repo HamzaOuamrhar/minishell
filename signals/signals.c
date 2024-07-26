@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:28:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/25 19:20:28 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:10:12 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		puts("this is  a signal");
 		printf("\n");
-		rl_replace_line();
-		return ;
+		puts("this is  a signal");
+		// rl_replace_line();
+		// return ;
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -34,4 +34,3 @@ void	signal_handle(void)
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 }
-
