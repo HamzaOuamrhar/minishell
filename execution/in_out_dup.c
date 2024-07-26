@@ -48,9 +48,6 @@ int	check_builtins(char *s)
 
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
-	int	status;
-
-	status = 0;
 	if (!params->pid)
 	{
 		if (check_builtins(st->cmd[0]))
