@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:28:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/26 15:10:12 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:58:27 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 void	signal_handler(int sig)
 {
+	if (sig == SIGQUIT)
+		return ;
 	if (sig == SIGINT)
 	{
-		printf("\n");
-		puts("this is  a signal");
-		// rl_replace_line();
-		// return ;
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-	else if (sig == SIGQUIT)
-	{
-		puts("sigquit");
-		// freeing(st, params); //need to free
-		exit(0);
-	}
+	else
+		return ;
 }
 
 void	signal_handle(void)
