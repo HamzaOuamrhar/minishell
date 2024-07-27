@@ -48,9 +48,6 @@ int	check_builtins(char *s)
 
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
-	int	status;
-
-	status = 0;
 	if (!params->pid)
 	{
 		if (check_builtins(st->cmd[0]))
@@ -98,20 +95,23 @@ int	in_out_dup(t_parse *st, t_params *params)
 			exit (0);
 		return (1);
 	}
-	if (!st->in_fd)
-		st->in_fd = open(st->in_dup, O_RDONLY);
-	st->out_fd = 0;
-	if (st->out_dup)
+	if (!params->pid)
 	{
-		// if () handle the append here, just the type on the struct
-		if (get_type(st->files, st->out_dup) == 3)
-			st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_APPEND, 0777);
-		else
-			st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777); //get the offset to 0
-		if (st->out_fd == -1)
+		if (!st->in_fd)
+			st->in_fd = open(st->in_dup, O_RDONLY);
+		st->out_fd = 0;
+		if (st->out_dup)
 		{
-			perror("open"); // handele this later
-			return 1;
+			// if () handle the append here, just the type on the struct
+			if (get_type(st->files, st->out_dup) == 3)
+				st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_APPEND, 0777);
+			else
+				st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777); //get the offset to 0
+			if (st->out_fd == -1)
+			{
+				perror("open"); // handele this later
+				return 1;
+			}
 		}
 	}
 	if (!st->cmd[0] || !st->cmd)
