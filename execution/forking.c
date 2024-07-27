@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	forking_piping(t_params *params, int i)
+void	forking_piping(t_params *params, int i)
 {
 	ssize_t		r;
 	char		buffer[500];
@@ -26,7 +26,7 @@ int	forking_piping(t_params *params, int i)
 			{
 				close(params->fds[0]);
 				close(params->fds[1]);
-				return (1);
+				return ;
 			}
 		}
 		else //middle or last command
@@ -38,7 +38,7 @@ int	forking_piping(t_params *params, int i)
 				if (dup2(params->fds[0], STDIN_FILENO) == -1)
 				{
 						perror("dup2");
-						return (1);
+						return ;
 					}
 					close(params->fds[0]);
 				}
@@ -47,7 +47,7 @@ int	forking_piping(t_params *params, int i)
 					if (dup2(params->save_fd, STDIN_FILENO) == -1)
 					{ 
 						perror("dup2");//remember to close the params->fds in failure cases
-						// return (1);
+						// return ;
 					}
 					close(params->save_fd);
 				}
@@ -58,16 +58,15 @@ int	forking_piping(t_params *params, int i)
 				if (dup2(params->fds[1], STDOUT_FILENO) == -1)
 				{
 					perror("dup2");
-						return (1);
+					return ;
 				}
 				close(params->fds[1]);
 				}
 			}
 		// close(params->fds[1]);
-		// close(params->save_fd);
+		// close(params->save_fd); //need to do something here
 		close(params->fds[0]);
 	}
-	return (0);
 }
 
 void	forking_checker(t_parse *st, t_params *params, int i)
@@ -84,8 +83,9 @@ void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
 	{
 		params->flag = 0;
 		*token = NULL;
-		params->status = 0;
-	}	
+		_g_signal = 0;
+	}
+	_g_signal = 0;
 	params->pid = 1;
 	params->flag_2 = 0;
 	params->save_fd = -1;

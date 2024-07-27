@@ -90,7 +90,7 @@ int	in_out_dup(t_parse *st, t_params *params)
 {
 	if (check_perms(st, params))
 	{
-		params->status = 1;
+		_g_signal = 1;
 		if (!params->pid)
 			exit (0);
 		return (1);

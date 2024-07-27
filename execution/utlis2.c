@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/20 20:15:11 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/27 22:49:06 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	checking_cmd(t_parse *st, t_params *params)
 {
-	params->status = 0;//remember to update this frero
+	_g_signal = 0;//remember to update this frero
 	// puts("here we go again");
 	// print(st);
 	if (!(ft_strcmp(st->cmd[0], "exit")))

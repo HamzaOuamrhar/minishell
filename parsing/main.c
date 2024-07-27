@@ -46,6 +46,7 @@ void	wait_prompt1(t_params *params)
 	while (1)
 	{
 		signal_handle();
+		_g_signal = 1;
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
 		if (!params->line)
@@ -108,7 +109,7 @@ void	wait_prompt1(t_params *params)
 							exit (0);
 						}
 						params->flag = 1;
-						params->status = 127;
+						_g_signal = 127;
 						printf("shellantics: %s :command not found\n", st->cmd[0]); //this is just a function
 					}
 					else
@@ -135,7 +136,7 @@ void	wait_prompt1(t_params *params)
 					i++;
 				}
 				initialiaze_vars(params, &i, &token, 0);
-				while (wait(0) != -1 || errno != ECHILD)
+				while (wait(0) != -1) // add the  errno != ECHILD
 					;
 			}
 		}

@@ -31,6 +31,7 @@
 # define RESET_TEXT "\033[0m"
 # define BLUE_TEXT "\033[1;34m"
 
+int		_g_signal;
 
 typedef	struct	t_env
 {
@@ -187,7 +188,7 @@ void	print(t_parse *parse);
 // execution
 
 void	wait_prompt1(t_params *params);
-void	signal_handle(void);
+void	signal_handle();
 char	*get_acc_path(char **paths, char *com);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);

@@ -20,7 +20,7 @@ void	expand_line(char **line, t_params *params)
 		while ((*line)[decl.i] && (is_alph_num((*line)[decl.i]) || (*line)[decl.i] == '_'))
 			decl.i++;
 		if ((*line)[decl.start] == '?')
-			decl.value = ft_strdup(ft_itoa(params->status));
+			decl.value = ft_strdup(ft_itoa(_g_signal));
 		else
 			decl.value = get_key(ft_mysubstr(*line, decl.start, decl.i - decl.start), params->env);
 		if (decl.value)
