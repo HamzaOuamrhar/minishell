@@ -23,7 +23,6 @@ void	slash_path(t_parse *st, t_params *params)
 
 int	just_a_checker(t_parse *st, t_params *params)
 {
-	// print(st);
 	if (st->files || st->in_fd || st->in_dup) //add redidrection to the pipes
 	{
 		if (in_out_dup(st, params))
@@ -125,18 +124,18 @@ void	wait_prompt1(t_params *params)
 						params->flag = 0; // this could cause a problem
 						if (i != 0)
 							close(params->save_fd);
-   						if (i != params->cmds - 1)
-   						{
-   					   		close(params->fds[1]);
+						if (i != params->cmds - 1)
+						{
+							close(params->fds[1]);
 							params->save_fd = params->fds[0];
 							params->flag_2 = 1;
-   						}
+						}
 					}
 					st = st->next;
 					i++;
 				}
 				initialiaze_vars(params, &i, &token, 0);
-				while (wait(0) != -1) // add the  errno != ECHILD
+				while (waitpid(-1, NULL, 0) > 0 || errno != ECHILD)
 					;
 			}
 		}

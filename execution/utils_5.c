@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/21 16:16:56 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:06:16 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	unset_cmd1(t_env **env, char *s)
 			free (tmp2->key);
 			free (tmp2->value);
 			free (tmp2);
-			return ;
+			return ;	
 		}
 		tmp = tmp->next;
 	}
