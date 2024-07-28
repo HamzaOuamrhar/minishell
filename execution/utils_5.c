@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/28 17:06:16 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:39:05 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,12 @@ void	unset_cmd1(t_env **env, char *s)
 			tmp2 = tmp->next;
 			if (tmp->next->next)
 				tmp->next = tmp->next->next;
+			else
+				tmp->next  = NULL;
 			free (tmp2->key);
 			free (tmp2->value);
 			free (tmp2);
-			return ;	
+			return ;
 		}
 		tmp = tmp->next;
 	}
@@ -83,7 +85,7 @@ void	unset_cmd(t_parse *st, t_params *params)
 			unset_cmd1(&(params->env), st->cmd[i]);
 			unset_cmd1(&(params->sorted_env), st->cmd[i]);
 		}
-		i++;
+		i++;	
 	}
 	free_update(NULL, params);
 }
