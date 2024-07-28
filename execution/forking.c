@@ -90,4 +90,5 @@ void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
 	params->flag_2 = 0;
 	params->save_fd = -1;
 	*i = 0;
+	rl_catch_signals = 0;
 }
