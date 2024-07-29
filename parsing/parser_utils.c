@@ -26,6 +26,8 @@ void	parse_append(t_token **tokens, t_parse **new_parse)
 
 void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
 {
+	if (read(0, 0, 0) != 0)
+		return ;
 	(*new_parse)->i ++;
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
@@ -57,6 +59,7 @@ t_files	*last_node_files(t_files *files)
 		files = files->next;
 	return (files);
 }
+
 void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse)
 {
 	t_files	*new;

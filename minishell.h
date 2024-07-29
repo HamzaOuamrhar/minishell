@@ -183,6 +183,7 @@ void	is_in_quote(t_decl2 *decl, char *t_v);
 void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
 void	not_w_first_i(t_decl *decl, char **n_t_v, t_token **token);
 void	print(t_parse *parse);
+void	heredoc_sig(int sig);
 
 // execution
 
