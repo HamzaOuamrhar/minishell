@@ -10,15 +10,11 @@ void	parser_reset(t_parse **st)
 	}
 }
 
-void	slash_path(t_parse *st, t_params *params)
+int	check_in_files(t_parse *st, t_params *params)
 {
-	if (!st->cmd || !st->cmd[0]
-		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
-		st->com_path = NULL;
-	else if (access(st->cmd[0], X_OK))
-		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
-	else
-		st->com_path = ft_copy(st->cmd[0]);
+	if (check_perms(st, params))
+		return (1);
+	return (0);
 }
 
 int	just_a_checker(t_parse *st, t_params *params)
@@ -69,10 +65,23 @@ void	wait_prompt1(t_params *params)
 				// print(st);
 				while (st)
 				{
-					////imad"first");
+					// if (st && st->next)
+						puts("its here");
 					update_(st, params);
+					if (check_in_files(st, params))
+					{
+						// st = st->next;
+						tokens_reset(&token);
+						parser_reset(&st);
+						// if (st->next)
+						// 	puts("not null");
+						printf("[%s]\n", st->in_dup);//sgv here
+						// continue ;
+						break ;
+					}
 					forking_checker(st, params, i);
-					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && just_a_checker(st, params))
+					////imad"first");
+					if ((!params->pid || (params->cmds == 1 && params->pid )) && just_a_checker(st, params))
 					{
 						////imad"in checker");
 						tokens_reset(&token);
