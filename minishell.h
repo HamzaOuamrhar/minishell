@@ -98,7 +98,6 @@ typedef struct t_decl3
 	char 	*line;
 	int		fd;
 	int		i;
-	int		f_time;
 }	t_decl3;
 
 typedef struct t_files
