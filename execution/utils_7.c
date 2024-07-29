@@ -72,3 +72,13 @@ void	update_(t_parse *st, t_params *params)
 	}
 }
 
+int	check_builtins(char *s)
+{
+	if (!(ft_strcmp(s, "cd")) || !(ft_strcmp(s, "export"))
+		|| !(ft_strcmp(s, "unset"))
+		|| !(ft_strcmp(s, "env")) || !(ft_strcmp(s, "exit"))
+		||!(ft_strcmp(s, "pwd"))
+		||!(ft_strcmp(s, ".")))
+		return (1);
+	return (0);
+}

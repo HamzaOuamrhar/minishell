@@ -70,11 +70,11 @@ typedef struct t_garbage
 
 typedef struct t_decl
 {
-	int still;
-	int first;
-	int j;
-	int i;
-	char    *value;
+	int		still;
+	int		first;
+	int		j;
+	int		i;
+	char	*value;
 	t_env	*env;
 }   t_decl;
 

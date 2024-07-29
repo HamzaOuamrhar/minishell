@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:05:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/09 23:09:58 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/29 09:22:17 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,3 +72,8 @@ char	*ft_copy(const char *s)
 	res[i] = '\0';
 	return (res);
 }
+
+// void	echo_cmd(t_parse *st)
+// {
+// 	int
+// }

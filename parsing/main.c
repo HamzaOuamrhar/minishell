@@ -23,6 +23,7 @@ void	slash_path(t_parse *st, t_params *params)
 
 int	just_a_checker(t_parse *st, t_params *params)
 {
+	////imad"gets to inpu");
 	if (st->files || st->in_fd || st->in_dup) //add redidrection to the pipes
 	{
 		if (in_out_dup(st, params))
@@ -62,16 +63,19 @@ void	wait_prompt1(t_params *params)
 				// print(st);
 				while (st)
 				{
+					////imad"first");
 					update_(st, params);
 					forking_checker(st, params, i);
 					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && just_a_checker(st, params))
 					{
+						////imad"in checker");
 						tokens_reset(&token);
 						parser_reset(&st);
 						if (!params->pid)
 							exit (0);
 						continue ;
 					}
+					////imad"hello form main");
 					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && checking_cmd(st, params))
 					{
 						tokens_reset(&token);
@@ -109,7 +113,7 @@ void	wait_prompt1(t_params *params)
 						}
 						params->flag = 1;
 						_g_signal = 127;
-						printf("shellantics: %s :command not found\n", st->cmd[0]); //this is just a function
+						printf("shellantics: %s :command not here found\n", st->cmd[0]); //this is just a function
 					}
 					else
 						excute_cmd(st, params);
