@@ -12,7 +12,7 @@ void	forking_piping(t_params *params, int i)
 	{
 		perror("fork)");
 	}//handle failure
-	if (params->pid == 0)
+	if (!params->pid)
 	{
 		if (params->flag && i > 1 && params->flag_2)
 		{
@@ -73,8 +73,11 @@ void	forking_checker(t_parse *st, t_params *params, int i)
 {
 	slash_path(st, params);
 	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
-		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //do not check for the command path
+		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //check this later
+		{
+			////imad"have benn forked");
 			forking_piping(params, i);
+		} //do not check for the command path
 }
 
 void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)

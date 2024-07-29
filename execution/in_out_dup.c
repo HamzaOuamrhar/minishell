@@ -35,16 +35,7 @@ int	check_perms(t_parse *st, t_params *params)
 	return (0);
 }
 
-int	check_builtins(char *s)
-{
-	if (!(ft_strcmp(s, "cd")) || !(ft_strcmp(s, "export"))
-		|| !(ft_strcmp(s, "unset"))
-		|| !(ft_strcmp(s, "env")) || !(ft_strcmp(s, "exit"))
-		||!(ft_strcmp(s, "pwd"))
-		||!(ft_strcmp(s, ".")))
-		return (1);
-	return (0);
-}
+
 
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
@@ -86,8 +77,47 @@ int	get_type(t_files *files, char *s)
 	return (0);
 }
 
+int	open_files(t_parse *st)
+{
+	t_files	*file;
+
+	file = st->files;
+	if (st->in_dup)
+		st->in_fd = open(st->in_dup, O_RDONLY);
+	if (st->in_fd == -1)
+	{
+		perror("open"); // handele this later
+		return (1);
+	}
+	while (file)
+	{
+		if (file->is_amb)
+		{
+			close(st->in_fd);
+			_g_signal = 1;
+			printf("shellantics: ambiguous redirect\n"); //fucking problem witht the status value
+			return (1);
+		}
+		if (file->type == 2)
+			st->out_fd = open(file->file, O_RDWR | O_CREAT, 0777);
+		else if (file->type == 3)
+			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_APPEND, 0777);
+		if (st->out_fd == -1)
+		{
+			perror("open"); // handele this later
+			return (1); //this shoule be 0
+		}
+		if (file->next)
+			close (st->out_fd);
+		file = file->next;
+	}
+	return (0);
+}
+
 int	in_out_dup(t_parse *st, t_params *params)
 {
+	////imad"gots here");
+	////imad"hello in_out  \n");
 	if (check_perms(st, params))
 	{
 		_g_signal = 1;
@@ -95,24 +125,11 @@ int	in_out_dup(t_parse *st, t_params *params)
 			exit (0);
 		return (1);
 	}
+	st->in_fd = 0;
 	if (!params->pid)
 	{
-		if (!st->in_fd)
-			st->in_fd = open(st->in_dup, O_RDONLY);
-		st->out_fd = 0;
-		if (st->out_dup)
-		{
-			// if () handle the append here, just the type on the struct
-			if (get_type(st->files, st->out_dup) == 3)
-				st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_APPEND, 0777);
-			else
-				st->out_fd = open(st->out_dup, O_RDWR | O_CREAT | O_TRUNC, 0777); //get the offset to 0
-			if (st->out_fd == -1)
-			{
-				perror("open"); // handele this later
-				return 1;
-			}
-		}
+		if (open_files(st))
+			exit (0);
 	}
 	if (!st->cmd[0] || !st->cmd)
 		return (1);
@@ -120,3 +137,4 @@ int	in_out_dup(t_parse *st, t_params *params)
 		excute_cmd_dup(st, params, st->in_fd);
 	return (1);
 }
+

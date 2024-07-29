@@ -5,10 +5,3 @@ minishell.h
 out
 parsing
 signals
-Makefile
-execution
-minishell
-minishell.h
-out
-parsing
-signals
