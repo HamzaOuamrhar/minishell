@@ -31,9 +31,8 @@ void	initialize_parse(t_decl3 *decl, t_count *count, t_parse **new_parse, t_pars
 	(*new_parse)->i = 0;
 	(*new_parse)->files = NULL;
 	(*new_parse)->in_fd = 0;
-	if (decl->f_time)
+	if (*parse)
 		(*new_parse)->i = ++(*parse)->i;
-	decl->f_time ++;
 	(*new_parse)->cmd = ft_malloc((1 + count->words - count->in - count->out - count->app) * sizeof(char **), 1);
 	(*new_parse)->in_dup = NULL;
 	(*new_parse)->out_dup = NULL;
@@ -53,8 +52,7 @@ void parsing(t_token **tokens, t_parse **new_parse, t_decl3 *decl, t_params *par
 			parse_append(tokens, new_parse);
 		else if ((*tokens) && ft_strcmp((*tokens)->type, "HEREDOC") == 0)
 			parse_heredoc(decl, tokens, new_parse, params);
-		if ((*tokens))
-			(*tokens) = (*tokens)->next;
+		(*tokens) = (*tokens)->next;
 	}
 }
 
@@ -66,7 +64,6 @@ void	parser(t_token *tokens, t_parse **parse, t_params *params)
 	t_count	count;
 
 	copie = tokens;
-	decl.f_time = 0;
 	while (tokens)
 	{
 		count_things(&copie, &count);
