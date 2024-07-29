@@ -1,5 +1,14 @@
 #include "../minishell.h"
 
+void	heredoc_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		close(0);
+		_g_signal = 1;
+	}
+}
+
 void	count_things(t_token **tokens, t_count *count)
 {
 	count->in = 0;
@@ -63,6 +72,8 @@ void	parser(t_token *tokens, t_parse **parse, t_params *params)
 	t_decl3	decl;
 	t_count	count;
 
+	int fd = dup(0);
+	signal(SIGINT, heredoc_sig);
 	copie = tokens;
 	while (tokens)
 	{
@@ -74,4 +85,6 @@ void	parser(t_token *tokens, t_parse **parse, t_params *params)
 		if (tokens)
 			tokens = tokens->next;
 	}
+	dup2(fd, 0);
+	close(fd);
 }
