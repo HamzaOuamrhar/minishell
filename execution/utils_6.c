@@ -15,6 +15,7 @@ void	update_shlvl(t_params *params)
 	int			n;
 	char		*lvl;
 
+	rl_catch_signals = 0;
 	n = ft_shell_atoi(get_key("SHLVL", params->env));
 	if (n == -1)
 	{
