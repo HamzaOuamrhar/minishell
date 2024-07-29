@@ -57,7 +57,6 @@ typedef	struct t_token
 	int 			wh;
 	int 			here;
 	int 			has_q;
-	int 			status;
 	t_env			*env;
 	struct t_token	*next;
 }	t_token;
@@ -121,7 +120,6 @@ typedef struct t_params
 	t_env			*env;
 	int				export_f;
 	int				q;
-	int				status;
 	char			*line;
 	int				save_fd;
 	int				i;

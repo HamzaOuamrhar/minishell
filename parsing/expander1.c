@@ -19,7 +19,7 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		(*token)->flag = 1;
 }
 
-void	get_value(t_decl *decl, int *i, char *token_value, int status)
+void	get_value(t_decl *decl, int *i, char *token_value)
 {
 	decl->j = 0;
 	(*i)++;
@@ -33,7 +33,7 @@ void	get_value(t_decl *decl, int *i, char *token_value, int status)
 			(*i)++;
 	}
 	if (token_value[decl->first] == '?')
-		decl->value = ft_strdup(ft_itoa(status));
+		decl->value = ft_strdup(ft_itoa(_g_signal));
 	else
 		decl->value = get_key(ft_mysubstr(token_value,
 				decl->first, (*i) - decl->first), decl->env);
@@ -49,7 +49,7 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 	{
 		if (token_value[*i] == '$')
 		{
-			get_value(&decl, i, token_value, (*token)->status);
+			get_value(&decl, i, token_value);
 			if (!decl.value)
 				*n_t_v = ft_strjoin(*n_t_v, "");
 			else
@@ -75,7 +75,6 @@ void	non_quotes_expander(t_token **token, t_params params)
 	char	*n_t_v;
 	t_token	*tmp;
 
-	(*token)->status = params.status;
 	i = 0;
 	n_t_v = NULL;
 	tmp = *token;

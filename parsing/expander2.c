@@ -47,7 +47,7 @@ void	double_quote_key(t_decl2 *decl, char *t_v, t_params params)
 			decl->i++;
 	}
 	if (t_v[decl->start] == '?')
-		decl->value = ft_strdup(ft_itoa(params.status));
+		decl->value = ft_strdup(ft_itoa(_g_signal));
 	else
 		decl->value = get_key(ft_mysubstr(t_v, decl->start, decl->i - decl->start), params.env);
 	if (decl->value)
