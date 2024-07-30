@@ -93,18 +93,20 @@ void	forking_piping(t_params *params)
 		// close(params->fds[1]);
 		// close(params->save_fd); //need to do something here
 		close(params->fds[0]);
+		// close(params->fds[1]);
 	}
 }
 
 void	forking_checker(t_parse *st, t_params *params)
 {
+	// (void)st;
 	slash_path(st, params);
-	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
-		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //check this later
-		{
-			////imad"have benn forked");
-			forking_piping(params);
-		} //do not check for the command path
+	// if (params->cmds == 1) //check this later
+	// {
+	forking_piping(params);
+		// params->pid = fork();
+	//do not check for the command path
+	// else
 }
 
 void	initialiaze_vars(t_params *params, t_token **token, int f)
@@ -119,4 +121,5 @@ void	initialiaze_vars(t_params *params, t_token **token, int f)
 	params->pid = 1;
 	params->flag_2 = 0;
 	params->save_fd = -1;
+	params->i = 0;
 }

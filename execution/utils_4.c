@@ -73,6 +73,19 @@ void	free_update(char **res, t_params *params)
 	params->paths_array = ft_split(params->path, ':');
 }
 
+
+char	**export_checker2(char **res, char *s, int i)
+{
+	if (i < (int)ft_strlen(s))
+	{
+		res[1] = ft_copy(&s[i]);
+		res[2] = NULL;
+	}
+	else
+		res[1] = NULL;//possible a leak here be carefull
+	return (res);
+}
+
 char	**export_checker(char *s)
 {
 	int		i;
@@ -93,16 +106,4 @@ char	**export_checker(char *s)
 	}
 	res[0][i++] = '\0';
 	return (export_checker2(res, s, i));
-}
-
-char	**export_checker2(char **res, char *s, int i)
-{
-	if (i < (int)ft_strlen(s))
-	{
-		res[1] = ft_copy(&s[i]);
-		res[2] = NULL;
-	}
-	else
-		res[1] = NULL;//possible a leak here be carefull
-	return (res);
 }
