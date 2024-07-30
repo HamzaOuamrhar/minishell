@@ -58,3 +58,5 @@ void	other_cmds(t_parse *st, t_params *params, t_token *token)//problem in herdo
 		}
 	}
 }
+
+cd execction > out
