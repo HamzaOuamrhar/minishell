@@ -24,10 +24,10 @@ void	parse_append(t_token **tokens, t_parse **new_parse)
 	(*tokens) = (*tokens)->next;
 }
 
-void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
+int	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
 {
 	if (read(0, 0, 0) != 0)
-		return ;
+		return (0);
 	(*new_parse)->i ++;
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
@@ -51,6 +51,7 @@ void	parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_param
 	}
 	close(decl->fd);
 	(*tokens) = (*tokens)->next;
+	return (1);
 }
 
 t_files	*last_node_files(t_files *files)

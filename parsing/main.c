@@ -46,7 +46,6 @@ void	wait_prompt1(t_params *params)
 	while (1)
 	{
 		signal_handle();
-		_g_signal = 0;
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
 		if (!params->line)
@@ -58,8 +57,7 @@ void	wait_prompt1(t_params *params)
 			if (!syntax(token))
 			{
 				expander(token, *params);
-				parser(token, &st, params);
-				if (_g_signal)
+				if (!parser(token, &st, params))
 				{
 					tokens_reset(&token);
 					parser_reset(&st);
