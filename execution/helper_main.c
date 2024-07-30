@@ -20,14 +20,21 @@ void	excute_builtins(t_parse *st, t_params *params)
 void	executing(t_parse *st, t_params *params, t_token *token)
 {
 	(void)token;
-	forking_checker(st, params);
+	// forking_checker(st, params);
+	// if (params->i != params->cmds - 1)
+		pipe(params->fds);
+	params->pid = fork();
 	if (!params->pid)
 	{
-		just_a_checker(st, params);
+		forking_piping(params);
+		puts("child");
 		if (check_builtins(st->cmd[0]))
 			checking_cmd(st, params);
 		else
 		{
+			just_a_checker(st, params);
+			puts("hello");
+			slash_path(st, params);
 			if (!st->com_path || !ft_strlen(st->cmd[0])) //check the "." and ".."
 			{
 				if (!params->pid)
@@ -45,12 +52,14 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 		}
 		exit (0);
 	}
+	// close (params->fds[1]);
+	// close (params->save_fd);
 	if (params->i == params->cmds - 1)
 	{
 		waitpid(params->pid, 0, 0);
-		return ;
-		close(params->fds[0]);
-		close(params->fds[1]);
+		// return ;
+		// close(params->fds[0]);
+		// close(params->fds[1]);
 	}
 	params->flag = 0; // this could cause a problem
 	if (params->i != 0)

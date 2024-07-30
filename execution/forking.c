@@ -31,17 +31,17 @@ void	forking_piping(t_params *params)
 	ssize_t		r;
 	char		buffer[500];
 
-	if (params->i != params->cmds - 1)
-		pipe(params->fds);
-	params->pid = fork();
-	if (params->pid < 0) 
-	{
-		perror("fork)");
-		return ;
-	}
-	//handle failure
-	if (!params->pid)
-	{
+	// if (params->i != params->cmds - 1)
+	// 	pipe(params->fds);
+	// params->pid = fork();
+	// if (params->pid < 0) 
+	// {
+	// 	perror("fork)");
+	// 	return ;
+	// }
+	// //handle failure
+	// if (!params->pid)
+	// {
 		if (params->flag && params->i > 1 && params->flag_2)
 		{
 			r = 1;
@@ -82,19 +82,19 @@ void	forking_piping(t_params *params)
 				}
 				if (params->i != params->cmds - 1 && params->i < params->cmds)
 				{
-				close(params->fds[0]);
-				if (dup2(params->fds[1], STDOUT_FILENO) == -1)
-				{
-					perror("dup2");
-					return ;
-				}
-				close(params->fds[1]);
+					close(params->fds[0]);
+					if (dup2(params->fds[1], STDOUT_FILENO) == -1)
+					{
+						perror("dup2");
+						return ;
+					}
+					close(params->fds[1]);
 				}
 			}
 		// close(params->fds[1]);
 		// close(params->save_fd); //need to do something here
 		close(params->fds[0]);
-	}
+	// }
 }
 void	forking_checker(t_parse *st, t_params *params)
 {
