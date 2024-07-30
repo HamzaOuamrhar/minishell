@@ -20,20 +20,24 @@ void	excute_builtins(t_parse *st, t_params *params)
 void	executing(t_parse *st, t_params *params, t_token *token)
 {
 	(void)token;
+	////imad"here");
+	params->flag = 0;
 	// forking_checker(st, params);
-	// if (params->i != params->cmds - 1)
+	if (params->i != params->cmds - 1)
 		pipe(params->fds);
 	params->pid = fork();
 	if (!params->pid)
 	{
 		forking_piping(params);
-		puts("child");
+		// fprintf(stdout, "hello\n");
+		// puts("hello 1");
+		////imad"child");
 		if (check_builtins(st->cmd[0]))
 			checking_cmd(st, params);
 		else
 		{
+			////imad"hello");
 			just_a_checker(st, params);
-			puts("hello");
 			slash_path(st, params);
 			if (!st->com_path || !ft_strlen(st->cmd[0])) //check the "." and ".."
 			{
@@ -45,15 +49,15 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 				}
 				params->flag = 1;
 				_g_signal = 127;
-				printf("shellantics: %s :command not found\n", st->cmd[0]); //this is just a function
+				fprintf(stderr, "shellantics: %s :command not found\n", st->cmd[0]); //this is just a function
 			}
 			else
 				excute_cmd(st, params);
 		}
 		exit (0);
 	}
-	// close (params->fds[1]);
-	// close (params->save_fd);
+	close (params->fds[1]);
+	close (params->save_fd);
 	if (params->i == params->cmds - 1)
 	{
 		waitpid(params->pid, 0, 0);
@@ -80,7 +84,7 @@ void	excute_cmds(t_parse *st, t_params *params, t_token *token)
 		excute_builtins(st, params);
 	else
 	{
-		puts("here");
+		////imad"here");
 		executing(st, params, token);
 		// other_cmds(st, params, token);
 	}

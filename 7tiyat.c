@@ -6,9 +6,9 @@ void	other_cmds(t_parse *st, t_params *params, t_token *token)//problem in herdo
 	forking_checker(st, params);
 	if (check_builtins(st->cmd[0]))
 	{
-	puts("here");
+	////imad"here");
 		// printf("pid %d tttt %d\n", params->pid, (!params->pid && check_builtins(st->cmd[0])));
-		// puts("gets here");
+		// ////imad"gets here");
 		// printf ("%s]]\n", st->cmd[0]);
 		// tokens_reset(&token);
 		// parser_reset(&st);
@@ -59,4 +59,6 @@ void	other_cmds(t_parse *st, t_params *params, t_token *token)//problem in herdo
 	}
 }
 
-cd execction > out
+
+//cd execction > out
+// just write it into the 2 stderror

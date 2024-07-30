@@ -50,6 +50,7 @@ void	forking_piping(t_params *params)
 		}
 		if (params->i == 0 && params->cmds > 1)
 		{
+			////imad"secure");
 			if (first_cmd(params->fds))
 			{
 				close(params->fds[0]);
@@ -61,24 +62,24 @@ void	forking_piping(t_params *params)
 		{
 			if (params->i != 0)
 			{
-			if (params->flag  && params->i != params->cmds - 1)
-			{
-				if (dup2(params->fds[0], STDIN_FILENO) == -1)
+				if (params->flag  && params->i != params->cmds - 1)
 				{
-						perror("dup2");
-						return ;
+					if (dup2(params->fds[0], STDIN_FILENO) == -1)
+					{
+							perror("dup2");
+							return ;
+						}
+						close(params->fds[0]);
 					}
-					close(params->fds[0]);
-				}
-				else if (params->save_fd != -1)
-				{
-					if (dup2(params->save_fd, STDIN_FILENO) == -1)
-					{ 
-						perror("dup2");//remember to close the params->fds in failure cases
-						// return ;
+					else if (params->save_fd != -1)
+					{
+						if (dup2(params->save_fd, STDIN_FILENO) == -1)
+						{ 
+							perror("dup2");//remember to close the params->fds in failure cases
+							// return ;
+						}
+						close(params->save_fd);
 					}
-					close(params->save_fd);
-				}
 				}
 				if (params->i != params->cmds - 1 && params->i < params->cmds)
 				{
