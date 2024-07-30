@@ -35,8 +35,6 @@ int	check_perms(t_parse *st, t_params *params)
 	return (0);
 }
 
-
-
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
 	if (!params->pid)

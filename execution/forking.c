@@ -1,26 +1,53 @@
 #include "../minishell.h"
 
-void	forking_piping(t_params *params, int i)
+int first_cmd(int fds[2])
+{
+    close(fds[0]);
+	if (dup2(fds[1], STDOUT_FILENO) == -1)
+    {
+        ////imad"error in dup");
+        return (1);
+    }
+	close(fds[1]);
+	// close(fds[0]);
+    return (0);
+}
+
+int last_cmd(int fds[2])
+{
+    close(fds[1]);
+	if (dup2(fds[0], STDIN_FILENO) == -1)
+    {
+        ////imad"error in dup");
+        return (1);
+    }
+	close(fds[0]);
+    return (0);
+}
+
+void	forking_piping(t_params *params)
 {
 	ssize_t		r;
 	char		buffer[500];
 
-	if (i != params->cmds - 1)
+	if (params->i != params->cmds - 1)
 		pipe(params->fds);
 	params->pid = fork();
 	if (params->pid < 0) 
 	{
 		perror("fork)");
-	}//handle failure
+		return ;
+	}
+	//handle failure
 	if (!params->pid)
 	{
-		if (params->flag && i > 1 && params->flag_2)
+		if (params->flag && params->i > 1 && params->flag_2)
 		{
 			r = 1;
 			while (r)	
 				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
 		}
-		if (i == 0 && params->cmds > 1)
+		if (params->i == 0 && params->cmds > 1)
 		{
 			if (first_cmd(params->fds))
 			{
@@ -31,9 +58,9 @@ void	forking_piping(t_params *params, int i)
 		}
 		else //middle or last command
 		{
-			if (i != 0)
+			if (params->i != 0)
 			{
-			if (params->flag  && i != params->cmds - 1)
+			if (params->flag  && params->i != params->cmds - 1)
 			{
 				if (dup2(params->fds[0], STDIN_FILENO) == -1)
 				{
@@ -52,7 +79,7 @@ void	forking_piping(t_params *params, int i)
 					close(params->save_fd);
 				}
 				}
-				if (i != params->cmds - 1 && i < params->cmds)
+				if (params->i != params->cmds - 1 && params->i < params->cmds)
 				{
 				close(params->fds[0]);
 				if (dup2(params->fds[1], STDOUT_FILENO) == -1)
@@ -69,18 +96,18 @@ void	forking_piping(t_params *params, int i)
 	}
 }
 
-void	forking_checker(t_parse *st, t_params *params, int i)
+void	forking_checker(t_parse *st, t_params *params)
 {
 	slash_path(st, params);
 	if ((!(params->cmds == 1 && check_builtins(st->cmd[0]))
 		|| (params->cmds == 1 && !check_builtins(st->cmd[0])))) //check this later
 		{
 			////imad"have benn forked");
-			forking_piping(params, i);
+			forking_piping(params);
 		} //do not check for the command path
 }
 
-void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
+void	initialiaze_vars(t_params *params, t_token **token, int f)
 {
 	if (f)
 	{
@@ -92,5 +119,4 @@ void	initialiaze_vars(t_params *params, int *i, t_token **token, int f)
 	params->pid = 1;
 	params->flag_2 = 0;
 	params->save_fd = -1;
-	*i = 0;
 }
