@@ -147,7 +147,7 @@ void     tokenize(t_token **token, char *line, int *q);
 char	**ft_mysplit(char const *s, char c, int *still);
 void	add_back(t_token **token, t_token *new);
 void	exit_syntax_error(char *error_msg);
-char	*ft_mysubstr(char const *s, unsigned int start, size_t len);
+char	*fmysubstr(char const *s, unsigned int start, size_t len);
 int		is_in_word(char c);
 int		is_white(char c);
 int		is_alph_num(char c);

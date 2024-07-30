@@ -11,7 +11,7 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		if (!(*n_t_v))
 		{
 			first_word_pos(decl->value, &decl->i, &decl->j);
-			*n_t_v = ft_mysubstr(decl->value, decl->i, decl->j - decl->i);
+			*n_t_v = fmysubstr(decl->value, decl->i, decl->j - decl->i);
 		}
 		add_middle(token, ft_mysplit(decl->value + decl->j, ' ', &decl->still));
 	}
@@ -25,7 +25,7 @@ void	get_value(t_decl *decl, int *i, char *token_value)
 	(*i)++;
 	decl->first = *i;
 	if (token_value[*i] && !is_alph(token_value[*i]) && token_value[*i] != '_')
- 		(*i)++;
+		(*i)++;
 	else
 	{
 		while (token_value[*i] && token_value[*i] != '$'
@@ -35,16 +35,15 @@ void	get_value(t_decl *decl, int *i, char *token_value)
 	if (token_value[decl->first] == '?')
 		decl->value = ft_strdup(ft_itoa(_g_signal));
 	else
-		decl->value = get_key(ft_mysubstr(token_value,
-				decl->first, (*i) - decl->first), decl->env);
+		decl->value = get_key(fmysubstr(token_value,
+					decl->first, (*i) - decl->first), decl->env);
 }
 
 void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 {
 	t_decl	decl;
 
-	decl.still = 0;
-	decl.env = (*token)->env;
+	42 && (decl.still = 0, decl.env = (*token)->env);
 	while (token_value[*i])
 	{
 		if (token_value[*i] == '$')
@@ -61,7 +60,7 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 			while (token_value[*i] && token_value[*i] != '$')
 				(*i)++;
 			if (!(*token)->flag && !decl.still)
-				*n_t_v = ft_strjoin(*n_t_v, ft_mysubstr(token_value,
+				*n_t_v = ft_strjoin(*n_t_v, fmysubstr(token_value,
 							decl.first, *i - decl.first));
 			else
 				comp(decl, token, token_value, i);
@@ -81,7 +80,7 @@ void	non_quotes_expander(t_token **token, t_params params)
 	while ((*token)->value[i] && (*token)->value[i] != '$')
 		i++;
 	if (i)
-		n_t_v = ft_mysubstr((*token)->value, 0, i);
+		n_t_v = fmysubstr((*token)->value, 0, i);
 	(*token)->env = params.env;
 	if ((*token)->value[i])
 		set_value(&n_t_v, (*token)->value, &i, token);
@@ -95,7 +94,8 @@ void	expander(t_token *token, t_params params)
 	while (token)
 	{
 		token->flag = 0;
-		if (ft_strcmp(token->type, "WORD") == 0 && !token->here && in_str(token->value, '$'))
+		if (ft_strcmp(token->type, "WORD") == 0
+			&& !token->here && in_str(token->value, '$'))
 		{
 			if (in_str(token->value, '\'') || in_str(token->value, '"'))
 				quotes_expander(&token, token->value, params);

@@ -28,7 +28,7 @@ char	*ft_strdup(const char *s1)
 	return (copy);
 }
 
-char	*ft_mysubstr(char const *s, unsigned int start, size_t len)
+char	*fmysubstr(char const *s, unsigned int start, size_t len)
 {
 	char	*substring;
 	int		i;
@@ -59,7 +59,7 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s && s[i]) // added
+	while (s && s[i])
 		i++;
 	return (i);
 }
@@ -90,8 +90,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		join++;
 		s2++;
 	}
-	*join = '\0';
-	return (join_string);
+	return (*join = '\0', join_string);
 }
 
 int	ft_strcmp(char *s1, char *s2)
