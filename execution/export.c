@@ -6,11 +6,26 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/21 12:10:16 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/30 11:26:54 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	add_key(char *key, char *value, t_env **env) //pass the head  of the list
+{
+	t_env	*new_key;
+
+	new_key = malloc (sizeof(t_env));
+	if (!new_key)
+		return ; //more protection nega for this
+	new_key->key = key;
+	new_key->value = value;
+	new_key->next = NULL;
+	// if (!new_key->key || !new_key->value)
+	// 	return ; //still thinking about this
+	last_var((*env))->next = new_key;
+}
 
 void	export_cmd(char **s, char *res, t_params *params)
 {
@@ -76,20 +91,6 @@ int	search_and_replace2(char *env, t_env **envi)
 	return (0);
 }
 
-void	add_key(char *key, char *value, t_env **env) //pass the head  of the list
-{
-	t_env	*new_key;
-
-	new_key = malloc (sizeof(t_env));
-	if (!new_key)
-		return ; //more protection nega for this
-	new_key->key = key;
-	new_key->value = value;
-	new_key->next = NULL;
-	// if (!new_key->key || !new_key->value)
-	// 	return ; //still thinking about this
-	last_var((*env))->next = new_key;
-}
 
 char	*get_pwd(t_params *params)
 {

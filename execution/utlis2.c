@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/29 18:06:38 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:37:00 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	checking_cmd(t_parse *st, t_params *params)
 {
-	_g_signal = 0;//remember to update this frero
-	// ////imad"here we go again");
-	// print(st);
 	if (!(ft_strcmp(st->cmd[0], "exit")))
 	{
 		terminate_shell(st, params);
@@ -27,11 +24,6 @@ int	checking_cmd(t_parse *st, t_params *params)
 		export_cmd1(st, params);
 		return (1);
 	}
-	// if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
-	// {
-	// 	excute_file(st, params);//handle multiple slashes
-	// 	return (1);
-	// }
 	if (checking_cmd3(st, params))
 		return (1);
 	return (0);

@@ -19,7 +19,7 @@ int	check_in_files(t_parse *st, t_params *params)
 
 int	just_a_checker(t_parse *st, t_params *params)
 {
-	////imad"gets to inpu");
+	// puts("gets to inpu");
 	if (st->files || st->in_fd || st->in_dup) //add redidrection to the pipes
 	{
 		if (in_out_dup(st, params))
@@ -34,9 +34,8 @@ void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
 	t_parse		*st;
-	int			i;
 
-	initialiaze_vars(params, &i, &token, 1);
+	initialiaze_vars(params, &token, 1);
 	st = NULL;
 	token = NULL;
 	while (1)
@@ -63,29 +62,34 @@ void	wait_prompt1(t_params *params)
 				}
 				params->cmds = lstsize(st);
 				// print(st);
+				params->i = 0;
 				while (st)
 				{
 					// if (st && st->next)
-						puts("its here");
+					puts("its first");
 					update_(st, params);
-					if (check_in_files(st, params))
-					{
-						// st = st->next;
-						tokens_reset(&token);
-						parser_reset(&st);
-						// if (st->next)
-						// 	puts("not null");
-						printf("[%s]\n", st->in_dup);//sgv here
-						// continue ;
-						break ;
-					}
-					forking_checker(st, params, i);
+					// if (check_in_files(st, params))
+					// {
+					// 	// st = st->next;
+					// 	tokens_reset(&token);
+					// 	parser_reset(&st);
+					// 	// st = st->next;
+					// 	// if (st->next)
+					// 	// 	puts("not null");
+					// 	// printf("[%s]\n", st->in_dup);//sgv here
+					// 	continue ;
+					// }
+					excute_cmds(st, params); //here the super hero
+					forking_checker(st, params);
 					////imad"first");
-					if ((!params->pid || (params->cmds == 1 && params->pid )) && just_a_checker(st, params))
+					if (check_in_files(st, params) || ((!params->pid || (params->cmds == 1 && params->pid )) && just_a_checker(st, params)))
 					{
+						// forking_piping()
+						puts("here");
 						////imad"in checker");
 						tokens_reset(&token);
-						parser_reset(&st);
+						// parser_reset(&st);
+						st = st ->next;
 						if (!params->pid)
 							exit (0);
 						continue ;
@@ -93,8 +97,10 @@ void	wait_prompt1(t_params *params)
 					////imad"hello form main");
 					if ((!(params->pid) || (params->cmds == 1 && params->pid )) && checking_cmd(st, params))
 					{
+						// puts("builtins");
 						tokens_reset(&token);
-						parser_reset(&st);
+						st = st->next;
+						// parser_reset(&st);
 						if (!params->pid)
 							exit (0);
 						continue ;
@@ -128,22 +134,23 @@ void	wait_prompt1(t_params *params)
 						}
 						params->flag = 1;
 						_g_signal = 127;
+						// puts("here");
 						printf("shellantics: %s :command not here found\n", st->cmd[0]); //this is just a function
 					}
 					else
 						excute_cmd(st, params);
 					if (params->pid != 0)
 					{
-						if (i == params->cmds - 1)
+						if (params->i == params->cmds - 1)
 						{
 							waitpid(params->pid, 0, 0);
 							// close(fds[0]);
 							// close(fds[1]);
 						}
 						params->flag = 0; // this could cause a problem
-						if (i != 0)
+						if (params->i != 0)
 							close(params->save_fd);
-						if (i != params->cmds - 1)
+						if (params->i != params->cmds - 1)
 						{
 							close(params->fds[1]);
 							params->save_fd = params->fds[0];
@@ -151,11 +158,11 @@ void	wait_prompt1(t_params *params)
 						}
 					}
 					st = st->next;
-					i++;
+					params->i++;
 				}
-				initialiaze_vars(params, &i, &token, 0);
 				while (waitpid(-1, NULL, 0) > 0 || errno != ECHILD)
 					;
+				initialiaze_vars(params, &token, 0);
 			}
 		}
 		tokens_reset(&token);
