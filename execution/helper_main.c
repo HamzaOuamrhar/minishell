@@ -48,6 +48,7 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 	if (params->i == params->cmds - 1)
 	{
 		waitpid(params->pid, 0, 0);
+		return ;
 		// close(fds[0]);
 		// close(fds[1]);
 	}
