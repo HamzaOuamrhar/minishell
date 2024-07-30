@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/30 17:21:54 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/30 21:22:22 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	checking_cmd(t_parse *st, t_params *params)
 {
-	// if (params->cmds == 1 || !params->pid)
-	// {
-	// puts("builtins");
 	if (!(ft_strcmp(st->cmd[0], "exit")))
 	{
 		terminate_shell(st, params);
@@ -34,7 +31,6 @@ int	checking_cmd(t_parse *st, t_params *params)
 	}
 	if (checking_cmd3(st, params))
 		return (1);
-	// }
 	return (0);
 }
 

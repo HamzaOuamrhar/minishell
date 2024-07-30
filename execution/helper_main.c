@@ -42,15 +42,15 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 			}
 			else
 				excute_cmd(st, params);
-			exit (0);
 		}
+		exit (0);
 	}
 	if (params->i == params->cmds - 1)
 	{
 		waitpid(params->pid, 0, 0);
 		return ;
-		// close(fds[0]);
-		// close(fds[1]);
+		close(params->fds[0]);
+		close(params->fds[1]);
 	}
 	params->flag = 0; // this could cause a problem
 	if (params->i != 0)
@@ -71,6 +71,7 @@ void	excute_cmds(t_parse *st, t_params *params, t_token *token)
 		excute_builtins(st, params);
 	else
 	{
+		puts("here");
 		executing(st, params, token);
 		// other_cmds(st, params, token);
 	}
