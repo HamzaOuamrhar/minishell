@@ -96,6 +96,7 @@ typedef struct t_decl3
 	int		l;
 	char 	*line;
 	int		fd;
+	int		save_fd;
 	int		i;
 }	t_decl3;
 
@@ -176,12 +177,14 @@ void	*ft_malloc(size_t size, int flag);
 void 	parse_input(t_token **tokens, t_parse **new_parse);
 void	parse_output(t_token **tokens, t_parse **new_parse);
 void	parse_append(t_token **tokens, t_parse **new_parse);
-int		parse_heredoc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params);
+int		doc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params);
 void	is_in_quote(t_decl2 *decl, char *t_v);
 void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
 void	not_w_first_i(t_decl *decl, char **n_t_v, t_token **token);
 void	print(t_parse *parse);
 void	heredoc_sig(int sig);
+int		pipe_syntax(t_token *token);
+int		redirection_syntax(t_token *token);
 
 // execution
 

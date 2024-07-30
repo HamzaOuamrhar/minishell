@@ -1,13 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 11:03:10 by houamrha          #+#    #+#             */
+/*   Updated: 2024/07/30 11:12:46 by houamrha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	redirection_error(t_token **token, t_token *tmp, int *error)
 {
 	if ((*token)->next)
 	{
-		*token = (*token) ->next;
-		if (ft_strcmp((*token)->type, "INPUT") == 0 || ft_strcmp((*token)->type, "OUTPUT") == 0
-			|| ft_strcmp((*token)->type, "APPEND") == 0 || ft_strcmp((*token)->type, "HEREDOC") == 0
-				|| ft_strcmp((*token)->type, "PIPE") == 0)
+		*token = (*token)->next;
+		if (ft_strcmp((*token)->type, "INPUT") == 0
+			|| ft_strcmp((*token)->type, "OUTPUT") == 0
+			|| ft_strcmp((*token)->type, "APPEND") == 0
+			|| ft_strcmp((*token)->type, "HEREDOC") == 0
+			|| ft_strcmp((*token)->type, "PIPE") == 0)
 			*error = 1;
 		else
 		{
@@ -25,8 +39,10 @@ void	check_redirection(t_token *token, int *error)
 
 	while (token)
 	{
-		if (ft_strcmp(token->type, "HEREDOC") == 0 || ft_strcmp(token->type, "INPUT") == 0
-			|| ft_strcmp(token->type, "OUTPUT") == 0 || ft_strcmp(token->type, "APPEND") == 0)
+		if (ft_strcmp(token->type, "HEREDOC") == 0
+			|| ft_strcmp(token->type, "INPUT") == 0
+			|| ft_strcmp(token->type, "OUTPUT") == 0
+			|| ft_strcmp(token->type, "APPEND") == 0)
 		{
 			tmp = token;
 			if (token->next)
@@ -60,13 +76,13 @@ void	check_pipeline(t_token *token, int *error)
 		{
 			*error = 1;
 			if (!token->next)
-				break;
+				break ;
 			if (ft_strcmp(token->next->type, "WHITE") == 0)
 				token = token->next->next;
 			else
 				token = token->next;
 			if (!token || ft_strcmp(token->type, "PIPE") == 0)
-				break;
+				break ;
 			else
 				*error = 0;
 		}
@@ -92,14 +108,5 @@ int	pipe_syntax(t_token *token)
 		exit_syntax_error("syntax error near unexpected token `|'");
 		return (1);
 	}
-	return (0);
-}
-
-int	syntax(t_token *token)
-{
-	if (pipe_syntax(token))
-		return (1);
-	if (redirection_syntax(token))
-		return (1);
 	return (0);
 }
