@@ -25,6 +25,7 @@ int last_cmd(int fds[2])
     return (0);
 }
 
+
 void	forking_piping(t_params *params)
 {
 	ssize_t		r;
@@ -93,10 +94,8 @@ void	forking_piping(t_params *params)
 		// close(params->fds[1]);
 		// close(params->save_fd); //need to do something here
 		close(params->fds[0]);
-		// close(params->fds[1]);
 	}
 }
-
 void	forking_checker(t_parse *st, t_params *params)
 {
 	// (void)st;
