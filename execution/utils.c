@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/30 22:37:43 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/31 10:59:04 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void change_directory(t_parse *st, t_params *params)
 		home = get_key("HOME", params->env);
 		if (!home)
 		{
-			printf("Shellantics: cd: HOME not set\n");
+			print_error(": HOME not set\n", NULL);
 			return ;
 		}
 		change_dir(st, params, home);

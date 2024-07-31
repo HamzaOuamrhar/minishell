@@ -18,7 +18,6 @@ int last_cmd(int fds[2])
     close(fds[1]);
 	if (dup2(fds[0], STDIN_FILENO) == -1)
     {
-        ////imad"error in dup");
         return (1);
     }
 	close(fds[0]);
@@ -31,72 +30,60 @@ void	forking_piping(t_params *params)
 	ssize_t		r;
 	char		buffer[500];
 
-	// if (params->i != params->cmds - 1)
-	// 	pipe(params->fds);
-	// params->pid = fork();
-	// if (params->pid < 0) 
-	// {
-	// 	perror("fork)");
-	// 	return ;
-	// }
-	// //handle failure
-	// if (!params->pid)
-	// {
-		if (params->flag && params->i > 1 && params->flag_2)
+	if (params->flag && params->i > 1 && params->flag_2)
+	{
+		r = 1;
+		while (r)	
+			r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
+	}
+	if (params->i == 0 && params->cmds > 1)
+	{
+		if (first_cmd(params->fds))
 		{
-			r = 1;
-			while (r)	
-				r = read(params->save_fd, buffer, sizeof(buffer));//handle the failure of read
+			close(params->fds[0]);
+			close(params->fds[1]);
+			return ;
 		}
-		if (params->i == 0 && params->cmds > 1)
+	}
+	else //middle or last command
+	{
+		if (params->i != 0)
 		{
-			////imad"secure");
-			if (first_cmd(params->fds))
+			if (params->flag  && params->i != params->cmds - 1)
 			{
-				close(params->fds[0]);
-				close(params->fds[1]);
-				return ;
-			}
-		}
-		else //middle or last command
-		{
-			if (params->i != 0)
-			{
-				if (params->flag  && params->i != params->cmds - 1)
+				if (dup2(params->fds[0], STDIN_FILENO) == -1)
 				{
-					if (dup2(params->fds[0], STDIN_FILENO) == -1)
-					{
-							perror("dup2");
-							return ;
-						}
-						close(params->fds[0]);
-					}
-					else if (params->save_fd != -1)
-					{
-						if (dup2(params->save_fd, STDIN_FILENO) == -1)
-						{ 
-							perror("dup2");//remember to close the params->fds in failure cases
-							// return ;
-						}
-						close(params->save_fd);
-					}
-				}
-				if (params->i != params->cmds - 1 && params->i < params->cmds)
-				{
-					close(params->fds[0]);
-					if (dup2(params->fds[1], STDOUT_FILENO) == -1)
-					{
 						perror("dup2");
 						return ;
 					}
-					close(params->fds[1]);
+					close(params->fds[0]);
+				}
+				else if (params->save_fd != -1)
+				{
+					if (dup2(params->save_fd, STDIN_FILENO) == -1)
+					{ 
+						perror("dup2");//remember to close the params->fds in failure cases
+						// return ;
+					}
+					close(params->save_fd);
 				}
 			}
-		// close(params->fds[1]);
-		// close(params->save_fd); //need to do something here
-		close(params->fds[0]);
-	// }
+			if (params->i != params->cmds - 1 && params->i < params->cmds)
+			{
+				close(params->fds[0]);
+				if (dup2(params->fds[1], STDOUT_FILENO) == -1)
+				{
+					perror("dup2");
+					return ;
+				}
+				close(params->fds[1]);
+			}
+		}
+	// close(params->fds[1]);
+	// close(params->save_fd); //need to do something here
+	close(params->fds[0]);
 }
+
 void	forking_checker(t_parse *st, t_params *params)
 {
 	// (void)st;

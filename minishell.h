@@ -258,5 +258,6 @@ int		check_perms(t_parse *st, t_params *params);
 void	excute_cmds(t_parse *st, t_params *params, t_token *token);
 int		check_in_files(t_parse *st, t_params *params);
 void	forking_piping(t_params *params);
+void	print_error(char *s, char *folder);
 
 #endif

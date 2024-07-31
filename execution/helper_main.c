@@ -66,6 +66,7 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 		waitpid(params->pid, &status, 0);
 		if (WIFEXITED(status))
 			_g_signal = WEXITSTATUS(status);
+		printf("%d\n", _g_signal);
 		// close(params->fds[0]);
 		// close(params->fds[1]);
 	}

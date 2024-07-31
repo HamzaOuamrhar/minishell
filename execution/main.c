@@ -46,6 +46,7 @@ void	wait_prompt1(t_params *params)
 					continue;
 				}
 				params->cmds = lstsize(st);
+				printf("%d\n", _g_signal);
 				while (st)
 				{
 					update_(st, params);

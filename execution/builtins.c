@@ -74,6 +74,13 @@ void	no_permissions(t_params *params)
 	search_and_replace("PWD", tmp2, &(params->env), 1);
 }
 
+void	print_error(char *s, char *folder)
+{
+	write (2, "shellantics: cd: ", 17);
+	if (folder)
+		write (2, folder, ft_strlen(folder));
+	write (2, s, ft_strlen(s));
+}
 void	change_dir(t_parse *st, t_params *params, char *s)
 {
 	struct stat the_path;
@@ -88,12 +95,11 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 		i++;
 	}
 	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1) //give another try to handle the permissions
-		print_error("Permission denied", s);
-		// printf("shellantics: cd: %s: Permission denied\n", s); //check the macro again
+		print_error(": Permission denied\n", s);
 	else if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
-		printf("cd: not a directory: %s\n", s);
+		print_error(": not a directory\n", s);
 	else if (chdir(s) == -1)
-		printf("cd: no such file or directory: %s\n", s);
+		print_error(": no such file or directory\n", s);
 	else
 	{
 		change_pwd_value(params);
@@ -101,8 +107,3 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 		i = 0;
 	}
 }
-
-// void	print_error(char *s, char *folder)
-// {
-
-// }
