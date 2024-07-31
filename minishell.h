@@ -184,6 +184,7 @@ void	not_w_first_i(t_decl *decl, char **n_t_v, t_token **token);
 void	heredoc_sig(int sig);
 int		pipe_syntax(t_token *token);
 int		redirection_syntax(t_token *token);
+void	parser_reset(t_parse **st);
 
 // execution
 
@@ -216,7 +217,6 @@ char	*ft_strjoin_env(char *s1, char *s2);
 char	**list2array(t_env *env, t_params *params);
 void	free_list(t_env *env);
 void	empty_env(t_params *params);
-int		checking_cmd2(t_parse *st, t_params *params);
 char	*get_key(char *s, t_env *env);
 char	*ft_copy(const char *s);
 void	export_cmd(char **s, char *res, t_params *params);
@@ -244,9 +244,6 @@ void	unset_cmd(t_parse *st, t_params *params);
 void	unset_cmd1(t_env **env, char *s);
 int		checking_cmd3(t_parse *st, t_params *params);
 void	update(t_params *params);
-int		ft_shell_atoi(char *s);
-void	update_shlvl(t_params *params);
-char	*ft_shell_itoa(int n);
 char	**export_checker2(char **res, char *s, int i);
 char	*ft_strjoin2(char *s1, char *s2);
 char	*ft_strdup2(const char *s1);
@@ -258,5 +255,8 @@ int		check_builtins(char *s);
 void	forking_checker(t_parse *st, t_params *params);
 void	initialiaze_vars(t_params *params, t_token **token, int f);
 int		check_perms(t_parse *st, t_params *params);
+void	excute_cmds(t_parse *st, t_params *params, t_token *token);
+int		check_in_files(t_parse *st, t_params *params);
+void	forking_piping(t_params *params);
 
 #endif

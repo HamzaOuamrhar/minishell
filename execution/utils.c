@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/30 13:18:42 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/30 22:37:43 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	excute_cmd(t_parse *st, t_params *params)
 {
-	// puts("exection");
+	// ////imad"exection");
 	if (params->pid == 0)
 		execve(st->com_path, st->cmd, params->env2);
 }

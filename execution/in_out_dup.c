@@ -114,8 +114,6 @@ int	open_files(t_parse *st)
 
 int	in_out_dup(t_parse *st, t_params *params)
 {
-	////imad"gots here");
-	////imad"hello in_out  \n");
 	if (check_perms(st, params))
 	{
 		_g_signal = 1;

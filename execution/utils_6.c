@@ -1,43 +1,5 @@
 #include "../minishell.h"
 
-void	update(t_params *params)
-{
-	char	*_;
-
-	_ = get_acc_path(params->paths_array, "env");
-	search_and_replace("_", _, &(params->env), 1);
-	search_and_replace("_", _, &(params->sorted_env), 1);
-	update_shlvl(params);
-}
-
-void	update_shlvl(t_params *params)
-{
-	int			n;
-	char		*lvl;
-
-	rl_catch_signals = 0;
-	n = ft_shell_atoi(get_key("SHLVL", params->env));
-	if (n == -1)
-	{
-		search_and_replace("SHLVL", "1", &(params->sorted_env), 1);
-		search_and_replace("SHLVL", "1", &(params->env), 1);//should allocate here
-		return ;
-	}
-	if (n == -2)
-		lvl = ft_copy("0");
-	else if (++n == 999)
-	{
-		search_and_replace("SHLVL", "", &(params->sorted_env), 1);
-		search_and_replace("SHLVL", "", &(params->env), 1);
-	}
-	if (n != -1 && n != -2)
-		lvl = ft_shell_itoa(n);
-	if (!lvl)
-		return ; // more protection here
-	search_and_replace("SHLVL", lvl, &(params->sorted_env), 1);
-	search_and_replace("SHLVL", ft_copy(lvl), &(params->env), 1);
-	
-}
 
 int	ft_shell_atoi(char *s)
 {
@@ -97,4 +59,44 @@ char	*ft_shell_itoa(int n)
 		counter--;
 	}
 	return (res);
+}
+
+
+void	update_shlvl(t_params *params)
+{
+	int			n;
+	char		*lvl;
+
+	rl_catch_signals = 0;
+	n = ft_shell_atoi(get_key("SHLVL", params->env));
+	if (n == -1)
+	{
+		search_and_replace("SHLVL", "1", &(params->sorted_env), 1);
+		search_and_replace("SHLVL", "1", &(params->env), 1);//should allocate here
+		return ;
+	}
+	if (n == -2)
+		lvl = ft_copy("0");
+	else if (++n == 999)
+	{
+		search_and_replace("SHLVL", "", &(params->sorted_env), 1);
+		search_and_replace("SHLVL", "", &(params->env), 1);
+	}
+	if (n != -1 && n != -2)
+		lvl = ft_shell_itoa(n);
+	if (!lvl)
+		return ; // more protection here
+	search_and_replace("SHLVL", lvl, &(params->sorted_env), 1);
+	search_and_replace("SHLVL", ft_copy(lvl), &(params->env), 1);
+	
+}
+
+void	update(t_params *params)
+{
+	char	*_;
+
+	_ = get_acc_path(params->paths_array, "env");
+	search_and_replace("_", _, &(params->env), 1);
+	search_and_replace("_", _, &(params->sorted_env), 1);
+	update_shlvl(params);
 }

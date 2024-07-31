@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/30 10:37:00 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/30 21:22:22 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	checking_cmd(t_parse *st, t_params *params)
 	if (!ft_strcmp(st->cmd[0], "export"))
 	{
 		export_cmd1(st, params);
+		return (1);
+	}
+	if (!ft_strcmp("env", st->cmd[0]))
+	{
+		env_cmd(st, params);
 		return (1);
 	}
 	if (checking_cmd3(st, params))
