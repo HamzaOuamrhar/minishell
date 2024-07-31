@@ -66,7 +66,6 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 		waitpid(params->pid, &status, 0);
 		if (WIFEXITED(status))
 			_g_signal = WEXITSTATUS(status);
-		printf("%d\n", _g_signal);
 		// close(params->fds[0]);
 		// close(params->fds[1]);
 	}
@@ -88,9 +87,5 @@ void	excute_cmds(t_parse *st, t_params *params, t_token *token)
 	if (params->cmds == 1 && check_builtins(st->cmd[0]))
 		excute_builtins(st, params);
 	else
-	{
-		////imad"here");
 		executing(st, params, token);
-		// other_cmds(st, params, token);
-	}
 }

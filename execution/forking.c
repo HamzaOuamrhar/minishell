@@ -102,9 +102,7 @@ void	initialiaze_vars(t_params *params, t_token **token, int f)
 	{
 		params->flag = 0;
 		*token = NULL;
-		_g_signal = 0;
 	}
-	_g_signal = 0;
 	params->pid = 1;
 	params->flag_2 = 0;
 	params->save_fd = -1;
