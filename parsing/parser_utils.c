@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:01:22 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 11:01:25 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/07/31 08:22:41 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	doc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
 	{
 		decl->line = readline("> ");
 		if (!decl->line)
-			break ;
+			return (close(decl->fd), 0);
 		if (ft_strcmp((*tokens)->next->value, decl->line) == 0)
 		{
 			free(decl->line);
