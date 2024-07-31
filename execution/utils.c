@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/31 10:59:04 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:37:15 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	excute_cmd(t_parse *st, t_params *params)
 		execve(st->com_path, st->cmd, params->env2);
 }
 
-void change_directory(t_parse *st, t_params *params)
+int change_directory(t_parse *st, t_params *params)
 {
 	char	*home;
 
@@ -27,17 +27,14 @@ void change_directory(t_parse *st, t_params *params)
 	{
 		home = get_key("HOME", params->env);
 		if (!home)
-		{
-			print_error(": HOME not set\n", NULL);
-			return ;
-		}
+			return (print_error("cd", ": HOME not set\n", NULL), 1);
 		change_dir(st, params, home);
-		return ;
+		return (0);
 	}
-	change_dir(st, params, st->cmd[1]);
+	return (change_dir(st, params, st->cmd[1]));
 }
 
-void	terminate_shell(t_parse *st, t_params *params)
+int	terminate_shell(t_parse *st, t_params *params)
 {
 	int	args_n;
 
@@ -46,13 +43,16 @@ void	terminate_shell(t_parse *st, t_params *params)
 		ft_exit(st, args_n, params);
 	if (!(numbered_arg(st->cmd[1])) && (count_args(st->cmd)) > 2)
 	{
-		printf("exit\nShellantics: exit: too many arguments\n");
-		return ;//its one 
+		write(2, "exit\n", 5);
+		print_error("exit",": too many arguments\n", NULL);
+		return (1);//its one 
 	}
 	if ((numbered_arg(st->cmd[1])))
 	{
-		printf("exit\nShellantics: exit: %s: numeric argument required\n", st->cmd[1]);
+		write(2, "exit\n", 5);
+		print_error("exit", ": numeric argument required\n", NULL);
 		// freeing(st, params);
 		exit (255);
 	}
+	return (0);
 }

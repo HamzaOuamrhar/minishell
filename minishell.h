@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 10:50:47 by iez-zagh          #+#    #+#             */
+/*   reated: 2024/04/19 10:50:47 by iez-zagh          #+#    #+#             */
 /*   Updated: 2024/06/03 17:10:55 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -126,6 +126,7 @@ typedef struct t_params
 	int				i;
 	int				fds[2];
 	int				pid;
+	char			*pwd;
 }   t_params;
 
 typedef struct t_parse
@@ -198,8 +199,8 @@ void	free_array(char **array);
 char	**ft_split(char const *s, char c);
 void	excute_cmd(t_parse *st, t_params *params);
 void	ft_free(char **s);
-void	change_directory(t_parse *st, t_params *params);
-void	terminate_shell(t_parse *st, t_params *params);
+int		change_directory(t_parse *st, t_params *params);
+int		terminate_shell(t_parse *st, t_params *params);
 int		ft_strcmp(char *s1, char *s2);
 int		count_args(char **s);
 int		numbered_arg(char *s);
@@ -226,21 +227,21 @@ void	change_pwd_value(t_params *params);
 t_env	*before_last_node(t_env *env);
 void	ft_free2(t_parse *st);
 void	freeing2(t_parse *st);
-void	change_dir(t_parse *st, t_params *params, char *s);
+int		change_dir(t_parse *st, t_params *params, char *s);
 void	sort_env(t_env *env);
 void	just_export(t_params *params);
 void	check_join(char **s, t_parse *st, t_params *params);
 void	ft_join_value(char **s, t_parse *st, t_params *params);
 void	ft_join(char **res, t_params *params);
-void	export_cmd1(t_parse *st, t_params *params);
+int		export_cmd1(t_parse *st, t_params *params);
 int 	ft_strchr(char *s, char c);
 int		search_and_replace2(char *env, t_env **envi);
 void	free_update(char **res, t_params *params);
 char	**export_checker(char *s);
 int		check_syntax(char *s);
 char	**copy_env(char **env);
-void	pwd_cmd(t_params *params);
-void	unset_cmd(t_parse *st, t_params *params);
+int		pwd_cmd(t_params *params);
+int		unset_cmd(t_parse *st, t_params *params);
 void	unset_cmd1(t_env **env, char *s);
 int		checking_cmd3(t_parse *st, t_params *params);
 void	update(t_params *params);
@@ -258,6 +259,6 @@ int		check_perms(t_parse *st, t_params *params);
 void	excute_cmds(t_parse *st, t_params *params, t_token *token);
 int		check_in_files(t_parse *st, t_params *params);
 void	forking_piping(t_params *params);
-void	print_error(char *s, char *folder);
+void	print_error(char *cmd, char *s, char *folder);
 
 #endif

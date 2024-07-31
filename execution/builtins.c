@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/31 15:43:35 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/07/31 21:40:29 by iez-zagh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	count_args(char **s)
@@ -9,42 +21,6 @@ int	count_args(char **s)
 		i++;
 	return (i);
 }
-char	*ft_spliter(char *s, int j)
-{
-	int	i;
-
-	i = ft_strlen(s) - 1;
-	while (s[i] == '/' || s[i] == '.')
-		i--;
-	while(s[i] != '/')
-		i--;
-	return (ft_substr(s, 0, i - (j * 2)));
-}
-
-int	check_deleted(t_params *params, char *tmp2)
-{
-	struct stat the_path;
-	char		*tmp;
-
-	tmp = get_key("PWD", params->env);
-	stat(tmp, &the_path);
-	if (!S_ISDIR(the_path.st_mode))
-	{
-		chdir("..");
-		printf("cd: error retrieving current directory: getcwd: cannot ");
-		printf("access parent directories: No such file or directory\n");
-		search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)), &(params->env), 1);
-		if (access(tmp2, F_OK) != -1)
-			search_and_replace("PWD", tmp2, &(params->env), 1);
-		else
-		{
-			search_and_replace("PWD", ft_strjoin2(tmp, "/.."), &(params->env), 1);
-			free (tmp2);
-		}
-		return (1);
-	}
-	return (0);
-}
 
 void	no_permissions(t_params *params)
 {
@@ -55,7 +31,7 @@ void	no_permissions(t_params *params)
 	tmp = ft_copy(get_key("PWD", params->env));
 	i = ft_strlen(tmp);
 	i--;
-	while(tmp[i] && tmp[i] != '/')
+	while (tmp[i] && tmp[i] != '/')
 		i--;
 	tmp2 = ft_substr(tmp, 0, i);
 	if (access(tmp2, X_OK) == -1)
@@ -70,40 +46,44 @@ void	no_permissions(t_params *params)
 		printf("chdir error\n");
 		exit (1);
 	}
-	search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)), &(params->env), 1);
+	search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)),
+		&(params->env), 1);
 	search_and_replace("PWD", tmp2, &(params->env), 1);
 }
 
-void	print_error(char *s, char *folder)
+void	print_error(char *cmd, char *s, char *folder)
 {
-	write (2, "shellantics: cd: ", 17);
+	write (2, "shellantics: ", 13);
+	if (cmd)
+		write (2, cmd, ft_strlen(cmd));
+	write(2, ": ", 2);
 	if (folder)
 		write (2, folder, ft_strlen(folder));
 	write (2, s, ft_strlen(s));
 }
-void	change_dir(t_parse *st, t_params *params, char *s)
-{
-	struct stat the_path;
-	char		*tmp;
-	static int	i = 0;
 
-	stat(s, &the_path);
-	tmp = ft_spliter(get_key("PWD", params->env), i);// handle the unset of PWD neega
-	if (access(tmp, F_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
+int	unset_cmd(t_parse *st, t_params *params)
+{
+	int	i;
+
+	i = 1;
+	while (st->cmd[i])
 	{
-		check_deleted(params, tmp);
+		if (check_syntax(st->cmd[i]))
+		{
+			print_error("env", ": not a valid identifier\n", st->cmd[i]);
+			_g_signal = 1;
+		}
+		else if (!ft_strcmp("_", st->cmd[i]))
+			_g_signal = 0;
+		else
+		{
+			unset_cmd1(&(params->env), st->cmd[i]);
+			unset_cmd1(&(params->sorted_env), st->cmd[i]);
+			_g_signal = 0;
+		}
 		i++;
 	}
-	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1) //give another try to handle the permissions
-		print_error(": Permission denied\n", s);
-	else if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
-		print_error(": not a directory\n", s);
-	else if (chdir(s) == -1)
-		print_error(": no such file or directory\n", s);
-	else
-	{
-		change_pwd_value(params);
-		free (tmp);
-		i = 0;
-	}
+	free_update(NULL, params);
+	return (_g_signal);
 }

@@ -13,7 +13,7 @@ int	check_perms(t_parse *st, t_params *params)
 		{
 			if (!params->pid)
 				exit (0);
-			printf("shellantics: %s: Permission denied\n", tmp->file);
+			print_error(NULL, ": Permission denied\n", tmp->file);
 			return (1);
 		}
 		if (tmp->type != 1)
@@ -26,7 +26,7 @@ int	check_perms(t_parse *st, t_params *params)
 		{
 			if (!params->pid)
 				exit (0);
-			printf("shellantics: %s: No such file or directory\n", tmp->file);
+			print_error(NULL, ": No such file or directory\n", tmp->file);
 			return (1);
 		}
 		close (fd);
@@ -57,7 +57,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		if (!st->com_path)
 		{
 			printf("%s :command not found\n", st->cmd[0]);
-			exit (127); 
+			exit (127);
 		}
 		execve(st->com_path, st->cmd, params->env2); //protection
 	}
@@ -131,6 +131,6 @@ int	in_out_dup(t_parse *st, t_params *params)
 		return (1);
 	if (!params->pid)
 		excute_cmd_dup(st, params, st->in_fd);
-	return (1);
+	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/28 17:39:05 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/31 18:01:52 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,6 @@ int	check_syntax(char *s)
 			|| (s[i] >= 'A' && s[i] <= 'Z') || (s[i] == '_')))
 		return (1);
 	return (0);
-}
-
-void	pwd_cmd(t_params *params)
-{
-	char	*pwd;
-	char	*tmp;
-
-	pwd = malloc (1024);
-	if (!pwd)
-		return ; // more protection
-	if (!(getcwd(pwd, 1024)))
-	{
-		tmp = get_key("PWD", params->env);
-		if (tmp)
-		{
-			printf("we can't get the working directory at this time, ");
-			printf("this may caused by the permissions or beeing in a deleted dire\n");
-		}
-		else
-			printf("%s\n", get_key("PWD", params->env));
-	}
-	else
-		printf("%s\n", pwd);
-	free (pwd);
 }
 
 void	unset_cmd1(t_env **env, char *s)
@@ -71,41 +47,65 @@ void	unset_cmd1(t_env **env, char *s)
 	}
 }
 
-void	unset_cmd(t_parse *st, t_params *params)
+int	exec_echo(int i, t_parse *st)
+{
+	int	j;
+
+	j = i;
+	while (st->cmd[i])
+	{
+		if (!(write(1, st->cmd[i], ft_strlen(st->cmd[i]))))
+		{
+			perror("write");
+			return (1);
+		}
+		i++;
+		if (st->cmd[i])
+			write(1, " ", 1);
+	}
+	if (j == 1)
+	{
+		if (!(write(1, "\n", 1)))
+		{
+			perror("write");
+			return (1);
+		}
+		
+	}
+	return (0);
+}
+
+int	echo_cmd(t_parse *st)
 {
 	int	i;
+	int	j;
 
 	i = 1;
 	while (st->cmd[i])
 	{
-		if (check_syntax(st->cmd[i]))
-			printf("Shellantics: unset: `%s': not a valid identifier\n", st->cmd[i]);
-		else if (ft_strcmp("_", st->cmd[i]))
+		if (st->cmd[i][0] != '-')
+			return (exec_echo(i, st));
+		j = 1;
+		while (st->cmd[i][j])
 		{
-			unset_cmd1(&(params->env), st->cmd[i]);
-			unset_cmd1(&(params->sorted_env), st->cmd[i]);
+			if (st->cmd[i][j] != 'n')
+				return (exec_echo(i, st));
+			j++;
 		}
-		i++;	
+		i++;
 	}
-	free_update(NULL, params);
+	return (0);
 }
 
 int	checking_cmd3(t_parse *st, t_params *params)
 {
 	if (!ft_strcmp(st->cmd[0], "pwd")) // enter with deleted directory
-	{
-		pwd_cmd(params);
-		return (1);
-	}
+		return (pwd_cmd(params));
 	if (!ft_strcmp(st->cmd[0], "unset")) // enter with deleted directory
-	{
-		unset_cmd(st, params);
-		return (1);
-	}
+		return (unset_cmd(st, params));
 	if (ft_strcmp(st->cmd[0], "cd") == 0)
-	{
-		change_directory(st, params);
-		return (1);
-	}
+		return (change_directory(st, params));
+	if (ft_strcmp(st->cmd[0], "echo") == 0)
+		return (echo_cmd(st));
 	return (0);
 }

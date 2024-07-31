@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/29 09:54:06 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/31 22:08:21 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	change_pwd_value(t_params *params)
 {
-	search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)), &(params->env), 1);
+	search_and_replace("OLDPWD",
+		ft_copy(get_key("PWD", params->env)), &(params->env), 1);
 	search_and_replace("PWD", get_pwd(params), &(params->env), 1);
 }
 
@@ -82,7 +83,7 @@ void	just_export(t_params *params)
 	}
 }
 
-void	export_cmd1(t_parse *st, t_params *params)
+int	export_cmd1(t_parse *st, t_params *params)
 {
 	int		i;
 	char	**res;
@@ -90,13 +91,16 @@ void	export_cmd1(t_parse *st, t_params *params)
 	if (count_args(st->cmd) == 1) //handle the "export" yooo i am here
 	{
 		just_export(params);
-		return ;
+		return (0);
 	}
 	i = 1;
 	while (st->cmd[i])
 	{
 		if (check_syntax(st->cmd[i]))
-			printf("Shellantics: export: `%s': not a valid identifier\n", st->cmd[i]);
+		{
+			print_error("export", ": not a valid identifier\n", st->cmd[i]);
+			_g_signal = 1;	
+		}
 		else
 		{
 			check_join(&(st->cmd[i]), st, params);
@@ -104,7 +108,9 @@ void	export_cmd1(t_parse *st, t_params *params)
 			if (!res)
 				error(st, 7, params);
 			export_cmd(res, st->cmd[i], params);
+			_g_signal = 0;
 		}
 		i++;
 	}
+	return (_g_signal);
 }

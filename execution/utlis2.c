@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/30 21:22:22 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:05:01 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,12 @@
 int	checking_cmd(t_parse *st, t_params *params)
 {
 	if (!(ft_strcmp(st->cmd[0], "exit")))
-	{
-		terminate_shell(st, params);
-		return (1);
-	}
+		return (terminate_shell(st, params));
 	if (!ft_strcmp(st->cmd[0], "export"))
-	{
-		export_cmd1(st, params);
-		return (1);
-	}
+		return (export_cmd1(st, params));
 	if (!ft_strcmp("env", st->cmd[0]))
-	{
-		env_cmd(st, params);
-		return (1);
-	}
-	if (checking_cmd3(st, params))
-		return (1);
+		return (env_cmd(st, params));
+	return (checking_cmd3(st, params));
 	return (0);
 }
 
@@ -38,10 +28,12 @@ int	env_cmd(t_parse	*st, t_params *params)
 {
 	t_env	*tmp;
 
+	if (!get_key("PATH", params->env))
+		return (print_error("env", "No such file or directory\n", NULL), 127);
 	search_and_replace("_", get_acc_path(params->paths_array, "env"), &(params->env), 1);
 	if (count_args(st->cmd) > 1)
 	{
-		printf ("minishell: env: Too many arguments.\n");
+		print_error("env", ": Too many arguments\n", NULL);
 		return (1);
 	}
 	tmp = params->env;
@@ -54,7 +46,7 @@ int	env_cmd(t_parse	*st, t_params *params)
 		tmp = tmp->next;
 	}
 	search_and_replace("_", ft_copy("env"), &(params->env), 1);
-	return (1);
+	return (0);
 }
 
 char	**list2array(t_env *env, t_params *params)
