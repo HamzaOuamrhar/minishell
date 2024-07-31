@@ -88,7 +88,8 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 		i++;
 	}
 	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1) //give another try to handle the permissions
-		printf("shellantics: cd: %s: Permission denied\n", s); //check the macro again
+		print_error("Permission denied", s);
+		// printf("shellantics: cd: %s: Permission denied\n", s); //check the macro again
 	else if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
 		printf("cd: not a directory: %s\n", s);
 	else if (chdir(s) == -1)
@@ -100,3 +101,8 @@ void	change_dir(t_parse *st, t_params *params, char *s)
 		i = 0;
 	}
 }
+
+// void	print_error(char *s, char *folder)
+// {
+
+// }
