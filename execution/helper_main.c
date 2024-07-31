@@ -17,12 +17,34 @@ void	excute_builtins(t_parse *st, t_params *params)
 	checking_cmd(st, params);
 }
 
+void	checking_and_exec(t_parse *st, t_params *params)
+{
+	if (!st->com_path || !ft_strlen(st->cmd[0])) //check the "." and ".."
+	{
+		if (!params->pid)
+		{
+			close (params->fds[0]);
+			close (params->fds[1]);
+			// exit (0);
+		}
+		params->flag = 1;
+		_g_signal = 127;
+		write(2, "shellanitcs: ", 13);
+		write(2, st->cmd[0], ft_strlen(st->cmd[0]));
+		write(2, " :command not found\n", 20);
+		exit (127);
+	}
+	else
+		excute_cmd(st, params);	
+}
+
 void	executing(t_parse *st, t_params *params, t_token *token)
 {
+	int	status;
+
 	(void)token;
 	params->flag = 0;
-	if (params->i != params->cmds - 1)
-		pipe(params->fds);
+	pipe(params->fds);
 	params->pid = fork();
 	if (!params->pid)
 	{
@@ -33,20 +55,7 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 		{
 			just_a_checker(st, params);
 			slash_path(st, params);
-			if (!st->com_path || !ft_strlen(st->cmd[0])) //check the "." and ".."
-			{
-				if (!params->pid)
-				{
-					close (params->fds[0]);
-					close (params->fds[1]);
-					// exit (0);
-				}
-				params->flag = 1;
-				_g_signal = 127;
-				fprintf(stderr, "shellantics: %s :command not found\n", st->cmd[0]); //this is just a function
-			}
-			else
-				excute_cmd(st, params);
+			checking_and_exec(st, params);
 		}
 		exit (0);
 	}
@@ -54,7 +63,9 @@ void	executing(t_parse *st, t_params *params, t_token *token)
 	close (params->save_fd);
 	if (params->i == params->cmds - 1)
 	{
-		waitpid(params->pid, 0, 0);
+		waitpid(params->pid, &status, 0);
+		if (WIFEXITED(status))
+			_g_signal = WEXITSTATUS(status);
 		// close(params->fds[0]);
 		// close(params->fds[1]);
 	}
