@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:03:24 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 11:03:28 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/01 13:50:42 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_type2(char *line, int *i, int *q)
 	}
 	if (in_quote)
 	{
-		exit_syntax_error("unclosed quotes syntax error");
+		syntax_error("unclosed quotes syntax error");
 		*q = 1;
 	}
 	return (type);

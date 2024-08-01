@@ -64,7 +64,7 @@ void	wait_prompt1(t_params *params)
 		tokenize(&token, params->line, &params->q);
 		if (!params->q)
 			starting_excute(st, params, token);
-		tokens_reset(&token);
+		token = NULL;
 		parser_reset(&st);
 	}
 }

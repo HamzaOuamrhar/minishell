@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:03:10 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 11:12:46 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/01 13:50:42 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	redirection_syntax(t_token *token)
 	check_redirection(token, &error);
 	if (error)
 	{
-		exit_syntax_error("redirection syntax error");
+		syntax_error("redirection syntax error");
 		return (1);
 	}
 	return (0);
@@ -99,13 +99,13 @@ int	pipe_syntax(t_token *token)
 		token = token->next;
 	if (token && ft_strcmp(token->type, "PIPE") == 0)
 	{
-		exit_syntax_error("syntax error near unexpected token `|'");
+		syntax_error("syntax error near unexpected token `|'");
 		return (1);
 	}
 	check_pipeline(token, &error);
 	if (error)
 	{
-		exit_syntax_error("syntax error near unexpected token `|'");
+		syntax_error("syntax error near unexpected token `|'");
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:00:48 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 11:00:51 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:33:28 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ char	*fmysubstr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
 	i = 0;
 	substring = ft_malloc((len + 1) * sizeof(char), 1);
 	if (substring == 0)

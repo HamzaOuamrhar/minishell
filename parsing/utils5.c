@@ -6,27 +6,13 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:04:27 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 11:04:30 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/01 13:50:42 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	tokens_reset(t_token **token)
-{
-	t_token	*tmp;
-
-	while (*token)
-	{
-		tmp = *token;
-		*token = (*token)->next;
-		free(tmp->type);
-		free(tmp->value);
-		free(tmp);
-	}
-}
-
-void	exit_syntax_error(char *error_msg)
+void	syntax_error(char *error_msg)
 {
 	printf("%s\n", error_msg);
 }
