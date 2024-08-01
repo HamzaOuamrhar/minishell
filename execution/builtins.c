@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:43:35 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 20:18:30 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	unset_cmd(t_parse *st, t_params *params)
 			g_status = 0;
 		else
 		{
+			puts("hello\n\n");
 			unset_cmd1(&(params->env), st->cmd[i]);
 			unset_cmd1(&(params->sorted_env), st->cmd[i]);
 			g_status = 0;
