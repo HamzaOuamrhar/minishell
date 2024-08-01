@@ -49,6 +49,8 @@ typedef	struct	t_count
 	int words;
 }   t_count;
 
+#define malloc(x) NULL;
+
 typedef	struct t_token
 {
 	char			*value;

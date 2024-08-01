@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/31 22:08:21 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 07:54:36 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,23 @@ void	just_export(t_params *params)
 	}
 }
 
+void	exporting(t_parse *st, t_params *params, char **res, int i)
+{
+	check_join(&(st->cmd[i]), st, params);
+	res = export_checker(st->cmd[i]);
+	if (!res)
+		error(st, 7, params);
+	export_cmd(res, st->cmd[i], params);
+	_g_signal = 0;
+}
+
 int	export_cmd1(t_parse *st, t_params *params)
 {
 	int		i;
 	char	**res;
 
-	if (count_args(st->cmd) == 1) //handle the "export" yooo i am here
+	res = NULL;
+	if (count_args(st->cmd) == 1)
 	{
 		just_export(params);
 		return (0);
@@ -103,14 +114,16 @@ int	export_cmd1(t_parse *st, t_params *params)
 		}
 		else
 		{
-			check_join(&(st->cmd[i]), st, params);
-			res = export_checker(st->cmd[i]);
-			if (!res)
-				error(st, 7, params);
-			export_cmd(res, st->cmd[i], params);
-			_g_signal = 0;
+			exporting(st, params, res, i);
+			// check_join(&(st->cmd[i]), st, params);
+			// res = export_checker(st->cmd[i]);
+			// if (!res)
+			// 	error(st, 7, params);
+			// export_cmd(res, st->cmd[i], params);
+			// _g_signal = 0;
 		}
 		i++;
 	}
 	return (_g_signal);
 }
+

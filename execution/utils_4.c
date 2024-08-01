@@ -97,7 +97,10 @@ char	**export_checker(char *s)
 	res = malloc (sizeof(char *) * (3));
 	res[0] = malloc (i + 1);
 	if (!res || !res[0])
-		return (NULL);//need more protection
+	{
+		perror("malloc");
+		return (NULL);
+	}
 	i = 0;
 	while (s[i] && s[i] != '=')
 	{
