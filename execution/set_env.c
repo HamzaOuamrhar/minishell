@@ -6,12 +6,11 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:35:31 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/30 14:38:56 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:20:20 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 void	add_var(t_env **env_vars, t_env *new)
 {
@@ -33,18 +32,17 @@ t_env	*last_var(t_env *env_vars)
 	return (tmp);
 }
 
-t_env	*set_env(char **env)
+t_env	*set_env(char **env, int i)
 {
 	t_env	*new_var;
 	t_env	*var;
 	int		start;
 	int		end;
-	int		i;
 	int		j;
 
 	i = 0;
 	var = NULL;
-	while(env[i])
+	while (env[i])
 	{
 		j = 0;
 		while (env[i][j] != '=')

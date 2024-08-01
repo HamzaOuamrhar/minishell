@@ -1,10 +1,16 @@
-#include "../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 17:19:56 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/08/01 17:19:57 by iez-zagh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	ft_free2(t_parse *st)
-{
-	// free(st->arr);
-	ft_free(st->cmd);
-}
+#include "../minishell.h"
 
 void	free_list(t_env *env)
 {
@@ -33,16 +39,6 @@ void	freeing(t_parse *st, t_params *params)
 	free (st);
 }
 
-void	freeing2(t_parse *st)
-{
-	// free(params->path);
-	free(st->com_path);
-	if (st->cmd)
-		ft_free(st->cmd);
-	// if (params->paths_array)
-	// 	ft_free(params->paths_array);
-}
-
 void	ft_free(char **s)
 {
 	int	i;
@@ -53,4 +49,11 @@ void	ft_free(char **s)
 	while (s[i])
 		free (s[i++]);
 	free (s);
+}
+
+void	change_pwd_value(t_params *params)
+{
+	search_and_replace("OLDPWD",
+		ft_copy(get_key("PWD", params->env)), &(params->env), 1);
+	search_and_replace("PWD", get_pwd(params), &(params->env), 1);
 }

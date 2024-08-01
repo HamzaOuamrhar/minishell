@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expanding.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:00:35 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 11:00:39 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	set_value(char **line, t_params *params, t_decl2 *decl)
 {
 	if ((*line)[decl->start] == '?')
-		decl->value = ft_strdup(ft_itoa(_g_signal));
+		decl->value = ft_strdup(ft_itoa(g_status));
 	else
 		decl->value = get_key(fmysubstr(*line,
 					decl->start, decl->i - decl->start), params->env);

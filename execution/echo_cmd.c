@@ -1,32 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo_cmd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/08/01 09:54:29 by iez-zagh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-
-int	pwd_cmd(t_params *params)
-{
-	char	*pwd;
-	char	*tmp;
-
-	pwd = malloc (1024);
-	if (!pwd)
-	{
-		perror("malloc");
-		return (1);
-	}
-	if (!(getcwd(pwd, 1024)))
-	{
-		tmp = get_key("PWD", params->env);
-		if (!tmp)
-		{
-			write(2, "we can't get the working directory\n", 35);
-			return (1);
-		}
-		else
-			printf("%s\n", get_key("PWD", params->env));
-	}
-	else
-		printf("%s\n", pwd);
-	free (pwd);
-	return (0);
-}
 
 int	trying_with_pwd(t_params *params)
 {
@@ -89,6 +73,13 @@ char	*ft_spliter(char *s, int j)
 	return (ft_substr(s, 0, i - (j * 2)));
 }
 
+void	change_pwd(t_params *params, char *tmp, int *i)
+{
+	change_pwd_value(params);
+	free (tmp);
+	i = 0;
+}
+
 int	change_dir(t_parse *st, t_params *params, char *s)
 {
 	struct stat	the_path;
@@ -103,11 +94,7 @@ int	change_dir(t_parse *st, t_params *params, char *s)
 			return (1);
 	}
 	if (tmp && access(tmp, F_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
-	{
-		check_deleted(params, tmp);
-		i++;
-		return (1);
-	}
+		return (check_deleted(params, tmp), i++, 1);
 	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1)
 		return (print_error("cd", ": Permission denied\n", s), 1);
 	else if (!S_ISDIR(the_path.st_mode) && access(s, F_OK) != -1)
@@ -115,10 +102,6 @@ int	change_dir(t_parse *st, t_params *params, char *s)
 	else if (chdir(s) == -1)
 		return (print_error("cd", ": no such file or directory\n", s), 1);
 	else
-	{
-		change_pwd_value(params);
-		free (tmp);
-		i = 0;
-	}
+		change_pwd(params, tmp, &i);
 	return (0);
 }

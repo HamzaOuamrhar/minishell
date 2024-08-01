@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ../minishell.h                                        :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   reated: 2024/04/19 10:50:47 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/06/03 17:10:55 by houamrha         ###   ########.fr       */
+/*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
+/*   Updated: 2024/08/01 17:48:01 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,43 +31,42 @@
 # define RESET_TEXT "\033[0m"
 # define BLUE_TEXT "\033[1;34m"
 
-int		_g_signal;
+int		g_status;
 
-typedef	struct	t_env
+typedef struct t_env
 {
-	// name=hamza
-	char		*key; // $name
-	char		*value; // hamza
-	struct t_env *next;
+	char			*key;
+	char			*value;
+	struct t_env	*next;
 }		t_env;
 
-typedef	struct	t_count
+typedef struct t_count
 {
-	int in;
-	int out;
-	int app;
-	int words;
-}   t_count;
+	int	in;
+	int	out;
+	int	app;
+	int	words;
+}	t_count;
 
 // #define malloc(x) NULL;
 
-typedef	struct t_token
+typedef struct t_token
 {
 	char			*value;
 	char			*type;
-	int 			flag;
-	int 			wh;
-	int 			here;
-	int 			has_q;
+	int				flag;
+	int				wh;
+	int				here;
+	int				has_q;
 	t_env			*env;
 	struct t_token	*next;
 }	t_token;
 
 typedef struct t_garbage
 {
-    void    *p;
-    struct t_garbage *next;
-}   t_garbage;
+	void				*p;
+	struct t_garbage	*next;
+}	t_garbage;
 
 typedef struct t_decl
 {
@@ -77,7 +76,7 @@ typedef struct t_decl
 	int		i;
 	char	*value;
 	t_env	*env;
-}   t_decl;
+}	t_decl;
 
 typedef struct t_decl2
 {
@@ -96,7 +95,7 @@ typedef struct t_decl2
 typedef struct t_decl3
 {
 	int		l;
-	char 	*line;
+	char	*line;
 	int		fd;
 	int		save_fd;
 	int		i;
@@ -104,32 +103,32 @@ typedef struct t_decl3
 
 typedef struct t_files
 {
-	char	*file;
-	int		type;
-	int		is_amb;
-	struct t_files *next;
+	char			*file;
+	int				type;
+	int				is_amb;
+	struct t_files	*next;
 }	t_files;
 
 typedef struct t_params
 {
-	int				flag; //remove this later
-	int				flag_2;
-	int				cmds;
-	char			**paths_array;
-	char			*path;
-	char			**env2;
-	char			**env3;
-	t_env			*sorted_env;
-	t_env			*env;
-	int				export_f;
-	int				q;
-	char			*line;
-	int				save_fd;
-	int				i;
-	int				fds[2];
-	int				pid;
-	char			*pwd;
-}   t_params;
+	int		flag; //remove this later
+	int		flag_2;
+	int		cmds;
+	char	**paths_array;
+	char	*path;
+	char	**env2;
+	char	**env3;
+	t_env	*sorted_env;
+	t_env	*env;
+	int		export_f;
+	int		q;
+	char	*line;
+	int		save_fd;
+	int		i;
+	int		fds[2];
+	int		pid;
+	char	*pwd;
+}	t_params;
 
 typedef struct t_parse
 {
@@ -141,13 +140,13 @@ typedef struct t_parse
 	int				in_fd;
 	int				out_fd;
 	int				i;
-	struct t_parse *next;
-}		t_parse;
+	struct t_parse	*next;
+}	t_parse;
 
 // parsing
 
 char	*ft_strdup(const char *s1);
-void     tokenize(t_token **token, char *line, int *q);
+void	tokenize(t_token **token, char *line, int *q);
 char	**ft_mysplit(char const *s, char c, int *still);
 void	add_back(t_token **token, t_token *new);
 void	syntax_error(char *error_msg);
@@ -156,19 +155,20 @@ int		is_in_word(char c);
 int		is_white(char c);
 int		is_alph_num(char c);
 char	*ft_strjoin(char *s1, char *s2);
-int 	syntax(t_token *token);
+int		syntax(t_token *token);
+void	tokens_reset(t_token **token);
 void	expander(t_token *token, t_params params);
-int	    in_str(char *str, char c);
+int		in_str(char *str, char c);
 void	quotes_removal(t_token *tokens);
-int	    is_alph(char c);
+int		is_alph(char c);
 int		parser(t_token *tokens, t_parse **parse, t_params *params);
 void	add_back_parse(t_parse **parse, t_parse *new);
 void	non_quotes_expander(t_token **token, t_params params);
 void	add_middle(t_token **token, char **arr);
-int	    word_count(char *str);
-int	    white_word(char *str);
+int		word_count(char *str);
+int		white_word(char *str);
 void	add_middle_n(t_token **token, char *value);
-int	    no_rest(char *str, int i);
+int		no_rest(char *str, int i);
 void	quotes_expander(t_token **token, char *token_value, t_params params);
 void	comp(t_decl decl, t_token **token, char *token_value, int *i);
 void	out_quotes(t_decl2 *decl, char *t_v, t_token **token, t_params params);
@@ -176,26 +176,29 @@ void	first_word_pos(char *value, int *i, int *j);
 char	*ft_itoa(int n);
 void	expand_line(char **line, t_params *params);
 void	*ft_malloc(size_t size, int flag);
-void 	parse_input(t_token **tokens, t_parse **new_parse);
+void	parse_input(t_token **tokens, t_parse **new_parse);
 void	parse_output(t_token **tokens, t_parse **new_parse);
 void	parse_append(t_token **tokens, t_parse **new_parse);
-int		doc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params);
+int		doc(t_decl3 *decl, t_token **tokens,
+			t_parse **new_parse, t_params *params);
 void	is_in_quote(t_decl2 *decl, char *t_v);
-void	add_back_file(t_files **files, int type, t_token *token, t_parse *parse);
+void	add_back_file(t_files **files,
+			int type, t_token *token, t_parse *parse);
 void	not_w_first_i(t_decl *decl, char **n_t_v, t_token **token);
 void	heredoc_sig(int sig);
 int		pipe_syntax(t_token *token);
 int		redirection_syntax(t_token *token);
 void	parser_reset(t_parse **st);
+int		echo_cmd(t_parse *st);
+int		ft_shell_atoi(char *s);
 
 // execution
 
 void	wait_prompt1(t_params *params);
-void	signal_handle();
+void	signal_handle(void);
 char	*get_acc_path(char **paths, char *com);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
-void	error(t_parse *st, int y, t_params *params);
 void	free_array(char **array);
 char	**ft_split(char const *s, char c);
 void	excute_cmd(t_parse *st, t_params *params);
@@ -209,7 +212,7 @@ void	freeing(t_parse *st, t_params *params);
 size_t	ft_atol(char *s, t_parse *st, t_params *params);
 void	ft_exit(t_parse *st, int args_n, t_params *params);
 int		checking_cmd(t_parse *st, t_params *params);
-t_env	*set_env(char **env);
+t_env	*set_env(char **env, int i);
 void	add_var(t_env **env_vars, t_env *new);
 t_env	*last_var(t_env *env_vars);
 char	*ft_substr(const char *s, int start, int end);
@@ -226,16 +229,13 @@ void	search_and_replace(char *env, char *value, t_env **envi, int flag);
 char	*get_pwd(t_params *params);
 void	change_pwd_value(t_params *params);
 t_env	*before_last_node(t_env *env);
-void	ft_free2(t_parse *st);
-void	freeing2(t_parse *st);
 int		change_dir(t_parse *st, t_params *params, char *s);
 void	sort_env(t_env *env);
 void	just_export(t_params *params);
 void	check_join(char **s, t_parse *st, t_params *params);
-void	ft_join_value(char **s, t_parse *st, t_params *params);
 void	ft_join(char **res, t_params *params);
 int		export_cmd1(t_parse *st, t_params *params);
-int 	ft_strchr(char *s, char c);
+int		ft_strchr(char *s, char c);
 int		search_and_replace2(char *env, t_env **envi);
 void	free_update(char **res, t_params *params);
 char	**export_checker(char *s);
@@ -257,9 +257,11 @@ int		check_builtins(char *s);
 void	forking_checker(t_parse *st, t_params *params);
 void	initialiaze_vars(t_params *params, t_token **token, int f);
 int		check_perms(t_parse *st, t_params *params);
-void	excute_cmds(t_parse *st, t_params *params, t_token *token);
+void	excute_cmds(t_parse *st, t_params *params);
 int		check_in_files(t_parse *st, t_params *params);
 void	forking_piping(t_params *params);
 void	print_error(char *cmd, char *s, char *folder);
+void	checking_and_exec(t_parse *st, t_params *params);
+int		just_a_checker(t_parse *st, t_params *params);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:59:33 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 10:59:37 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	double_quote_key(t_decl2 *decl, char *t_v, t_params params)
 			decl->i++;
 	}
 	if (t_v[decl->start] == '?')
-		decl->value = ft_strdup(ft_itoa(_g_signal));
+		decl->value = ft_strdup(ft_itoa(g_status));
 	else
 		decl->value = get_key(fmysubstr(t_v, decl->start,
 					decl->i - decl->start), params.env);

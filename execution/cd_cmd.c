@@ -6,25 +6,11 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 09:27:40 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	change_pwd_value(t_params *params)
-{
-	search_and_replace("OLDPWD",
-		ft_copy(get_key("PWD", params->env)), &(params->env), 1);
-	search_and_replace("PWD", get_pwd(params), &(params->env), 1);
-}
-
-t_env	*before_last_node(t_env *env)
-{
-	while (env->next->next)
-		env = env->next;
-	return (env);
-}
 
 void	ft_swap(t_env *a, t_env *b)
 {
@@ -85,12 +71,8 @@ void	just_export(t_params *params)
 
 void	exporting(t_parse *st, t_params *params, char **res, int i)
 {
-	check_join(&(st->cmd[i]), st, params);
-	res = export_checker(st->cmd[i]);
-	if (!res)
-		error(st, 7, params);
 	export_cmd(res, st->cmd[i], params);
-	_g_signal = 0;
+	g_status = 0;
 }
 
 int	export_cmd1(t_parse *st, t_params *params)
@@ -100,22 +82,22 @@ int	export_cmd1(t_parse *st, t_params *params)
 
 	res = NULL;
 	if (count_args(st->cmd) == 1)
-	{
-		just_export(params);
-		return (0);
-	}
+		return (just_export(params), 0);
 	i = 1;
 	while (st->cmd[i])
 	{
-		if (check_syntax(st->cmd[i]))
+		check_join(&(st->cmd[i]), st, params);
+		res = export_checker(st->cmd[i]);
+		if (!res || !res[0])
+			return (perror("malloc"), 1);
+		if (check_syntax(res[0]))
 		{
 			print_error("export", ": not a valid identifier\n", st->cmd[i]);
-			_g_signal = 1;	
+			g_status = 1;
 		}
 		else
 			exporting(st, params, res, i);
 		i++;
 	}
-	return (_g_signal);
+	return (g_status);
 }
-

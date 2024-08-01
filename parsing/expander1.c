@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:34 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 10:58:39 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	get_value(t_decl *decl, int *i, char *token_value)
 			(*i)++;
 	}
 	if (token_value[decl->first] == '?')
-		decl->value = ft_strdup(ft_itoa(_g_signal));
+		decl->value = ft_strdup(ft_itoa(g_status));
 	else
 		decl->value = get_key(fmysubstr(token_value,
 					decl->first, (*i) - decl->first), decl->env);

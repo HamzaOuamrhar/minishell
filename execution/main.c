@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/08/01 17:58:34 by iez-zagh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	parser_reset(t_parse **st)
@@ -17,24 +29,18 @@ int	check_in_files(t_parse *st, t_params *params)
 	return (0);
 }
 
-
 void	starting_excute(t_parse *st, t_params *params, t_token *token)
 {
 	if (!syntax(token))
 	{
 		expander(token, *params);
 		if (!parser(token, &st, params))
-		{
-			// tokens_reset(&token);
-			// parser_reset(&st);
-			// continue;
 			return ;
-		}
 		params->cmds = lstsize(st);
 		while (st)
 		{
 			update_(st, params);
-			excute_cmds(st, params, token); //here the super hero
+			excute_cmds(st, params);
 			st = st->next;
 			params->i++;
 		}
@@ -42,7 +48,6 @@ void	starting_excute(t_parse *st, t_params *params, t_token *token)
 			;
 		initialiaze_vars(params, &token, 0);
 	}
-
 }
 
 void	wait_prompt1(t_params *params)
@@ -53,17 +58,18 @@ void	wait_prompt1(t_params *params)
 	initialiaze_vars(params, &token, 1);
 	st = NULL;
 	token = NULL;
+	signal_handle();
 	while (1)
 	{
-		signal_handle();
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
 		if (!params->line)
-			break ; // exit with 1
+			break ;//free and exit
 		add_history(params->line);
 		tokenize(&token, params->line, &params->q);
 		if (!params->q)
 			starting_excute(st, params, token);
+		signal_handle();
 		token = NULL;
 		parser_reset(&st);
 	}

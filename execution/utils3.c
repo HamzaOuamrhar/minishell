@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/30 14:35:28 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:10:02 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ size_t	ft_atol(char *s, t_parse *st, t_params *params)
 			sign = -1;
 		i++;
 	}
-	while(s[i])
+	while (s[i])
 	{
 		res = res * 10 + s[i++] - '0';
 		if (!(s[i] >= 0 && s[i] <= '9') || res > __LONG_MAX__)
@@ -61,14 +61,12 @@ void	ft_exit(t_parse *st, int args_n, t_params *params)
 
 	if (args_n == 1)
 	{
-		// freeing(st, params);
 		printf ("exit\n");
 		exit (0);
 	}
 	if (args_n == 2 && !(numbered_arg(st->cmd[1])))
 	{
 		n = ft_atol(st->cmd[1], st, params);
-		// freeing(st, params);
 		printf ("exit\n");
 		exit (n);
 	}
@@ -105,7 +103,10 @@ char	**copy_env(char **env)
 
 	res = malloc (sizeof(char *) * (count_args(env) + 1));
 	if (!res)
-		return (NULL);//more protection
+	{
+		perror ("malloc");
+		return (NULL);
+	}
 	i = 0;
 	while (env[i])
 	{

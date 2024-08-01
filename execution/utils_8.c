@@ -1,0 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_8.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 16:41:03 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/08/01 17:00:26 by iez-zagh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+int	get_number(char *s, int i)
+{
+	int	res;
+
+	res = 0;
+	while (s[i])
+	{
+		if (!(s[i] >= '0' && s[i] <= '9'))
+			return (-1);
+		res = res * 10 + s[i] - '0';
+		if (res == 100)
+			return (-1);
+		i++;
+	}
+	return (res);
+}
+
+int	ft_shell_atoi(char *s)
+{
+	int	i;
+	int	res;
+
+	if (!s)
+		return (-1);
+	res = 0;
+	i = 0;
+	if (s[i] == '-' || s[i] == '+')
+	{
+		if (s[i] == '-')
+		{
+			if (s[i + 1] >= '0' && s[i + 1] <= '9')
+				return (-2);
+			else
+				return (-1);
+		}
+		else
+			i++;
+	}
+	return (get_number(s, i));
+}
+
+char	*ft_strdup2(const char *s1)
+{
+	char		*copy;
+	char		*c;
+	const char	*s;
+	int			i;
+
+	i = 0;
+	s = s1;
+	while (*s)
+	{
+		i++;
+		s++;
+	}
+	copy = malloc(i * sizeof(char) + 1);
+	if (copy == NULL)
+		return (0);
+	c = copy;
+	while (*s1)
+	{
+		*c = *s1;
+		c++;
+		s1++;
+	}
+	*c = '\0';
+	return (copy);
+}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utlis2.c                                           :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 09:25:59 by iez-zagh         ###   ########.fr       */
+/*   Created: 2024/08/01 15:46:07 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/08/01 17:11:19 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	env_cmd(t_parse	*st, t_params *params)
 
 	if (!get_key("PATH", params->env))
 		return (print_error("env", "No such file or directory\n", NULL), 127);
-	search_and_replace("_", get_acc_path(params->paths_array, "env"), &(params->env), 1);
+	search_and_replace("_", get_acc_path(params->paths_array,
+			"env"), &(params->env), 1);
 	if (count_args(st->cmd) > 1)
 	{
 		print_error("env", ": Too many arguments\n", NULL);
@@ -58,8 +59,11 @@ char	**list2array(t_env *env, t_params *params)
 	i = 0;
 	tmp = params->env;
 	env2 = malloc (sizeof(char *) * (lstcounter(env) + 1));
-	// if (!env2)
-	// 	error(st, 2, params); // chechk another protection
+	if (!env2)
+	{
+		perror("malloc");
+		return (NULL);
+	}
 	while (tmp)
 	{
 		env2[i++] = ft_strjoin_env(tmp->key, tmp->value);

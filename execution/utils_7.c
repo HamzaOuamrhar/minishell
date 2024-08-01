@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_7.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/08/01 17:05:07 by iez-zagh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*ft_strjoin2(char *s1, char *s2)
@@ -11,51 +23,15 @@ char	*ft_strjoin2(char *s1, char *s2)
 		s1 = ft_strdup2("");
 	join_string = malloc
 		((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (join_string == 0)
-		return (0);
+	if (!join_string)
+		return (NULL);
 	join = join_string;
 	while (*s1)
-	{
-		*join = *s1;
-		join++;
-		s1++;
-	}
+		*join++ = *s1++;
 	while (*s2)
-	{
-		*join = *s2;
-		join++;
-		s2++;
-	}
+		*join++ = *s2++;
 	*join = '\0';
 	return (join_string);
-}
-
-char	*ft_strdup2(const char *s1)
-{
-	char		*copy;
-	char		*c;
-	const char	*s;
-	int			i;
-
-	i = 0;
-	s = s1;
-	while (*s)
-	{
-		i++;
-		s++;
-	}
-	copy = malloc(i * sizeof(char) + 1);
-	if (copy == NULL)
-		return (0);
-	c = copy;
-	while (*s1)
-	{
-		*c = *s1;
-		c++;
-		s1++;
-	}
-	*c = '\0';
-	return (copy);
 }
 
 void	update_(t_parse *st, t_params *params)
@@ -68,7 +44,8 @@ void	update_(t_parse *st, t_params *params)
 	}
 	else if (st->cmd[0] && (ft_strcmp(st->cmd[0], "echo")))
 	{
-		search_and_replace("_", ft_copy(st->cmd[count_args(st->cmd) - 1]), &(params->env), 1);
+		search_and_replace("_", ft_copy(st->cmd[count_args(st->cmd) - 1]),
+			&(params->env), 1);
 	}
 }
 
@@ -82,4 +59,29 @@ int	check_builtins(char *s)
 		||!(ft_strcmp(s, ".")))
 		return (1);
 	return (0);
+}
+
+char	**export_checker(char *s)
+{
+	int		i;
+	char	**res;
+
+	i = 0;
+	while (s[i] && s[i] != '=')
+		i++;
+	res = malloc (sizeof(char *) * (3));
+	res[0] = malloc (i + 1);
+	if (!res || !res[0])
+	{
+		perror("malloc");
+		return (NULL);
+	}
+	i = 0;
+	while (s[i] && s[i] != '=')
+	{
+		res[0][i] = s[i];
+		i++;
+	}
+	res[0][i++] = '\0';
+	return (export_checker2(res, s, i));
 }
