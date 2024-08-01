@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:46:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 17:11:19 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:29:41 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	env_cmd(t_parse	*st, t_params *params)
 {
 	t_env	*tmp;
 
-	if (!get_key("PATH", params->env))
-		return (print_error("env", "No such file or directory\n", NULL), 127);
+	// if (!get_key("PATH", params->env))
+	// 	return (print_error("env", "No such file or directory\n", NULL), 127);
 	search_and_replace("_", get_acc_path(params->paths_array,
 			"env"), &(params->env), 1);
 	if (count_args(st->cmd) > 1)

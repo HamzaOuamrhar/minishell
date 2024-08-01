@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 17:08:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:30:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ char	*get_acc_path(char **paths, char *com)
 
 void	slash_path(t_parse *st, t_params *params)
 {
+	(void)params;
 	if (!st->cmd || !st->cmd[0]
 		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
 		st->com_path = NULL;
-	else if (access(st->cmd[0], X_OK))
-		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+	// else if (access(st->cmd[0], X_OK))
+	// 	st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 	else
 		st->com_path = ft_copy(st->cmd[0]);
 }
@@ -99,8 +100,10 @@ void	unset_cmd1(t_env **env, char *s)
 			tmp2 = tmp->next;
 			if (tmp->next->next)
 				tmp->next = tmp->next->next;
-			else
+			else if (tmp->next)
 				tmp->next = NULL;
+			else
+				tmp = NULL;
 			free (tmp2->key);
 			free (tmp2->value);
 			free (tmp2);

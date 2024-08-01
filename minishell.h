@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/01 17:48:01 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:18:13 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ typedef struct t_params
 	int		i;
 	int		fds[2];
 	int		pid;
-	char	*pwd;
+	char	*pwd;//think about this
 }	t_params;
 
 typedef struct t_parse
