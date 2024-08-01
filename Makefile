@@ -5,13 +5,14 @@ RESET_TEXT =\033[0m
 
 NAME = minishell
 N = -fsanitize=address
-CFLAGS = $(N)
+CFLAGS = -Wall -Wextra -Werror -g $(N)
 CC = cc
 READLINE_DIR=$(shell brew --prefix readline)
 EXECUTION_DIR = execution
+SIGNALS_DIR = signals
 PARSING_DIR = parsing
 
-M_SOURCES = $(wildcard $(EXECUTION_DIR)/*.c $(PARSING_DIR)/*.c)
+M_SOURCES = $(wildcard $(EXECUTION_DIR)/*.c $(PARSING_DIR)/*.c $(SIGNALS_DIR)/*.c)
 
 M_OBJECTS = ${M_SOURCES:.c=.o}
 
