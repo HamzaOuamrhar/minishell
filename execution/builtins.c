@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:43:35 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/31 21:40:29 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,18 @@ int	unset_cmd(t_parse *st, t_params *params)
 		if (check_syntax(st->cmd[i]))
 		{
 			print_error("env", ": not a valid identifier\n", st->cmd[i]);
-			_g_signal = 1;
+			g_status = 1;
 		}
 		else if (!ft_strcmp("_", st->cmd[i]))
-			_g_signal = 0;
+			g_status = 0;
 		else
 		{
 			unset_cmd1(&(params->env), st->cmd[i]);
 			unset_cmd1(&(params->sorted_env), st->cmd[i]);
-			_g_signal = 0;
+			g_status = 0;
 		}
 		i++;
 	}
 	free_update(NULL, params);
-	return (_g_signal);
+	return (g_status);
 }

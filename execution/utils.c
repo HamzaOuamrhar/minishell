@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/31 13:37:15 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:07:48 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 void	excute_cmd(t_parse *st, t_params *params)
 {
-	// ////imad"exection");
 	if (params->pid == 0)
 		execve(st->com_path, st->cmd, params->env2);
 }
 
-int change_directory(t_parse *st, t_params *params)
+int	change_directory(t_parse *st, t_params *params)
 {
 	char	*home;
 
@@ -44,15 +43,33 @@ int	terminate_shell(t_parse *st, t_params *params)
 	if (!(numbered_arg(st->cmd[1])) && (count_args(st->cmd)) > 2)
 	{
 		write(2, "exit\n", 5);
-		print_error("exit",": too many arguments\n", NULL);
-		return (1);//its one 
+		print_error("exit", ": too many arguments\n", NULL);
+		return (1);
 	}
 	if ((numbered_arg(st->cmd[1])))
 	{
 		write(2, "exit\n", 5);
 		print_error("exit", ": numeric argument required\n", NULL);
-		// freeing(st, params);
 		exit (255);
 	}
 	return (0);
+}
+
+void	forking_checker(t_parse *st, t_params *params)
+{
+	slash_path(st, params);
+	forking_piping(params);
+}
+
+void	initialiaze_vars(t_params *params, t_token **token, int f)
+{
+	if (f)
+	{
+		params->flag = 0;
+		*token = NULL;
+	}
+	params->pid = 1;
+	params->flag_2 = 0;
+	params->save_fd = -1;
+	params->i = 0;
 }

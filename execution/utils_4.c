@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_4.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 14:22:49 by iez-zagh          #+#    #+#             */
+/*   Updated: 2024/08/01 16:07:28 by iez-zagh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int ft_strchr(char *s, char c)
+int	ft_strchr(char *s, char c)
 {
 	int	i;
 
@@ -14,26 +26,7 @@ int ft_strchr(char *s, char c)
 	return (0);
 }
 
-void	check_join(char **s, t_parse *st, t_params *params)
-{
-	int	i;
-
-	i = 0;
-	params->export_f = 0;
-	while ((*s)[i])
-	{
-		if ((*s)[i] == '=')
-			if ((*s)[i - 1] == '+')
-			{
-				params->export_f = 1;
-				ft_join_value(s, st, params);
-				return ;
-			}
-		i++;
-	}
-}
-
-void	ft_join_value(char **s, t_parse *st, t_params *params)
+void	ft_join_value(char **s)
 {
 	int		i;
 	int		j;
@@ -43,18 +36,44 @@ void	ft_join_value(char **s, t_parse *st, t_params *params)
 	j = 0;
 	res = malloc (ft_strlen(*s));
 	if (!res)
-		error(st, 2, params); //more portection
+	{
+		perror("malloc");
+		return ;
+	}
 	while ((*s)[i])
 	{
 		if ((*s)[i] == '+')
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		res[j++] = (*s)[i++];
 	}
 	res[j] = '\0';
+	free (*s);
 	*s = res;
+}
+
+void	check_join(char **s, t_parse *st, t_params *params)
+{
+	int	i;
+
+	(void)st;
+	i = 0;
+	params->export_f = 0;
+	while ((*s)[i])
+	{
+		if ((*s)[i] == '=')
+		{
+			if ((*s)[i - 1] == '+')
+			{
+				params->export_f = 1;
+				ft_join_value(s);
+				return ;
+			}
+		}
+		i++;
+	}
 }
 
 void	free_update(char **res, t_params *params)
@@ -63,7 +82,7 @@ void	free_update(char **res, t_params *params)
 	ft_free(params->env2);
 	params->env2 = list2array(params->env, params);
 	free(params->path);
-	params->path = ft_copy(get_key("PATH", params->env)); //handle empty path or else
+	params->path = ft_copy(get_key("PATH", params->env));
 	ft_free(params->paths_array);
 	if (!params->path)
 	{
@@ -73,7 +92,6 @@ void	free_update(char **res, t_params *params)
 	params->paths_array = ft_split(params->path, ':');
 }
 
-
 char	**export_checker2(char **res, char *s, int i)
 {
 	if (i < (int)ft_strlen(s))
@@ -82,31 +100,6 @@ char	**export_checker2(char **res, char *s, int i)
 		res[2] = NULL;
 	}
 	else
-		res[1] = NULL;//possible a leak here be carefull
+		res[1] = NULL;
 	return (res);
-}
-
-char	**export_checker(char *s)
-{
-	int		i;
-	char	**res;
-
-	i = 0;
-	while (s[i] && s[i] != '=')
-		i++;
-	res = malloc (sizeof(char *) * (3));
-	res[0] = malloc (i + 1);
-	if (!res || !res[0])
-	{
-		perror("malloc");
-		return (NULL);
-	}
-	i = 0;
-	while (s[i] && s[i] != '=')
-	{
-		res[0][i] = s[i];
-		i++;
-	}
-	res[0][i++] = '\0';
-	return (export_checker2(res, s, i));
 }
