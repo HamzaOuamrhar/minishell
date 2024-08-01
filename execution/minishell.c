@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 09:04:50 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 09:22:09 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int __attribute__((unused)) argc, char __attribute__((unused)) * argv[]
 	sort_env(params.sorted_env);
 	ft_free(params.env3);
 	update(&params);
-	params.env2 = list2array(&params);
+	params.env2 = list2array(params.env, &params);
 	wait_prompt1(&params);
 }
 

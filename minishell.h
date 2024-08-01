@@ -49,7 +49,7 @@ typedef	struct	t_count
 	int words;
 }   t_count;
 
-#define malloc(x) NULL;
+// #define malloc(x) NULL;
 
 typedef	struct t_token
 {
@@ -215,9 +215,9 @@ void	add_var(t_env **env_vars, t_env *new);
 t_env	*last_var(t_env *env_vars);
 char	*ft_substr(const char *s, int start, int end);
 int		env_cmd(t_parse	*st, t_params *params);
-// int		lstcounter(t_env	*env);
+int		lstcounter(t_env *env);
 char	*ft_strjoin_env(char *s1, char *s2);
-char	**list2array(t_params *params);
+char	**list2array(t_env *env, t_params *params);
 void	free_list(t_env *env);
 void	empty_env(t_params *params);
 char	*get_key(char *s, t_env *env);

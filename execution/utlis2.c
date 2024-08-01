@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:05:38 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 09:04:01 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/01 09:20:34 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	env_cmd(t_parse	*st, t_params *params)
 	return (0);
 }
 
-char	**list2array(t_params *params)
+char	**list2array(t_env *env, t_params *params)
 {
 	char	**env2;
 	int		i;
