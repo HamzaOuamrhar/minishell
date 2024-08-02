@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 09:54:29 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:45:34 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	trying_with_pwd(t_params *params)
 {
 	char	*pwd;
+	char	*tmp;
 
 	pwd = malloc(1024 * (sizeof(char)));
 	if (!pwd)
@@ -22,13 +23,15 @@ int	trying_with_pwd(t_params *params)
 		perror("malloc");
 		return (1);
 	}
-	if (!(getcwd(pwd, 1024)))
+	tmp = getcwd(pwd, 1024);
+	if (!tmp)
 	{
 		write(2, "some thing went wrong here\n", 28);
 		return (1);
 	}
 	else
 		search_and_replace("PWD", pwd, &(params->env), 1);
+	free (tmp);
 	return (0);
 }
 

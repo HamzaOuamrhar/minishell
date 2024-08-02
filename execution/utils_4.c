@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:22:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 16:07:28 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:38:48 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	check_join(char **s, t_parse *st, t_params *params)
 
 void	free_update(char **res, t_params *params)
 {
+	// free(res[0]); //this later
 	free (res);
 	ft_free(params->env2);
 	params->env2 = list2array(params->env, params);

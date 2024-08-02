@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 20:21:59 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/02 20:00:55 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,26 +90,38 @@ int	checking_cmd3(t_parse *st, t_params *params)
 
 void	unset_cmd1(t_env **env, char *s)
 {
-	t_env	*tmp;
-	t_env	*tmp2;
+	t_env		*tmp;
+	t_env		*tmp2;
 
 	tmp = *env;
-	while (tmp->next)
+	tmp2 = NULL;
+	while (tmp)
 	{
-		printf("%s]]\n", tmp->key);
+		if (tmp->next)
+		{
+			if (!(ft_strcmp(tmp->next->key, s)))
+			{
+				tmp2 = tmp->next;
+				tmp->next = tmp->next->next;
+				break ;
+			}
+		}
 		if (!(ft_strcmp(tmp->key, s)))
 		{
-			puts("getsher\n");
-			tmp2 = tmp->next;
-			if (tmp->next->next)
-				tmp->next = tmp->next->next;
+			tmp2 = tmp;
+			if (tmp->next)
+				*(env) = tmp->next;
 			else
 				tmp->next = NULL;
-			free (tmp2->key);
-			free (tmp2->value);
-			free (tmp2);
-			return ;
+			break ;
 		}
 		tmp = tmp->next;
+	}
+	if (tmp2)
+	{	
+		free (tmp2->key);
+		free (tmp2->value);
+		free (tmp2);
+		return ;
 	}
 }

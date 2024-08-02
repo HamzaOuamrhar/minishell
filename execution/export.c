@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 09:59:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:43:27 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	add_key(char *key, char *value, t_env **env)
 		perror(NULL);
 		return ;
 	}
-	new_key->key = key;
+	new_key->key = ft_copy(key);
 	new_key->value = value;
 	new_key->next = NULL;
 	last_var((*env))->next = new_key;
@@ -37,7 +37,7 @@ void	export_cmd(char **s, char *res, t_params *params)
 		if (ft_strchr(res, '='))
 		{
 			s[1] = ft_copy("");
-			search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->env), 0);
+			search_and_replace(s[0], ft_copy(s[1]), &(params->env), 0);
 			search_and_replace(s[0], s[1], &(params->sorted_env), 0);
 		}
 		else
@@ -96,15 +96,18 @@ int	search_and_replace2(char *env, t_env **envi)
 char	*get_pwd(t_params *params)
 {
 	char	*pwd;
+	char	*tmp;
 
 	pwd = malloc (1024);
 	if (!pwd)
 		return (NULL);
-	if (!(getcwd(pwd, 1024)))
+	tmp = getcwd(pwd, 1024);
+	if (!tmp)
 	{
 		printf("cd: error retrieving current directory: getcwd\n");
 		free (pwd);
 		return (ft_strjoin2(get_key("PWD", params->env), "/.."));
 	}
+	free (tmp);
 	return (pwd);
 }
