@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 17:58:34 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 09:23:58 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	wait_prompt1(t_params *params)
 			starting_excute(st, params, token);
 		signal_handle();
 		token = NULL;
+		// if (st->com_path)
+		// 	free(st->com_path);
+		// st->com_path = NULL;
 		parser_reset(&st);
 	}
 }

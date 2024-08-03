@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/02 20:00:55 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 09:12:09 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*get_acc_path(char **paths, char *com)
 void	slash_path(t_parse *st, t_params *params)
 {
 	(void)params;
+	st->com_path = NULL;
 	if (!st->cmd || !st->cmd[0]
 		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
 		st->com_path = NULL;
@@ -44,7 +45,7 @@ void	slash_path(t_parse *st, t_params *params)
 	else
 		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 	// else
-	// 	st->com_path = ft_copy(st->cmd[0]);
+	// 	st->com_path = ft_copy(st->cmd[0]);`
 }
 
 int	pwd_cmd(t_params *params)
