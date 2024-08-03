@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:34 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:25:08 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 
 void	get_value(t_decl *decl, int *i, char *token_value)
 {
+	if (!token_value[*i + 1])
+	{
+		decl->value = ft_strdup("$");
+		(*i)++;
+		return ;
+	}
 	decl->j = 0;
 	(*i)++;
 	decl->first = *i;
