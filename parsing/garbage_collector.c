@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:00:24 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/01 11:38:02 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/03 10:28:14 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	garbage_collector(t_garbage **gr, void	*p)
 
 	new_g = malloc(sizeof(t_garbage));
 	if (!new_g)
+	{
+		ft_malloc(0, 3);
 		exit(1);
+	}
 	new_g->next = NULL;
 	new_g->p = p;
 	if (!*gr)
@@ -55,7 +58,10 @@ void	*ft_malloc(size_t size, int flag)
 	{
 		p = malloc(size);
 		if (!p)
+		{
+			ft_malloc(0, 3);
 			exit(1);
+		}
 		else
 			if (flag)
 				garbage_collector(&gr, p);
