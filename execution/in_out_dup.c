@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 17:12:39 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:06:00 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@ int	check_perms(t_parse *st, t_params *params)
 {
 	int		fd;
 	t_files	*tmp;
-
+	struct stat path;
+	
 	(void)params;
 	tmp = st->files;
 	while (tmp)
 	{
+		stat(tmp->file, &path);
+		if (S_ISDIR(path.st_mode))
+			return (print_error(NULL, ": is a directory\n", tmp->file), 1);
 		if (access(tmp->file, R_OK) == -1 && access(tmp->file, F_OK) != -1)
 			return (print_error(NULL, ": Permission denied\n", tmp->file), 1);
 		if (tmp->type != 1)

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 10:10:05 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 12:11:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	change_directory(t_parse *st, t_params *params)
 		home = get_key("HOME", params->env);
 		if (!home)
 			return (print_error("cd", ": HOME not set\n", NULL), 1);
-		change_dir(st, params, home);
-		return (0);
+		return (change_dir(st, params, home));
 	}
 	return (change_dir(st, params, st->cmd[1]));
 }

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 10:58:51 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:21:41 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,15 @@ int	search_and_replace2(char *env, t_env **envi)
 char	*get_pwd(t_params *params)
 {
 	char	*pwd;
-	char	*tmp;
 
 	pwd = malloc (1024);
 	if (!pwd)
 		return (NULL);
-	tmp = getcwd(pwd, 1024);
-	if (!tmp)
+	if (!getcwd(pwd, 1024))
 	{
 		printf("cd: error retrieving current directory: getcwd\n");
 		free (pwd);
 		return (ft_strjoin2(get_key("PWD", params->env), "/.."));
 	}
-	free (tmp);
 	return (pwd);
 }
