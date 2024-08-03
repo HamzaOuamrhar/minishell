@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/02 21:43:27 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 10:58:51 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	add_key(char *key, char *value, t_env **env)
 		perror(NULL);
 		return ;
 	}
-	new_key->key = ft_copy(key);
+	new_key->key = key;
 	new_key->value = value;
 	new_key->next = NULL;
 	last_var((*env))->next = new_key;
@@ -37,11 +37,11 @@ void	export_cmd(char **s, char *res, t_params *params)
 		if (ft_strchr(res, '='))
 		{
 			s[1] = ft_copy("");
-			search_and_replace(s[0], ft_copy(s[1]), &(params->env), 0);
-			search_and_replace(s[0], s[1], &(params->sorted_env), 0);
+			search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->env), 0);
+			search_and_replace(ft_copy(s[0]), s[1], &(params->sorted_env), 0);
 		}
 		else
-			search_and_replace2(s[0], &(params->sorted_env));
+			search_and_replace2(ft_copy(s[0]), &(params->sorted_env));
 		sort_env(params->sorted_env);
 		free_update(s, params);
 		return ;
@@ -49,7 +49,7 @@ void	export_cmd(char **s, char *res, t_params *params)
 	if (params->export_f)
 		ft_join(s, params);
 	search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->sorted_env), 0);
-	search_and_replace(s[0], s[1], &(params->env), 0);
+	search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->env), 0);
 	sort_env(params->sorted_env);
 	free_update(s, params);
 }

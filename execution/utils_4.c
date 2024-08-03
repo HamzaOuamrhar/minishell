@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:22:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/02 21:38:48 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:15:37 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_join_value(char **s)
 
 	i = 0;
 	j = 0;
-	res = malloc (ft_strlen(*s));
+	res = ft_malloc(ft_strlen(*s), 1);
 	if (!res)
 	{
 		perror("malloc");
@@ -50,7 +50,7 @@ void	ft_join_value(char **s)
 		res[j++] = (*s)[i++];
 	}
 	res[j] = '\0';
-	free (*s);
+	// free (*s);//think about this
 	*s = res;
 }
 
@@ -71,6 +71,7 @@ void	check_join(char **s, t_parse *st, t_params *params)
 				ft_join_value(s);
 				return ;
 			}
+			return ;
 		}
 		i++;
 	}
@@ -79,7 +80,8 @@ void	check_join(char **s, t_parse *st, t_params *params)
 void	free_update(char **res, t_params *params)
 {
 	// free(res[0]); //this later
-	free (res);
+	// free (res);
+	(void)res;
 	ft_free(params->env2);
 	params->env2 = list2array(params->env, params);
 	free(params->path);
@@ -95,12 +97,20 @@ void	free_update(char **res, t_params *params)
 
 char	**export_checker2(char **res, char *s, int i)
 {
+	int	j;
+
+	j = 0;
 	if (i < (int)ft_strlen(s))
 	{
-		res[1] = ft_copy(&s[i]);
+		res[1] = ft_malloc(ft_strlen(&s[i]) + 1, 1);
+		while (s[i])
+			res[1][j++] = s[i++];
+		res[1][j] = '\0';
 		res[2] = NULL;
 	}
 	else
+	{
 		res[1] = NULL;
+	}
 	return (res);
 }

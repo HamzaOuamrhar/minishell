@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 09:35:00 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/03 10:06:46 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ void	starting_excute(t_parse *st, t_params *params, t_token *token)
 			excute_cmds(st, params);
 			st = st->next;
 			params->i++;
+			// if (st->com_path)
+			// 	free(st->com_path);
 		}
 		while (waitpid(-1, NULL, 0) > 0 || errno != ECHILD)
 			;
 		initialiaze_vars(params, &token, 0);
 	}
 }
-
+ 
 void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
@@ -61,11 +63,9 @@ void	wait_prompt1(t_params *params)
 			starting_excute(st, params, token);
 		signal_handle();
 		token = NULL;
-		// if (st->com_path)
-		// 	free(st->com_path);
-		// st->com_path = NULL;
-		parser_reset(&st);
 		st = NULL;
 		ft_malloc(0, 3);
+		if (params->line)
+			free (params->line);
 	}
 }

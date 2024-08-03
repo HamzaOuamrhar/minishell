@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 09:06:04 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 10:46:34 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ char	**export_checker(char *s)
 	i = 0;
 	while (s[i] && s[i] != '=')
 		i++;
-	res = malloc (sizeof(char *) * (3));
-	res[0] = malloc (i + 1);
+	res = ft_malloc (sizeof(char *) * (3), 1);
+	res[0] = ft_malloc (i + 1, 1);
 	if (!res || !res[0])
 	{
 		perror("malloc");
