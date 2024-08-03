@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 17:58:34 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 09:20:43 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	parser_reset(t_parse **st)
-{
-	while (*st)
-	{
-		if ((*st)->in_fd)
-			close((*st)->in_fd);
-		(*st) = (*st)->next;
-	}
-}
 
 int	check_in_files(t_parse *st, t_params *params)
 {
@@ -71,6 +61,7 @@ void	wait_prompt1(t_params *params)
 			starting_excute(st, params, token);
 		signal_handle();
 		token = NULL;
-		parser_reset(&st);
+		st = NULL;
+		ft_malloc(0, 3);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/01 18:18:13 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 09:19:33 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ void	not_w_first_i(t_decl *decl, char **n_t_v, t_token **token);
 void	heredoc_sig(int sig);
 int		pipe_syntax(t_token *token);
 int		redirection_syntax(t_token *token);
-void	parser_reset(t_parse **st);
 int		echo_cmd(t_parse *st);
 int		ft_shell_atoi(char *s);
 
