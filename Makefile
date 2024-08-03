@@ -5,7 +5,7 @@ RESET_TEXT =\033[0m
 
 NAME = minishell
 N = -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -g $(N)
+CFLAGS = -Wall -Wextra -Werror
 CC = cc
 READLINE_DIR=$(shell brew --prefix readline)
 EXECUTION_DIR = execution
@@ -35,4 +35,3 @@ fclean : clean
 
 re : fclean all
 .PHONY : clean
-

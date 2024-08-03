@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 10:01:38 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:13:10 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	pwd_cmd(t_params *params)
 		if (!tmp)
 		{
 			write(2, "we can't get the working directory\n", 35);
+			free (pwd);
 			return (1);
 		}
 		else
