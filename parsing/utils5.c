@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:04:27 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/01 13:50:42 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/03 15:05:18 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	syntax_error(char *error_msg)
 {
+	g_status = 258;
 	printf("%s\n", error_msg);
 }
 
