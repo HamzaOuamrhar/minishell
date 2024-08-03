@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:34 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/03 17:25:08 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/03 19:50:33 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	get_value(t_decl *decl, int *i, char *token_value)
 	{
 		decl->value = ft_strdup("$");
 		(*i)++;
+		decl->j = 0;
 		return ;
 	}
 	decl->j = 0;
