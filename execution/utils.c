@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 12:11:39 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/03 21:53:10 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int	change_directory(t_parse *st, t_params *params)
 			return (print_error("cd", ": HOME not set\n", NULL), 1);
 		return (change_dir(st, params, home));
 	}
+	if (!ft_strcmp(st->cmd[1], "."))
+		return (print_error("cd",
+				": no such file or directory\n", "."), 1);
 	return (change_dir(st, params, st->cmd[1]));
 }
 
