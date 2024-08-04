@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:27:48 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:11:11 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	executing(t_parse *st, t_params *params)
 			status = checking_cmd(st, params);
 		else
 		{
+			slash_path(st, params);
 			if (just_a_checker(st, params))
 				status = 0;
 			else
 			{
-				slash_path(st, params);
 				checking_and_exec(st, params);
 			}
 		}
