@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 23:04:19 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 16:38:08 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 11:59:43 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,13 @@ int	exec_echo(int i, t_parse *st)
 	j = i;
 	while (st->cmd[i])
 	{
-		if (!(write(1, st->cmd[i], ft_strlen(st->cmd[i]))))
-		{
-			perror("write");
-			return (1);
-		}
+		write(1, st->cmd[i], ft_strlen(st->cmd[i]));
 		i++;
 		if (st->cmd[i])
 			write(1, " ", 1);
 	}
 	if (j == 1)
-	{
-		if (!(write(1, "\n", 1)))
-		{
-			perror("write");
-			return (1);
-		}
-	}
+		write(1, "\n", 1);
 	return (0);
 }
 
@@ -77,6 +67,8 @@ int	echo_cmd(t_parse *st)
 	int	i;
 	int	j;
 
+	if (count_args(st->cmd) == 1)
+		return (just_echo(st));
 	i = 1;
 	while (st->cmd[i])
 	{
