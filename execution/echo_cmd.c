@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 22:18:22 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 11:29:02 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,15 @@ void	change_pwd2(char *tmp2, t_params *params, char *tmp)
 {
 	if (access(tmp2, F_OK) != -1)
 	{
-		search_and_replace("PWD", ft_copy(tmp2), &(params->env), 1);
-		search_and_replace("PWD", ft_copy(tmp2), &(params->sorted_env), 1);
-		// free(tmp2);
+		search_and_replace(ft_copy("PWD"), ft_copy(tmp2), &(params->env), 0);
+		search_and_replace(ft_copy("PWD"), ft_copy(tmp2), &(params->sorted_env), 0);
 	}
 	else
 	{
-		search_and_replace("PWD",
-			ft_strjoin2(tmp, "/.."), &(params->env), 1);
-		search_and_replace("PWD",
-			ft_strjoin2(tmp, "/.."), &(params->sorted_env), 1);
+		search_and_replace(ft_copy("PWD"),
+			ft_strjoin2(tmp, "/.."), &(params->env), 0);
+		search_and_replace(ft_copy("PWD"),
+			ft_strjoin2(tmp, "/.."), &(params->sorted_env), 0);
 	}
 }
 
@@ -61,7 +60,6 @@ int	check_deleted(t_params *params, char *tmp2)
 	struct stat	the_path;
 	char		*tmp;
 
-	puts("helo");
 	tmp = get_key("PWD", params->env);
 	if (!tmp)
 		return (0);
@@ -83,25 +81,26 @@ int	check_deleted(t_params *params, char *tmp2)
 
 char	*ft_spliter(char *s, int j)
 {
-	int	i;
+	int		i;
+	char	*pwd;
 
-	i = 0;
+	(void)j;
 	if (!s)
 		return (NULL);
-	i = ft_strlen(s) - 1;
-	while (s[i] && (s[i] == '/' || s[i] == '.'))
+	pwd = malloc(1024);
+	if (!pwd)
 	{
-		printf("[%c]\n", s[i]);
-		i--;
+		perror("malloc");
+		return (NULL);
 	}
-	while (s[i] && (s[i] != '/'))
-	{
-		
-		printf("[%c]\n", s[i]);
+	getcwd(pwd, 1024);
+	i = 0;
+	i = ft_strlen(pwd) - 1;
+	while (pwd[i] && (pwd[i] != '/'))
 		i--;
-	}
-	// printf("[%c]]]]\n", s[i]);
-	return (ft_substr(s, 0, i - (j * 2)));
+	char *pwd2 = ft_substr(pwd, 0, i);
+	free (pwd);
+	return (pwd2);
 }
 
 void	change_pwd(t_params *params, char *tmp, int *i)
@@ -111,7 +110,7 @@ void	change_pwd(t_params *params, char *tmp, int *i)
 	*i = 0;
 }
 
-int	change_dir(t_parse *st, t_params *params, char *s)
+int	 change_dir(t_parse *st, t_params *params, char *s)
 {
 	struct stat	the_path;
 	char		*tmp = NULL;
@@ -125,7 +124,6 @@ int	change_dir(t_parse *st, t_params *params, char *s)
 			return (1);
 		return (change_dir(st, params, s));
 	}
-	printf("[[%s\n]]\n", tmp);
 	if (access(tmp, F_OK) == -1 && !(ft_strcmp("..", st->cmd[1])))
 		return (free(tmp), check_deleted(params, tmp), i++, 1);
 	else if (S_ISDIR(the_path.st_mode) && access(s, X_OK) == -1)
