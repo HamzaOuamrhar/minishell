@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:01:22 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/01 12:13:37 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/04 17:51:33 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	write_in_doc(t_decl3 *decl)
 {
 	write(decl->fd, decl->line, ft_strlen(decl->line));
 	write(decl->fd, "\n", 1);
-	free(decl->line);
 }
 
 int	doc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
