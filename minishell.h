@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/03 09:19:33 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/04 11:33:50 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int		pipe_syntax(t_token *token);
 int		redirection_syntax(t_token *token);
 int		echo_cmd(t_parse *st);
 int		ft_shell_atoi(char *s);
+void	change_pwd(t_params *params, char *tmp, int *i);
 
 // execution
 

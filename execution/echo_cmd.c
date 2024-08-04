@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 11:29:02 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 11:33:14 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	trying_with_pwd(t_params *params)
 	else
 	{
 		search_and_replace(ft_copy("PWD"), pwd, &(params->env), 0);
-		search_and_replace(ft_copy("PWD"), ft_copy(pwd), &(params->sorted_env), 0);
+		search_and_replace(ft_copy("PWD"), ft_copy(pwd),
+			&(params->sorted_env), 0);
 	}
 	return (0);
 }
@@ -44,7 +45,8 @@ void	change_pwd2(char *tmp2, t_params *params, char *tmp)
 	if (access(tmp2, F_OK) != -1)
 	{
 		search_and_replace(ft_copy("PWD"), ft_copy(tmp2), &(params->env), 0);
-		search_and_replace(ft_copy("PWD"), ft_copy(tmp2), &(params->sorted_env), 0);
+		search_and_replace(ft_copy("PWD"),
+			ft_copy(tmp2), &(params->sorted_env), 0);
 	}
 	else
 	{
@@ -83,6 +85,7 @@ char	*ft_spliter(char *s, int j)
 {
 	int		i;
 	char	*pwd;
+	char	*pwd2;
 
 	(void)j;
 	if (!s)
@@ -98,22 +101,14 @@ char	*ft_spliter(char *s, int j)
 	i = ft_strlen(pwd) - 1;
 	while (pwd[i] && (pwd[i] != '/'))
 		i--;
-	char *pwd2 = ft_substr(pwd, 0, i);
-	free (pwd);
-	return (pwd2);
+	pwd2 = ft_substr(pwd, 0, i);
+	return (free(pwd), pwd2);
 }
 
-void	change_pwd(t_params *params, char *tmp, int *i)
-{
-	change_pwd_value(params);
-	free (tmp);
-	*i = 0;
-}
-
-int	 change_dir(t_parse *st, t_params *params, char *s)
+int	change_dir(t_parse *st, t_params *params, char *s)
 {
 	struct stat	the_path;
-	char		*tmp = NULL;
+	char		*tmp;
 	static int	i = 0;
 
 	stat(s, &the_path);
