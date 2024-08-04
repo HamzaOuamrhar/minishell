@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:05:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/07/31 15:42:34 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:58:38 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,20 @@ char	*ft_copy(const char *s)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+char	*ft_slashs(t_parse *st)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (st->cmd[0][i])
+	{
+		if (st->cmd[0][i] == '/')
+			j = i + 1;
+		i++;
+	}
+	return (ft_substr(st->cmd[0], j, i - 1));
 }

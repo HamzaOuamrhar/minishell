@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/04 11:58:04 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:58:49 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ typedef struct t_params
 	int		i;
 	int		fds[2];
 	int		pid;
-	char	*pwd;//think about this
 }	t_params;
 
 typedef struct t_parse
@@ -156,7 +155,6 @@ int		is_white(char c);
 int		is_alph_num(char c);
 char	*ft_strjoin(char *s1, char *s2);
 int		syntax(t_token *token);
-void	tokens_reset(t_token **token);
 void	expander(t_token *token, t_params params);
 int		in_str(char *str, char c);
 void	quotes_removal(t_token *tokens);
@@ -192,7 +190,7 @@ int		echo_cmd(t_parse *st);
 int		ft_shell_atoi(char *s);
 void	change_pwd(t_params *params, char *tmp, int *i);
 int		just_echo(t_parse *st);
-
+void	signal_handle2(void);
 // execution
 
 void	wait_prompt1(t_params *params);
@@ -209,8 +207,8 @@ int		terminate_shell(t_parse *st, t_params *params);
 int		ft_strcmp(char *s1, char *s2);
 int		count_args(char **s);
 int		numbered_arg(char *s);
-void	freeing(t_parse *st, t_params *params);
-size_t	ft_atol(char *s, t_parse *st, t_params *params);
+void	freeing(t_params *params);
+size_t	ft_atol(char *s, t_params *params);
 void	ft_exit(t_parse *st, int args_n, t_params *params);
 int		checking_cmd(t_parse *st, t_params *params);
 t_env	*set_env(char **env, int i);
@@ -257,12 +255,13 @@ void	update_(t_parse *st, t_params *params);
 int		check_builtins(char *s);
 void	forking_checker(t_parse *st, t_params *params);
 void	initialiaze_vars(t_params *params, t_token **token, int f);
-int		check_perms(t_parse *st, t_params *params);
+int		check_perms(t_parse *st);
 void	excute_cmds(t_parse *st, t_params *params);
-int		check_in_files(t_parse *st, t_params *params);
+int		check_in_files(t_parse *st);
 void	forking_piping(t_params *params);
 void	print_error(char *cmd, char *s, char *folder);
 void	checking_and_exec(t_parse *st, t_params *params);
 int		just_a_checker(t_parse *st, t_params *params);
+char	*ft_slashs(t_parse *st);
 
 #endif

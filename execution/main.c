@@ -6,15 +6,15 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 15:58:12 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:30:00 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_in_files(t_parse *st, t_params *params)
+int	check_in_files(t_parse *st)
 {
-	if (check_perms(st, params))
+	if (check_perms(st))
 		return (1);
 	return (0);
 }
@@ -29,19 +29,18 @@ void	starting_excute(t_parse *st, t_params *params, t_token *token)
 		params->cmds = lstsize(st);
 		while (st)
 		{
+			signal_handle();
 			update_(st, params);
 			excute_cmds(st, params);
 			st = st->next;
 			params->i++;
-			// if (st->com_path)
-			// 	free(st->com_path);
 		}
 		while (waitpid(-1, NULL, 0) > 0 || errno != ECHILD)
 			;
 		initialiaze_vars(params, &token, 0);
 	}
 }
- 
+
 void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
@@ -50,9 +49,9 @@ void	wait_prompt1(t_params *params)
 	initialiaze_vars(params, &token, 1);
 	st = NULL;
 	token = NULL;
-	signal_handle();
 	while (1)
 	{
+		signal_handle();
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
 		if (!params->line)
@@ -61,7 +60,6 @@ void	wait_prompt1(t_params *params)
 		tokenize(&token, params->line, &params->q);
 		if (!params->q)
 			starting_excute(st, params, token);
-		signal_handle();
 		token = NULL;
 		st = NULL;
 		ft_malloc(0, 3);

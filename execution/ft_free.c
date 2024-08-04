@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:19:56 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 17:33:07 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:18:15 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ void	free_list(t_env *env)
 	}
 }
 
-void	freeing(t_parse *st, t_params *params)
+void	freeing(t_params *params)
 {
 	free(params->path);
 	free_list(params->env);
-	free_list(params->sorted_env);
-	if (st->cmd)
-		ft_free(st->cmd);
+	// free_list(params->sorted_env);
 	if (params->paths_array)
 		ft_free(params->paths_array);
 	ft_free(params->env2);
-	free (st);
+	ft_malloc(0, 3);
 }
 
 void	ft_free(char **s)
@@ -70,6 +68,7 @@ void	change_pwd_value(t_params *params)
 		search_and_replace(ft_copy("OLDPWD"), "",
 			&(params->sorted_env), 0);
 	}
-	search_and_replace(ft_copy("PWD"), get_pwd(params), &(params->sorted_env), 0);
+	search_and_replace(ft_copy("PWD"), get_pwd(params),
+		&(params->sorted_env), 0);
 	search_and_replace(ft_copy("PWD"), get_pwd(params), &(params->env), 0);
 }

@@ -6,19 +6,18 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 16:06:00 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:24:19 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_perms(t_parse *st, t_params *params)
+int	check_perms(t_parse *st)
 {
-	int		fd;
-	t_files	*tmp;
-	struct stat path;
-	
-	(void)params;
+	int			fd;
+	t_files		*tmp;
+	struct stat	path;
+
 	tmp = st->files;
 	while (tmp)
 	{
@@ -113,7 +112,7 @@ int	open_files(t_parse *st)
 
 int	in_out_dup(t_parse *st, t_params *params)
 {
-	if (check_perms(st, params))
+	if (check_perms(st))
 	{
 		g_status = 1;
 		if (!params->pid)

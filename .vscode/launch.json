@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/iez-zagh/Desktop/minishell/execution",
-      "program": "/Users/iez-zagh/Desktop/minishell/execution/build/Debug/outDebug"
+      "cwd": "/Users/iez-zagh/Desktop/minishell",
+      "program": "/Users/iez-zagh/Desktop/minishell/build/Debug/outDebug"
     }
   ]
 }

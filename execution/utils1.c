@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 20:34:35 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 17:05:25 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,26 @@ char	*get_acc_path(char **paths, char *com)
 
 void	slash_path(t_parse *st, t_params *params)
 {
+	char	*tmp;
+
 	(void)params;
-	st->com_path = NULL;
+	tmp = NULL;
 	if (!st->cmd || !st->cmd[0]
 		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
+	{
 		st->com_path = NULL;
-	// else if (access(st->cmd[0], X_OK))
-	else
-		st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
-	// else
-	// 	st->com_path = ft_copy(st->cmd[0]);`
+		return ;
+	}
+	st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
+	if (st->com_path)
+		return ;
+	if (ft_strchr(st->cmd[0], '/'))
+		tmp = ft_slashs(st);
+	if (tmp)
+		st->com_path = get_acc_path(params->paths_array, tmp);
+	if (access(st->cmd[0], X_OK) && st->com_path)
+		st->com_path = ft_copy(st->cmd[0]);
+	free (tmp);
 }
 
 int	pwd_cmd(t_params *params)
@@ -77,17 +87,13 @@ int	pwd_cmd(t_params *params)
 	return (0);
 }
 
-int	checking_cmd3(t_parse *st, t_params *params)
+void	ft_unseting(t_env *tmp, t_env **env, t_env *tmp2)
 {
-	if (!ft_strcmp(st->cmd[0], "pwd"))
-		return (pwd_cmd(params));
-	if (!ft_strcmp(st->cmd[0], "unset"))
-		return (unset_cmd(st, params));
-	if (ft_strcmp(st->cmd[0], "cd") == 0)
-		return (change_directory(st, params));
-	if (ft_strcmp(st->cmd[0], "echo") == 0)
-		return (echo_cmd(st));
-	return (0);
+	tmp2 = tmp;
+	if (tmp->next)
+		*(env) = tmp->next;
+	else
+		tmp->next = NULL;
 }
 
 void	unset_cmd1(t_env **env, char *s)
@@ -110,20 +116,11 @@ void	unset_cmd1(t_env **env, char *s)
 		}
 		if (!(ft_strcmp(tmp->key, s)))
 		{
-			tmp2 = tmp;
-			if (tmp->next)
-				*(env) = tmp->next;
-			else
-				tmp->next = NULL;
+			ft_unseting(tmp, env, tmp2);
 			break ;
 		}
 		tmp = tmp->next;
 	}
 	if (tmp2)
-	{	
-		free (tmp2->key);
-		free (tmp2->value);
-		free (tmp2);
-		return ;
-	}
+		return (free(tmp2->key), free(tmp2->value), free(tmp2));
 }

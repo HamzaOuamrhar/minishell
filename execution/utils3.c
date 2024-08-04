@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 17:10:02 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:27:37 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	numbered_arg(char *s)
 	return (0);
 }
 
-size_t	ft_atol(char *s, t_parse *st, t_params *params)
+size_t	ft_atol(char *s, t_params *params)
 {
 	int		i;
 	size_t	res;
@@ -48,7 +48,7 @@ size_t	ft_atol(char *s, t_parse *st, t_params *params)
 		res = res * 10 + s[i++] - '0';
 		if (!(s[i] >= 0 && s[i] <= '9') || res > __LONG_MAX__)
 		{
-			freeing(st, params);
+			freeing(params);
 			exit (255);
 		}
 	}
@@ -62,11 +62,12 @@ void	ft_exit(t_parse *st, int args_n, t_params *params)
 	if (args_n == 1)
 	{
 		printf ("exit\n");
+		freeing(params);
 		exit (0);
 	}
 	if (args_n == 2 && !(numbered_arg(st->cmd[1])))
 	{
-		n = ft_atol(st->cmd[1], st, params);
+		n = ft_atol(st->cmd[1], params);
 		printf ("exit\n");
 		exit (n);
 	}

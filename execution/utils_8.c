@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:41:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 12:00:06 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:58:18 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,5 @@ int	just_echo(t_parse *st)
 {
 	if (!st->cmd[1])
 		return (write(1, "\n", 1), 0);
-	// else
-	// 	return (write(1, st->cmd[1], ft_strlen(st->cmd[1])), 0);
 	return (0);
 }

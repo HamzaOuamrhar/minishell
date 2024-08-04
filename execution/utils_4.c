@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:22:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 11:34:07 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/04 17:09:15 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	ft_join_value(char **s)
 		res[j++] = (*s)[i++];
 	}
 	res[j] = '\0';
-	// free (*s);//think about this
 	*s = res;
 }
 
@@ -79,8 +78,6 @@ void	check_join(char **s, t_parse *st, t_params *params)
 
 void	free_update(char **res, t_params *params)
 {
-	// free(res[0]); //this later
-	// free (res);
 	(void)res;
 	ft_free(params->env2);
 	params->env2 = list2array(params->env, params);
@@ -109,8 +106,6 @@ char	**export_checker2(char **res, char *s, int i)
 		res[2] = NULL;
 	}
 	else
-	{
-		res[1] = NULL; 	
-	}
+		res[1] = NULL;
 	return (res);
 }
