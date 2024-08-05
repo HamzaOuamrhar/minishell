@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:30:00 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 10:04:05 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	starting_excute(t_parse *st, t_params *params, t_token *token)
 	}
 }
 
+void	readline_failure(t_params *params)
+{
+	freeing(params);
+	exit (1);
+}
+
 void	wait_prompt1(t_params *params)
 {
 	t_token		*token;
@@ -55,7 +61,7 @@ void	wait_prompt1(t_params *params)
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
 		if (!params->line)
-			break ;//free and exit
+			readline_failure(params);
 		add_history(params->line);
 		tokenize(&token, params->line, &params->q);
 		if (!params->q)

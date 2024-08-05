@@ -21,7 +21,6 @@ M_OBJECTS = ${M_SOURCES:.c=.o}
 
 all : $(NAME)
 
-
 $(NAME) : $(M_OBJECTS)
 	@$(CC) $(CFLAGS) -L $(READLINE_DIR)/lib $(M_OBJECTS) -lreadline -o $(NAME)
 	@echo "$(GREEN_TEXT)[the executable created successfully]$(RESET_TEXT)"
