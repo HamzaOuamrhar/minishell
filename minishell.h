@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/04 16:58:49 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:03:58 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ typedef struct t_count
 	int	app;
 	int	words;
 }	t_count;
-
-// #define malloc(x) NULL;
 
 typedef struct t_token
 {
@@ -144,6 +142,9 @@ typedef struct t_parse
 
 // parsing
 
+int		fork_failure(t_params *params);
+void	malloc_error(t_params *params);
+int		minishell(t_parse *st);
 char	*ft_strdup(const char *s1);
 void	tokenize(t_token **token, char *line, int *q);
 char	**ft_mysplit(char const *s, char c, int *still);

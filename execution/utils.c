@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 15:03:02 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:59:41 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	terminate_shell(t_parse *st, t_params *params)
 	{
 		write(2, "exit\n", 5);
 		print_error("exit", ": numeric argument required\n", NULL);
+		freeing(params);
 		exit (255);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:19:56 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:18:15 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:59:53 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	freeing(t_params *params)
 {
 	free(params->path);
 	free_list(params->env);
-	// free_list(params->sorted_env);
 	if (params->paths_array)
 		ft_free(params->paths_array);
 	ft_free(params->env2);

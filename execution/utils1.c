@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 20:11:50 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:49:08 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	slash_path(t_parse *st, t_params *params)
 	char	*tmp;
 
 	tmp = NULL;
+	if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
+		if (minishell(st))
+			return ;
 	if (!st->cmd || !st->cmd[0]
 		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
 	{
