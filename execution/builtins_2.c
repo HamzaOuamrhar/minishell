@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:05:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:58:38 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:07:18 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ char	*check_allocate(char *s1, char *s2)
 	return (s);
 }
 
-char	*ft_strjoin_env(char *s1, char *s2)
+char	*ft_strjoin_env(char *s1, char *s2, t_params *params)
 {
 	char	*join_string;
 	char	*join;
 
 	join_string = check_allocate(s1, s2);
+	if (!join_string)
+		malloc_error(params);
 	join = join_string;
 	while (*s1)
 	{

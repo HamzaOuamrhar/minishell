@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 11:49:08 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:16:57 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,7 @@ int	pwd_cmd(t_params *params)
 	char	*tmp;
 
 	pwd = malloc (1024);
-	if (!pwd)
-	{
-		perror("malloc");
-		return (1);
-	}
+		malloc_error(params);
 	if (!(getcwd(pwd, 1024)))
 	{
 		tmp = get_key("PWD", params->env);

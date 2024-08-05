@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:17:05 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:10:27 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	export_cmd1(t_parse *st, t_params *params)
 	while (st->cmd[i])
 	{
 		check_join(&(st->cmd[i]), st, params);
-		res = export_checker(st->cmd[i]);
+		res = export_checker(st->cmd[i], params);
 		if (!res || !res[0])
 			return (perror("malloc"), 1);
 		if (check_syntax(res[0]))

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:40:06 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/01 16:58:37 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:16:24 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	update_shlvl(t_params *params)
 	if (n != -1 && n != -2)
 		lvl = ft_shell_itoa(n);
 	if (!lvl)
-		return (perror("malloc"));
+		malloc_error(params);
 	search_and_replace("SHLVL", lvl, &(params->sorted_env), 1);
 	search_and_replace("SHLVL", ft_copy(lvl), &(params->env), 1);
 }

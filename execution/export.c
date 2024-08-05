@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/03 17:21:41 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:15:24 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add_key(char *key, char *value, t_env **env)
 	new_key = malloc (sizeof(t_env));
 	if (!new_key)
 	{
-		perror(NULL);
+		perror("malloc");
 		return ;
 	}
 	new_key->key = key;
@@ -99,7 +99,7 @@ char	*get_pwd(t_params *params)
 
 	pwd = malloc (1024);
 	if (!pwd)
-		return (NULL);
+		malloc_error(params);
 	if (!getcwd(pwd, 1024))
 	{
 		printf("cd: error retrieving current directory: getcwd\n");

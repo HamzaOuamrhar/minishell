@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 11:54:37 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:17:13 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	empty_env(t_params *params)
 	pwd = malloc (1024);
 	params->env3 = malloc (sizeof(char *) * 5);
 	if (!pwd || !params->env3)
-		return ;
+		malloc_error(params);
 	params->env3[0] = ft_copy("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin");
 	if (getcwd(pwd, 1024))
 	{

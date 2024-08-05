@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 17:07:43 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:16:04 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	update_(t_parse *st, t_params *params)
 		return ;
 	if (!st->cmd[0])
 	{
-		search_and_replace("_", ft_copy(""), &(params->env), 1);
+		search_and_replace(ft_copy("_"), ft_copy(""), &(params->env), 0);
 	}
 	else if (st->cmd[0] && (ft_strcmp(st->cmd[0], "echo")))
 	{
-		search_and_replace("_", ft_copy(st->cmd[count_args(st->cmd) - 1]),
-			&(params->env), 1);
+		search_and_replace(ft_copy("_"), ft_copy(st->cmd[count_args(st->cmd) - 1]),
+			&(params->env), 0);
 	}
 }
 
@@ -61,7 +61,7 @@ int	check_builtins(char *s)
 	return (0);
 }
 
-char	**export_checker(char *s)
+char	**export_checker(char *s, t_params *params)
 {
 	int		i;
 	char	**res;
@@ -72,10 +72,7 @@ char	**export_checker(char *s)
 	res = ft_malloc (sizeof(char *) * (3), 1);
 	res[0] = ft_malloc (i + 1, 1);
 	if (!res || !res[0])
-	{
-		perror("malloc");
-		return (NULL);
-	}
+		malloc_error(params);
 	i = 0;
 	while (s[i] && s[i] != '=')
 	{

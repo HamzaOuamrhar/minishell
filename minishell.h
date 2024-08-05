@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/05 12:03:58 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:12:17 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ t_env	*last_var(t_env *env_vars);
 char	*ft_substr(const char *s, int start, int end);
 int		env_cmd(t_parse	*st, t_params *params);
 int		lstcounter(t_env *env);
-char	*ft_strjoin_env(char *s1, char *s2);
+char	*ft_strjoin_env(char *s1, char *s2, t_params *params);
 char	**list2array(t_env *env, t_params *params);
 void	free_list(t_env *env);
 void	empty_env(t_params *params);
@@ -238,7 +238,7 @@ int		export_cmd1(t_parse *st, t_params *params);
 int		ft_strchr(char *s, char c);
 int		search_and_replace2(char *env, t_env **envi);
 void	free_update(char **res, t_params *params);
-char	**export_checker(char *s);
+char	**export_checker(char *s, t_params *params);
 int		check_syntax(char *s);
 char	**copy_env(char **env);
 int		pwd_cmd(t_params *params);

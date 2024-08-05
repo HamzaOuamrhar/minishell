@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 13:09:15 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:15:04 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ int	trying_with_pwd(t_params *params)
 	(void)params;
 	pwd = malloc(1024 * (sizeof(char)));
 	if (!pwd)
-	{
-		perror("malloc");
-		return (1);
-	}
+		malloc_error(params);
 	getcwd(pwd, 1024);
 	if (!pwd)
 	{
@@ -93,10 +90,7 @@ char	*ft_spliter(char *s, int j, t_params *params)
 		return (NULL);
 	pwd = malloc(1024);
 	if (!pwd)
-	{
-		perror("malloc");
-		return (NULL);
-	}
+		malloc_error(params);
 	if (!getcwd(pwd, 1024))
 		return (free(pwd), ft_copy(get_key("PWD", params->env)));
 	i = 0;
