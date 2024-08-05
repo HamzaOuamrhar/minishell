@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:16:04 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:18:18 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	update_(t_parse *st, t_params *params)
 	}
 	else if (st->cmd[0] && (ft_strcmp(st->cmd[0], "echo")))
 	{
-		search_and_replace(ft_copy("_"), ft_copy(st->cmd[count_args(st->cmd) - 1]),
+		search_and_replace(ft_copy("_"),
+			ft_copy(st->cmd[count_args(st->cmd) - 1]),
 			&(params->env), 0);
 	}
 }
