@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:10:27 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 14:50:52 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,20 @@ void	just_export(t_params *params)
 	tmp = params->sorted_env;
 	while (tmp)
 	{
-		if (!(ft_strcmp("_", tmp->key)))
+		if (!tmp->value && ft_strcmp("_", tmp->key))
 		{
-			tmp = tmp->next;
-			continue ;
+			write(1, "declare -x ", 12);
+			write(1, tmp->key, ft_strlen(tmp->key));
+			write (1, "\n", 1);
 		}
-		if (!tmp->value)
-			printf("declare -x %s\n", tmp->key);
-		else
-			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+		else if (ft_strcmp("_", tmp->key))
+		{
+			write(1, "declare -x ", 11);
+			write(1, tmp->key, ft_strlen(tmp->key));
+			write(1, "=\"", 2);
+			write(1, tmp->value, ft_strlen(tmp->value));
+			write(1, "\"\n", 2);
+		}
 		tmp = tmp->next;
 	}
 }

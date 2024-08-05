@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:24:19 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:58:48 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 		}
 		if (!st->com_path)
 		{
-			printf("%s :command not found\n", st->cmd[0]);
+			write(2, st->cmd[0], ft_strlen(st->cmd[0]));
+			write(2, " :command not found\n", 20);
 			exit (127);
 		}
 		execve(st->com_path, st->cmd, params->env2);
@@ -94,8 +95,7 @@ int	open_files(t_parse *st)
 		{
 			close(st->in_fd);
 			g_status = 1;
-			printf("shellantics: ambiguous redirect\n");
-			return (1);
+			return (write(2, "shellantics: ambiguous redirect\n", 32), 1);
 		}
 		if (file->type == 2)
 			st->out_fd = open(file->file, O_RDWR | O_CREAT, 0777);
@@ -123,7 +123,9 @@ int	in_out_dup(t_parse *st, t_params *params)
 	if (!params->pid)
 	{
 		if (open_files(st))
+		{
 			exit (0);
+		}
 	}
 	if (!st->cmd[0] || !st->cmd)
 		return (1);

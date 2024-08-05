@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:15:24 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:55:43 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*get_pwd(t_params *params)
 		malloc_error(params);
 	if (!getcwd(pwd, 1024))
 	{
-		printf("cd: error retrieving current directory: getcwd\n");
+		write(2, "cd: error retrieving current directory: getcwd\n", 47);
 		free (pwd);
 		return (ft_strjoin2(get_key("PWD", params->env), "/.."));
 	}

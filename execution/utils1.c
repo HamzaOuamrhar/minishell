@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:18:43 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 14:42:54 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,21 @@ int	pwd_cmd(t_params *params)
 	{
 		tmp = get_key("PWD", params->env);
 		if (!tmp)
-		{
-			write(2, "we can't get the working directory\n", 35);
-			free (pwd);
-			return (1);
-		}
+			return (write(2, "we can't get the working directory\n", 35),
+				free(pwd), 1);
 		else
-			printf("%s\n", get_key("PWD", params->env));
+		{
+			write(1, get_key("PWD", params->env),
+				ft_strlen(get_key("PWD", params->env)));
+			write(1, "\n", 1);
+		}
 	}
 	else
-		printf("%s\n", pwd);
-	free (pwd);
-	return (0);
+	{
+		write(1, pwd, ft_strlen(pwd));
+		write(1, "\n", 1);
+	}
+	return (free(pwd), 0);
 }
 
 void	ft_unseting(t_env *tmp, t_env **env, t_env *tmp2)

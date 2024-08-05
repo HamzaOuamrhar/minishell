@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/05 12:12:17 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 14:44:31 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,6 @@ void	change_pwd_value(t_params *params);
 t_env	*before_last_node(t_env *env);
 int		change_dir(t_parse *st, t_params *params, char *s);
 void	sort_env(t_env *env);
-void	just_export(t_params *params);
 void	check_join(char **s, t_parse *st, t_params *params);
 void	ft_join(char **res, t_params *params);
 int		export_cmd1(t_parse *st, t_params *params);

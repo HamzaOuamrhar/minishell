@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:30:30 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 14:25:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argv;
 	i = 0;
 	if (!isatty(fileno(stdin)))
-		return (printf("can't reach the tty standart input\n"), 1);
+		return (print_error(NULL, "can't reach the tty standart input\n",
+				NULL), 1);
 	if (!env || !env[0])
 		empty_env(&params);
 	else

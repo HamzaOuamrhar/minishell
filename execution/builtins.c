@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:43:35 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 14:14:07 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:47:46 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,6 @@ int	count_args(char **s)
 	while (s[i])
 		i++;
 	return (i);
-}
-
-void	no_permissions(t_params *params)
-{
-	char	*tmp;
-	char	*tmp2;
-	int		i;
-
-	tmp = ft_copy(get_key("PWD", params->env));
-	i = ft_strlen(tmp);
-	i--;
-	while (tmp[i] && tmp[i] != '/')
-		i--;
-	tmp2 = ft_substr(tmp, 0, i);
-	if (access(tmp2, X_OK) == -1)
-	{
-		printf("shellantics: cd: ..: Permission denied\n");
-		free (tmp2);
-		free (tmp);
-		return ;
-	}
-	if (chdir(tmp2) == -1)
-	{
-		printf("chdir error\n");
-		exit (1);
-	}
-	search_and_replace("OLDPWD", ft_copy(get_key("PWD", params->env)),
-		&(params->env), 1);
-	search_and_replace("PWD", tmp2, &(params->env), 1);
 }
 
 void	print_error(char *cmd, char *s, char *folder)
