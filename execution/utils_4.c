@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:22:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 17:09:15 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:14:57 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_join(char **s, t_parse *st, t_params *params)
 	{
 		if ((*s)[i] == '+')
 		{
-			if ((*s)[i + 1] == '=')
+			if ((*s)[i + 1] == '=' && s[i + 2])
 			{
 				params->export_f = 1;
 				ft_join_value(s);

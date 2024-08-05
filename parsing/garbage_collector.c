@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:00:24 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/03 10:28:14 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:49:52 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	*ft_malloc(size_t size, int flag)
 		p = malloc(size);
 		if (!p)
 		{
+			//freeing(param);
 			ft_malloc(0, 3);
 			exit(1);
 		}

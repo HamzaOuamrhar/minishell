@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 13:55:43 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:03:12 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	export_cmd(char **s, char *res, t_params *params)
 {
 	if (count_args(s) == 1)
 	{
-		if (ft_strchr(res, '='))
+		if (ft_strchr(res, '=') && !params->export_f)
 		{
 			s[1] = ft_copy("");
 			search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->env), 0);

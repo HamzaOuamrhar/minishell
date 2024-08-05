@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 13:58:48 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:11:00 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ int	check_perms(t_parse *st)
 
 int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 {
-	if (!params->pid)
-	{
-		if (check_builtins(st->cmd[0]))
-		{
-			close (fd);
-			return (1);
-		}
+	// if (!params->pid)
+	// {
+		(void)params;
+		// if (check_builtins(st->cmd[0]))
+		// {
+		// 	close (fd);
+		// 	return (1);
+		// }
 		if (fd)
 		{
 			dup2(fd, 0);
@@ -60,14 +61,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 			dup2(st->out_fd, 1);
 			close (st->out_fd);
 		}
-		if (!st->com_path)
-		{
-			write(2, st->cmd[0], ft_strlen(st->cmd[0]));
-			write(2, " :command not found\n", 20);
-			exit (127);
-		}
-		execve(st->com_path, st->cmd, params->env2);
-	}
+	// }
 	return (0);
 }
 
@@ -92,11 +86,8 @@ int	open_files(t_parse *st)
 	while (file)
 	{
 		if (file->is_amb)
-		{
-			close(st->in_fd);
-			g_status = 1;
-			return (write(2, "shellantics: ambiguous redirect\n", 32), 1);
-		}
+			return (write(2, "shellantics: ambiguous redirect\n", 32),
+				close(st->in_fd), g_status = 1, 1);
 		if (file->type == 2)
 			st->out_fd = open(file->file, O_RDWR | O_CREAT, 0777);
 		else if (file->type == 3)
@@ -120,16 +111,16 @@ int	in_out_dup(t_parse *st, t_params *params)
 		return (1);
 	}
 	st->in_fd = 0;
-	if (!params->pid)
-	{
+	// if (!params->pid)
+	// {
 		if (open_files(st))
 		{
 			exit (0);
 		}
-	}
+	// }
 	if (!st->cmd[0] || !st->cmd)
 		return (1);
-	if (!params->pid)
+	// if (!params->pid)
 		excute_cmd_dup(st, params, st->in_fd);
 	return (0);
 }
