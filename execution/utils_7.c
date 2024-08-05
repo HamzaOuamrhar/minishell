@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:18:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 20:16:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*ft_strjoin2(char *s1, char *s2)
 
 void	update_(t_parse *st, t_params *params)
 {
+	params->stdin_ = -1;
+	params->stdout_ = -1;
 	if (!st->cmd)
 		return ;
 	if (!st->cmd[0])

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:01:37 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 17:10:11 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/05 20:39:52 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,8 @@ int	just_a_checker(t_parse *st, t_params *params)
 {
 	if (st->files || st->in_dup)
 	{
-		// write(1, "herer", 4);
 		if (in_out_dup(st, params))
-		{
-	// write(2, "error", 5);
-			// puts("here again");
 			return (1);
-		}
 	}
 	if (!st || !st->cmd[0] || (!st->files && !st->cmd))
 		return (1);
@@ -58,5 +53,5 @@ void	checking_and_exec(t_parse *st, t_params *params)
 		print_error(st->cmd[0], ": command not found\n", NULL);
 		exit (127);
 	}
-		excute_cmd(st, params);
+	excute_cmd(st, params);
 }
