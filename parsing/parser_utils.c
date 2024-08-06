@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:01:22 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/04 17:51:33 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:36:41 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	write_in_doc(t_decl3 *decl)
 
 int	doc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
 {
-	if (read(0, 0, 0) != 0)
-		return (0);
 	(*new_parse)->i ++;
 	if (ft_strcmp((*tokens)->next->type, "WHITE") == 0)
 		(*tokens) = (*tokens)->next;
@@ -57,8 +55,10 @@ int	doc(t_decl3 *decl, t_token **tokens, t_parse **new_parse, t_params *params)
 	while (1)
 	{
 		decl->line = readline("> ");
+		if (!ttyname(0))
+			return (open(ttyname(2), O_RDWR, 0777), close(decl->fd), 0);
 		if (!decl->line)
-			return (close(decl->fd), 0);
+			break;
 		if (ft_strcmp((*tokens)->next->value, decl->line) == 0)
 		{
 			free(decl->line);
