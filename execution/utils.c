@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:52:27 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 20:16:19 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 00:27:49 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	terminate_shell(t_parse *st, t_params *params)
 void	forking_checker(t_parse *st, t_params *params)
 {
 	slash_path(st, params);
-	forking_piping(params);
+	if (params->cmds > 1 && isatty(1))
+		forking_piping(params);
 }
 
 void	initialiaze_vars(t_params *params, t_token **token, int f)

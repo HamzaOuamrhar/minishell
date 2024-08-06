@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 23:35:10 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 00:38:23 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ int	open_files(t_parse *st, t_params *params)
 			return (write(2, "shellantics: ambiguous redirect\n", 32),
 				close(st->in_fd), params->status = 1, 1);
 		if (file->type == 2)
-			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			st->out_fd = open(file->file, O_WRONLY | O_CREAT | O_TRUNC, 0604);
 		else if (file->type == 3)
-			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_APPEND, 0777);
+			st->out_fd = open(file->file, O_WRONLY | O_CREAT | O_APPEND, 0604);//here and there
 		if (st->out_fd == -1 || st->in_fd == -1)
 			return (perror("open"), 1);
 		if (file->next && file->type != 1)
@@ -114,6 +114,7 @@ int	in_out_dup(t_parse *st, t_params *params)
 		return (1);
 	}
 	st->in_fd = 0;
+	st->out_fd = 0;
 	if (open_files(st, params))
 	{
 		if (!params->pid)

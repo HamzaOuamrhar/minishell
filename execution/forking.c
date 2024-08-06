@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:00:20 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 21:18:33 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 00:27:22 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int	last_cmd(int fds[2])
 
 void	forking_piping(t_params *params)
 {
-	if (params->cmds == 1)
-		return ;
 	if (params->flag && params->i > 1 && params->flag_2)
 	{
 		close (params->save_fd);
