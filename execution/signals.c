@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:28:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 21:11:31 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 00:03:14 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 void	signal_handler(int sig)
 {
-	if (sig == SIGQUIT)
-		return ;
 	if (!(waitpid(-1, NULL, WNOHANG)))
-	{
-		g_status = 130;
 		return ;
+	if (sig == SIGINT)
+	{
+		g_status = 2;
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-	g_status = 2;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
 }
 
 void	signal_handle(t_params *params)
@@ -34,12 +32,6 @@ void	signal_handle(t_params *params)
 	signal(SIGQUIT, signal_handler);
 	if (g_status == 130)
 		params->status = 130;
-}
-
-void	signal_handle2(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 }
 
 int	minishell(t_parse *st)

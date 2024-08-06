@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 23:37:57 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 00:10:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ void	closing_fds(t_params *params)
 	if (params->i == params->cmds - 1)
 	{
 		waitpid(params->pid, &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == 2
+				|| WTERMSIG(status) == 3)
+			{
+				status = WTERMSIG(status) + 128;
+				if (WTERMSIG(status) == 3)
+					write(1, "Quit: 3\n", 8);
+				if (WTERMSIG(status) == 2)
+					write(1, "\n", 1);
+				params->status = status;
+			}
+		}
 		if (WIFEXITED(status))
 			params->status = WEXITSTATUS(status);
 		close(params->fds[0]);
