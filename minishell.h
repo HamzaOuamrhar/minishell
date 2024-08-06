@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 14:54:58 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:31:05 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int		echo_cmd(t_parse *st);
 int		ft_shell_atoi(char *s);
 void	change_pwd(t_params *params, char *tmp, int *i);
 int		just_echo(t_parse *st);
-void	signal_handle2(t_params *params);
+void	signal_handle2(void);
 
 // execution
 
