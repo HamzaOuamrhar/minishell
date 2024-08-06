@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:59:33 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/06 11:58:20 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:14:34 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,12 @@ void	double_quote_key(t_decl2 *decl, char *t_v, t_params params)
 			decl->i++;
 	}
 	if (t_v[decl->start] == '?')
-		decl->value = ft_strdup(ft_itoa(params.status));
+	{
+		if (g_status == 2)
+			decl->value = ft_strdup(ft_itoa(1));
+		else
+			decl->value = ft_strdup(ft_itoa(params.status));
+	}
 	else
 		decl->value = get_key(fmysubstr(t_v, decl->start,
 					decl->i - decl->start), params.env);

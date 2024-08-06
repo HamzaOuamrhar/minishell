@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:00:24 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/05 15:49:52 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:19:49 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	garbage_collector(t_garbage **gr, void	*p)
 	if (!new_g)
 	{
 		ft_malloc(0, 3);
+		perror("Malloc error!");
 		exit(1);
 	}
 	new_g->next = NULL;
@@ -59,7 +60,7 @@ void	*ft_malloc(size_t size, int flag)
 		p = malloc(size);
 		if (!p)
 		{
-			//freeing(param);
+			perror("Malloc error!");
 			ft_malloc(0, 3);
 			exit(1);
 		}

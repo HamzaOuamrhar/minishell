@@ -6,11 +6,19 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:22 by houamrha          #+#    #+#             */
-/*   Updated: 2024/07/30 10:58:26 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:25:53 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*set_status(int status)
+{
+	if (g_status == 2)
+		return (ft_strdup(ft_itoa(1)));
+	else
+		return (ft_strdup(ft_itoa(status)));
+}
 
 void	comp(t_decl decl, t_token **token, char *token_value, int *i)
 {

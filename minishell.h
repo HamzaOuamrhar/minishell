@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 15:51:41 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:23:37 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ int		ft_shell_atoi(char *s);
 void	change_pwd(t_params *params, char *tmp, int *i);
 int		just_echo(t_parse *st);
 void	signal_handle2(void);
+char	*set_status(int status);
 
 // execution
 

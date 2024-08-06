@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:34 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/06 12:49:20 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:22:28 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	get_value(t_decl *decl, int *i, char *token_value, int status)
 			(*i)++;
 	}
 	if (token_value[decl->first] == '?')
-		decl->value = ft_strdup(ft_itoa(status));
+		decl->value = set_status(status);
 	else
 		decl->value = get_key(fmysubstr(token_value,
 					decl->first, (*i) - decl->first), decl->env);
