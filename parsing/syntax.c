@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:03:10 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/01 13:50:42 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:08:06 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_redirection(t_token *token, int *error)
 	}
 }
 
-int	redirection_syntax(t_token *token)
+int	redirection_syntax(t_token *token, t_params *params)
 {
 	int	error;
 
@@ -62,7 +62,7 @@ int	redirection_syntax(t_token *token)
 	check_redirection(token, &error);
 	if (error)
 	{
-		syntax_error("redirection syntax error");
+		syntax_error("redirection syntax error", params);
 		return (1);
 	}
 	return (0);
@@ -90,7 +90,7 @@ void	check_pipeline(t_token *token, int *error)
 	}
 }
 
-int	pipe_syntax(t_token *token)
+int	pipe_syntax(t_token *token, t_params *params)
 {
 	int	error;
 
@@ -99,13 +99,13 @@ int	pipe_syntax(t_token *token)
 		token = token->next;
 	if (token && ft_strcmp(token->type, "PIPE") == 0)
 	{
-		syntax_error("syntax error near unexpected token `|'");
+		syntax_error("syntax error near unexpected token `|'", params);
 		return (1);
 	}
 	check_pipeline(token, &error);
 	if (error)
 	{
-		syntax_error("syntax error near unexpected token `|'");
+		syntax_error("syntax error near unexpected token `|'", params);
 		return (1);
 	}
 	return (0);

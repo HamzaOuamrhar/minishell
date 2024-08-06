@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:04:27 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/05 14:43:27 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:59:03 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	syntax_error(char *error_msg)
+void	syntax_error(char *error_msg, t_params *params)
 {
-	g_status = 258;
+	params->status = 258;
 	printf("%s\n", error_msg);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:02:07 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/04 16:07:34 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:58:37 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	heredoc_sig(int sig)
 {
 	(void)sig;
 	close(0);
-	g_status = 1;
 }
 
 void	count_things(t_token **tokens, t_count *count)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 11:02:44 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:54:28 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_in_files(t_parse *st)
 
 void	starting_excute(t_parse *st, t_params *params, t_token *token)
 {
-	if (!syntax(token))
+	if (!syntax(token, params))
 	{
 		expander(token, *params);
 		if (!parser(token, &st, params))
@@ -63,7 +63,7 @@ void	wait_prompt1(t_params *params)
 		if (!params->line)
 			readline_failure(params);
 		add_history(params->line);
-		tokenize(&token, params->line, &params->q);
+		tokenize(&token, params->line, params);
 		if (!params->q)
 			starting_excute(st, params, token);
 		token = NULL;

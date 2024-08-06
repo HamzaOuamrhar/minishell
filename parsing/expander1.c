@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:34 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/03 19:50:33 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:49:20 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	valide_val(t_decl *decl, char **n_t_v, t_token **token)
 		(*token)->flag = 1;
 }
 
-void	get_value(t_decl *decl, int *i, char *token_value)
+void	get_value(t_decl *decl, int *i, char *token_value, int status)
 {
 	if (!token_value[*i + 1])
 	{
@@ -52,7 +52,7 @@ void	get_value(t_decl *decl, int *i, char *token_value)
 			(*i)++;
 	}
 	if (token_value[decl->first] == '?')
-		decl->value = ft_strdup(ft_itoa(g_status));
+		decl->value = ft_strdup(ft_itoa(status));
 	else
 		decl->value = get_key(fmysubstr(token_value,
 					decl->first, (*i) - decl->first), decl->env);
@@ -67,7 +67,7 @@ void	set_value(char **n_t_v, char *token_value, int *i, t_token **token)
 	{
 		if (token_value[*i] == '$')
 		{
-			get_value(&decl, i, token_value);
+			get_value(&decl, i, token_value, (*token)->status);
 			if (!decl.value)
 				*n_t_v = ft_strjoin(*n_t_v, "");
 			else
@@ -101,6 +101,7 @@ void	non_quotes_expander(t_token **token, t_params params)
 	if (i)
 		n_t_v = fmysubstr((*token)->value, 0, i);
 	(*token)->env = params.env;
+	(*token)->status = params.status;
 	if ((*token)->value[i])
 		set_value(&n_t_v, (*token)->value, &i, token);
 	tmp->value = n_t_v;

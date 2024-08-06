@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 10:35:22 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:09:23 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct t_token
 	int				here;
 	int				has_q;
 	t_env			*env;
+	int				status;
 	struct t_token	*next;
 }	t_token;
 
@@ -149,16 +150,16 @@ int		fork_failure(t_params *params);
 void	malloc_error(t_params *params);
 int		minishell(t_parse *st);
 char	*ft_strdup(const char *s1);
-void	tokenize(t_token **token, char *line, int *q);
+void	tokenize(t_token **token, char *line, t_params *params);
 char	**ft_mysplit(char const *s, char c, int *still);
 void	add_back(t_token **token, t_token *new);
-void	syntax_error(char *error_msg);
+void	syntax_error(char *error_msg, t_params *params);
 char	*fmysubstr(char const *s, unsigned int start, size_t len);
 int		is_in_word(char c);
 int		is_white(char c);
 int		is_alph_num(char c);
 char	*ft_strjoin(char *s1, char *s2);
-int		syntax(t_token *token);
+int		syntax(t_token *token, t_params *params);
 void	expander(t_token *token, t_params params);
 int		in_str(char *str, char c);
 void	quotes_removal(t_token *tokens);
@@ -188,8 +189,8 @@ void	add_back_file(t_files **files,
 			int type, t_token *token, t_parse *parse);
 void	not_w_first_i(t_decl *decl, char **n_t_v, t_token **token);
 void	heredoc_sig(int sig);
-int		pipe_syntax(t_token *token);
-int		redirection_syntax(t_token *token);
+int		pipe_syntax(t_token *token, t_params *params);
+int		redirection_syntax(t_token *token, t_params *params);
 int		echo_cmd(t_parse *st);
 int		ft_shell_atoi(char *s);
 void	change_pwd(t_params *params, char *tmp, int *i);
