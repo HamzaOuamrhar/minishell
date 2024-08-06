@@ -6,7 +6,11 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/08/06 14:58:06 by iez-zagh         ###   ########.fr       */
+=======
+/*   Updated: 2024/08/06 14:59:45 by houamrha         ###   ########.fr       */
+>>>>>>> 20f5466e0942af3194300994f9cf301662316f75
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +27,7 @@ void	starting_excute(t_parse *st, t_params *params, t_token *token)
 {
 	if (!syntax(token, params))
 	{
+		printf("%d\n", params->status);
 		expander(token, *params);
 		if (!parser(token, &st, params))
 			return ;

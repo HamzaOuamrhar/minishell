@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:02:07 by houamrha          #+#    #+#             */
-/*   Updated: 2024/08/06 11:58:37 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:54:52 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	parser(t_token *tokens, t_parse **parse, t_params *params)
 	t_decl3	decl;
 	t_count	count;
 
-	decl.save_fd = dup(0);
 	signal(SIGINT, heredoc_sig);
 	copie = tokens;
 	while (tokens)
@@ -95,16 +94,11 @@ int	parser(t_token *tokens, t_parse **parse, t_params *params)
 		count_things(&copie, &count);
 		ini_pars(&decl, &count, &new_parse, parse);
 		if (!parsing(&tokens, &new_parse, &decl, params))
-		{
-			dup2(decl.save_fd, 0);
-			close(decl.save_fd);
 			return (0);
-		}
 		new_parse->cmd[decl.i] = NULL;
 		add_back_parse(parse, new_parse);
 		if (tokens)
 			tokens = tokens->next;
 	}
-	close(decl.save_fd);
 	return (1);
 }
