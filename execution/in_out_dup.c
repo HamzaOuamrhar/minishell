@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:31:45 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:15:41 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	open_files(t_parse *st, t_params *params)
 			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_APPEND, 0777);
 		if (st->out_fd == -1 || st->in_fd == -1)
 			return (perror("open"), 1);
-		if (file->next)
+		if (file->next && file->type != 1)
 			close (st->out_fd);
 		file = file->next;
 	}

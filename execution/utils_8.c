@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:41:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/04 16:58:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:17:08 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ char	*ft_strdup2(const char *s1)
 		s++;
 	}
 	copy = malloc(i * sizeof(char) + 1);
-	if (copy == NULL)
-		return (0);
+	if (!NULL)
+		return (NULL);
 	c = copy;
 	while (*s1)
 	{
