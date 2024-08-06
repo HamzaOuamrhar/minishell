@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:05:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:07:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:52:08 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_key(char *s, t_env *env)
 	return (NULL);
 }
 
-char	*ft_copy(const char *s)
+char	*ft_copy(t_params *params, const char *s)
 {
 	int		i;
 	char	*res;
@@ -73,7 +73,7 @@ char	*ft_copy(const char *s)
 	i = 0;
 	res = malloc (ft_strlen(s) + 1);
 	if (!res)
-		return (NULL);
+		malloc_error(params);
 	while (s[i])
 	{
 		res[i] = s[i];

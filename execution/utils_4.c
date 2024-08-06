@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:22:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 15:14:57 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:50:03 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	free_update(char **res, t_params *params)
 	ft_free(params->env2);
 	params->env2 = list2array(params->env, params);
 	free(params->path);
-	params->path = ft_copy(get_key("PATH", params->env));
+	params->path = ft_copy(params, get_key("PATH", params->env));
 	ft_free(params->paths_array);
 	if (!params->path)
 	{

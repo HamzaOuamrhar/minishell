@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 10:35:22 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:30:16 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ typedef struct t_parse
 
 int		fork_failure(t_params *params);
 void	malloc_error(t_params *params);
-int		minishell(t_parse *st);
+int		minishell(t_params *params, t_parse *st);
 char	*ft_strdup(const char *s1);
 void	tokenize(t_token **token, char *line, int *q);
 char	**ft_mysplit(char const *s, char c, int *still);
@@ -226,7 +226,7 @@ char	**list2array(t_env *env, t_params *params);
 void	free_list(t_env *env);
 void	empty_env(t_params *params);
 char	*get_key(char *s, t_env *env);
-char	*ft_copy(const char *s);
+char	*ft_copy(t_params *params, const char *s);
 void	export_cmd(char **s, char *res, t_params *params);
 void	search_and_replace(char *env, char *value, t_env **envi, int flag);
 char	*get_pwd(t_params *params);
@@ -242,7 +242,7 @@ int		search_and_replace2(char *env, t_env **envi);
 void	free_update(char **res, t_params *params);
 char	**export_checker(char *s, t_params *params);
 int		check_syntax(char *s);
-char	**copy_env(char **env);
+char	**copy_env(t_params *params, char **env);
 int		pwd_cmd(t_params *params);
 int		unset_cmd(t_parse *st, t_params *params);
 void	unset_cmd1(t_env **env, char *s);

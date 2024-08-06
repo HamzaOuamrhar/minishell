@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:19:56 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 11:59:53 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:34:56 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,20 @@ void	change_pwd_value(t_params *params)
 	tmp = get_key("PWD", params->env);
 	if (tmp)
 	{
-		search_and_replace(ft_copy("OLDPWD"), ft_copy(tmp),
+		search_and_replace(ft_copy(params, "OLDPWD"), ft_copy(params, tmp),
 			&(params->env), 0);
-		search_and_replace(ft_copy("OLDPWD"), ft_copy(tmp),
+		search_and_replace(ft_copy(params, "OLDPWD"), ft_copy(params, tmp),
 			&(params->sorted_env), 0);
 	}
 	else
 	{
-		search_and_replace(ft_copy("OLDPWD"), "",
+		search_and_replace(ft_copy(params, "OLDPWD"), "",
 			&(params->env), 0);
-		search_and_replace(ft_copy("OLDPWD"), "",
+		search_and_replace(ft_copy(params, "OLDPWD"), "",
 			&(params->sorted_env), 0);
 	}
-	search_and_replace(ft_copy("PWD"), get_pwd(params),
+	search_and_replace(ft_copy(params, "PWD"), get_pwd(params),
 		&(params->sorted_env), 0);
-	search_and_replace(ft_copy("PWD"), get_pwd(params), &(params->env), 0);
+	search_and_replace(ft_copy(params, "PWD"),
+		get_pwd(params), &(params->env), 0);
 }

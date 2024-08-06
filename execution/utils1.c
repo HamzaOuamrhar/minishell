@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:18:13 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:29:34 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	slash_path(t_parse *st, t_params *params)
 
 	tmp = NULL;
 	if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
-		if (minishell(st))
+		if (minishell(params, st))
 			return ;
 	if (!st->cmd || !st->cmd[0]
 		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
@@ -56,7 +56,7 @@ void	slash_path(t_parse *st, t_params *params)
 	if (tmp)
 		st->com_path = get_acc_path(params->paths_array, tmp);
 	if (access(st->cmd[0], X_OK) && st->com_path)
-		st->com_path = ft_copy(st->cmd[0]);
+		st->com_path = ft_copy(params, st->cmd[0]);
 	free (tmp);
 }
 

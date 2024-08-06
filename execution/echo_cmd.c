@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:30:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:33:39 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	trying_with_pwd(t_params *params)
 	}
 	else
 	{
-		search_and_replace(ft_copy("PWD"), pwd, &(params->env), 0);
-		search_and_replace(ft_copy("PWD"), ft_copy(pwd),
+		search_and_replace(ft_copy(params, "PWD"), pwd, &(params->env), 0);
+		search_and_replace(ft_copy(params, "PWD"), ft_copy(params, pwd),
 			&(params->sorted_env), 0);
 	}
 	return (0);
@@ -41,15 +41,16 @@ void	change_pwd2(char *tmp2, t_params *params, char *tmp)
 {
 	if (access(tmp2, F_OK) != -1)
 	{
-		search_and_replace(ft_copy("PWD"), ft_copy(tmp2), &(params->env), 0);
-		search_and_replace(ft_copy("PWD"),
-			ft_copy(tmp2), &(params->sorted_env), 0);
+		search_and_replace(ft_copy(params, "PWD"),
+			ft_copy(params, tmp2), &(params->env), 0);
+		search_and_replace(ft_copy(params, "PWD"),
+			ft_copy(params, tmp2), &(params->sorted_env), 0);
 	}
 	else
 	{
-		search_and_replace(ft_copy("PWD"),
+		search_and_replace(ft_copy(params, "PWD"),
 			ft_strjoin2(tmp, "/.."), &(params->env), 0);
-		search_and_replace(ft_copy("PWD"),
+		search_and_replace(ft_copy(params, "PWD"),
 			ft_strjoin2(tmp, "/.."), &(params->sorted_env), 0);
 	}
 	free (tmp);
@@ -60,7 +61,7 @@ int	check_deleted(t_params *params, char *tmp2)
 	struct stat	the_path;
 	char		*tmp;
 
-	tmp = ft_copy(get_key("PWD", params->env));
+	tmp = ft_copy(params, get_key("PWD", params->env));
 	if (!tmp)
 		return (0);
 	stat(tmp, &the_path);
@@ -69,10 +70,11 @@ int	check_deleted(t_params *params, char *tmp2)
 		chdir("..");
 		write(2, "cd: error retrieving current ", 29);
 		write(2, "directory: getcwd\n", 18);
-		search_and_replace(ft_copy("OLDPWD"),
-			ft_copy(get_key("PWD", params->env)), &(params->env), 0);
-		search_and_replace(ft_copy("OLDPWD"),
-			ft_copy(get_key("PWD", params->env)), &(params->sorted_env), 0);
+		search_and_replace(ft_copy(params, "OLDPWD"),
+			ft_copy(params, get_key("PWD", params->env)), &(params->env), 0);
+		search_and_replace(ft_copy(params, "OLDPWD"),
+			ft_copy(params, get_key("PWD", params->env)),
+			&(params->sorted_env), 0);
 		change_pwd2(tmp2, params, tmp);
 		return (1);
 	}
@@ -92,7 +94,7 @@ char	*ft_spliter(char *s, int j, t_params *params)
 	if (!pwd)
 		malloc_error(params);
 	if (!getcwd(pwd, 1024))
-		return (free(pwd), ft_copy(get_key("PWD", params->env)));
+		return (free(pwd), ft_copy(params, get_key("PWD", params->env)));
 	i = 0;
 	i = ft_strlen(pwd) - 1;
 	while (pwd[i] && (pwd[i] != '/'))

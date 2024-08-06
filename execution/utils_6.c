@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:40:06 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:16:24 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:38:08 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,24 @@ void	update_shlvl(t_params *params)
 	rl_catch_signals = 0;
 	n = ft_shell_atoi(get_key("SHLVL", params->env));
 	if (n == -1)
-	{
-		search_and_replace("SHLVL", ft_copy("1"), &(params->sorted_env), 1);
-		search_and_replace("SHLVL", ft_copy("1"), &(params->env), 1);
-		return ;
-	}
+		return (search_and_replace("SHLVL", ft_copy(params, "1"),
+				&(params->sorted_env), 1),
+			search_and_replace("SHLVL", ft_copy(params, "1"),
+				&(params->env), 1));
 	if (n == -2)
-		lvl = ft_copy("0");
+		lvl = ft_copy(params, "0");
 	else if (++n == 999)
 	{
-		search_and_replace("SHLVL", ft_copy(""), &(params->sorted_env), 1);
-		search_and_replace("SHLVL", ft_copy(""), &(params->env), 1);
+		search_and_replace("SHLVL", ft_copy(params, ""),
+			&(params->sorted_env), 1);
+		search_and_replace("SHLVL", ft_copy(params, ""), &(params->env), 1);
 	}
 	if (n != -1 && n != -2)
 		lvl = ft_shell_itoa(n);
 	if (!lvl)
 		malloc_error(params);
 	search_and_replace("SHLVL", lvl, &(params->sorted_env), 1);
-	search_and_replace("SHLVL", ft_copy(lvl), &(params->env), 1);
+	search_and_replace("SHLVL", ft_copy(params, lvl), &(params->env), 1);
 }
 
 void	update(t_params *params)

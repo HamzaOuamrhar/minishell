@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:28:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:38:45 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:35:09 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	signal_handle2(t_params *params)
 		params->status = 1;
 }
 
-int	minishell(t_parse *st)
+int	minishell(t_params *params, t_parse *st)
 {
 	char	*tmp;
 
 	tmp = ft_substr(st->cmd[0], 2, ft_strlen(st->cmd[0]));
 	if (!access(tmp, X_OK))
 	{
-		st->com_path = ft_copy(st->cmd[0]);
+		st->com_path = ft_copy(params, st->cmd[0]);
 		free (tmp);
 		return (1);
 	}

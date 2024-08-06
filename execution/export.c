@@ -6,13 +6,13 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:39:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 16:03:12 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:45:38 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_key(char *key, char *value, t_env **env)
+void	add_key(t_params *params, char *key, char *value, t_env **env)
 {
 	t_env	*new_key;
 
@@ -20,10 +20,7 @@ void	add_key(char *key, char *value, t_env **env)
 		return ;
 	new_key = malloc (sizeof(t_env));
 	if (!new_key)
-	{
-		perror("malloc");
-		return ;
-	}
+		malloc_error(params);
 	new_key->key = key;
 	new_key->value = value;
 	new_key->next = NULL;
@@ -36,25 +33,29 @@ void	export_cmd(char **s, char *res, t_params *params)
 	{
 		if (ft_strchr(res, '=') && !params->export_f)
 		{
-			s[1] = ft_copy("");
-			search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->env), 0);
-			search_and_replace(ft_copy(s[0]), s[1], &(params->sorted_env), 0);
+			s[1] = ft_copy(params, "");
+			search_and_replace(ft_copy(params, s[0]),
+				ft_copy(params, s[1]), &(params->env), 0);
+			search_and_replace(ft_copy(params, s[0]),
+				s[1], &(params->sorted_env), 0);
 		}
 		else
-			search_and_replace2(ft_copy(s[0]), &(params->sorted_env));
+			search_and_replace2(ft_copy(params, s[0]), &(params->sorted_env));
 		sort_env(params->sorted_env);
 		free_update(s, params);
 		return ;
 	}
 	if (params->export_f)
 		ft_join(s, params);
-	search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->sorted_env), 0);
-	search_and_replace(ft_copy(s[0]), ft_copy(s[1]), &(params->env), 0);
+	search_and_replace(ft_copy(params, s[0]), ft_copy(params,
+			s[1]), &(params->sorted_env), 0);
+	search_and_replace(ft_copy(params, s[0]), ft_copy(params,
+			s[1]), &(params->env), 0);
 	sort_env(params->sorted_env);
 	free_update(s, params);
 }
 
-void	search_and_replace(char *env, char *value, t_env **envi, int flag)
+void	search_and_replace(t_params *params, char *env, char *value, t_env **envi, int flag)
 {
 	t_env	*tmp;
 
@@ -72,7 +73,7 @@ void	search_and_replace(char *env, char *value, t_env **envi, int flag)
 		}
 		tmp = tmp->next;
 	}
-	add_key(env, value, envi);
+	add_key(params, env, value, envi);
 }
 
 int	search_and_replace2(char *env, t_env **envi)

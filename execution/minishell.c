@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 15:59:27 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:30:31 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	main(int argc, char *argv[], char *env[])
 	if (!env || !env[0])
 		empty_env(&params);
 	else
-		params.env3 = copy_env(env);
+		params.env3 = copy_env(&params, env);
 	params.env = set_env(params.env3, i);
-	params.path = ft_copy(get_key("PATH", params.env));
+	params.path = ft_copy(&params, get_key("PATH", params.env));
 	params.paths_array = ft_split(params.path, ':');
 	params.sorted_env = set_env(params.env3, i);
 	sort_env(params.sorted_env);

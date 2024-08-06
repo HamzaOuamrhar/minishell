@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:17:13 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:35:41 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	empty_env(t_params *params)
 	params->env3 = malloc (sizeof(char *) * 5);
 	if (!pwd || !params->env3)
 		malloc_error(params);
-	params->env3[0] = ft_copy("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin");
+	params->env3[0] = ft_copy(params,
+			"PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin");
 	if (getcwd(pwd, 1024))
 	{
 		tmp = pwd;
@@ -93,12 +94,12 @@ void	empty_env(t_params *params)
 	}
 	else
 		return ;
-	params->env3[2] = ft_copy("SHLVL=1");
-	params->env3[3] = ft_copy("_=/usr/bin/env");
+	params->env3[2] = ft_copy(params, "SHLVL=1");
+	params->env3[3] = ft_copy(params, "_=/usr/bin/env");
 	params->env3[4] = NULL;
 }
 
-char	**copy_env(char **env)
+char	**copy_env(t_params *params, char **env)
 {
 	char	**res;
 	int		i;
@@ -112,7 +113,7 @@ char	**copy_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		res[i] = ft_copy(env[i]);
+		res[i] = ft_copy(params, env[i]);
 		i++;
 	}
 	res[i] = NULL;
