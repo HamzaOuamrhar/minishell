@@ -6,7 +6,7 @@
 /*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 12:09:23 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:06:11 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ typedef struct t_parse
 
 // parsing
 
+void	signal_pro(t_decl3 *decl, t_params *params);
 int		fork_failure(t_params *params);
 void	malloc_error(t_params *params);
 int		minishell(t_parse *st);
