@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:28:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 15:30:22 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:11:31 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	minishell(t_parse *st)
 		free (tmp);
 		return (1);
 	}
+	free (tmp);
 	return (0);
 }
 

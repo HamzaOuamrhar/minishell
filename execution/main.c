@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 16:01:20 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:23:57 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	starting_excute(t_parse *st, t_params *params, t_token *token)
 void	readline_failure(t_params *params)
 {
 	freeing(params);
+	ft_malloc(0, 3);
 	exit (1);
 }
 
@@ -53,6 +54,7 @@ void	wait_prompt1(t_params *params)
 	t_parse		*st;
 
 	initialiaze_vars(params, &token, 1);
+	params->status = 0;
 	st = NULL;
 	token = NULL;
 	while (1)

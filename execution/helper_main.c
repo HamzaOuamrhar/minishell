@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:01:37 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 14:55:56 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 23:33:46 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	just_a_checker(t_parse *st, t_params *params)
 
 void	checking_and_exec(t_parse *st, t_params *params)
 {
-	if (!(get_key("PATH", params->env)))
+	if (st->cmd[0] && (!(get_key("PATH", params->env))
+			&& ft_strcmp(st->cmd[0], "./minishell")))
 		no_path(st, params);
 	else if (!st->com_path || !ft_strlen(st->cmd[0]))
 	{

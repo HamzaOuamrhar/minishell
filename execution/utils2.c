@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:46:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 14:46:22 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:51:14 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**list2array(t_env *env, t_params *params)
 	env2 = malloc (sizeof(char *) * (lstcounter(env) + 1));
 	if (!env2)
 		malloc_error(params);
-	while (tmp)
+	while (tmp && tmp->value && tmp->key)
 	{
 		env2[i++] = ft_strjoin_env(tmp->key, tmp->value, params);
 		tmp = tmp->next;

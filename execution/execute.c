@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 20:13:00 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 23:37:57 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	closing_fds(t_params *params)
 {
 	int	status;
 
+	status = 0;
 	close (params->fds[1]);
 	if (params->save_fd != -1)
 		close (params->save_fd);
@@ -56,10 +57,10 @@ void	executing(t_parse *st, t_params *params)
 		return ;
 	if (!params->pid)
 	{
-		signal_handle2();
+		// signal_handle2();
 		forking_piping(params);
 		if (just_a_checker(st, params))
-			exit (1);
+			status = 1;
 		if (check_builtins(st->cmd[0]))
 			status = checking_cmd(st, params);
 		else

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 15:59:27 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:54:31 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,17 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
+void	intialize(t_params *params)
+{
+	params->paths_array = NULL;
+	params->path = NULL;
+	params->env2 = NULL;
+	params->env3 = NULL;
+	params->sorted_env = NULL;
+	params->sorted_env = NULL;
+	params->env = NULL;
+}
+
 int	main(int argc, char *argv[], char *env[])
 {
 	int			i;
@@ -24,6 +35,7 @@ int	main(int argc, char *argv[], char *env[])
 
 	(void)argc;
 	(void)argv;
+	intialize(&params);
 	i = 0;
 	if (!isatty(fileno(stdin)))
 		return (print_error(NULL, "can't reach the tty standart input\n",

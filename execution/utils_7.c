@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 14:58:20 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 23:28:16 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	update_(t_parse *st, t_params *params)
 
 int	check_builtins(char *s)
 {
+	if (!s)
+		return (0);
 	if (!(ft_strcmp(s, "cd")) || !(ft_strcmp(s, "export"))
 		|| !(ft_strcmp(s, "unset"))
 		|| !(ft_strcmp(s, "env")) || !(ft_strcmp(s, "exit"))

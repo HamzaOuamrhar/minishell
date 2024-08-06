@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:05:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:07:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:37:31 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ char	*check_allocate(char *s1, char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	s = (char *)malloc
-		((ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
+	s = malloc((ft_strlen(s1) + ft_strlen(s2) + 2));
 	if (!s)
 		return (NULL);
 	return (s);

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:19:56 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 11:59:53 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 22:36:22 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ void	free_list(t_env *env)
 
 void	freeing(t_params *params)
 {
-	free(params->path);
-	free_list(params->env);
+	if (params->path)
+		free(params->path);
+	if (params->env)
+		free_list(params->env);
 	if (params->paths_array)
 		ft_free(params->paths_array);
-	ft_free(params->env2);
+	if (params->env2)
+		ft_free(params->env2);
 	ft_malloc(0, 3);
 }
 
