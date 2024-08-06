@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 16:23:37 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:40:15 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,12 @@
 
 # include <unistd.h>
 # include <stdio.h>
-# include <dirent.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
-# include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <stdbool.h>
 
 # define RED_TEXT "\033[1;31m"
 # define GREEN_TEXT "\033[1;32m"

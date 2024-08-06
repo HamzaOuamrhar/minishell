@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:18:13 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:03:38 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ void	slash_path(t_parse *st, t_params *params)
 	char	*tmp;
 
 	tmp = NULL;
-	if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
-		if (minishell(st))
-			return ;
 	if (!st->cmd || !st->cmd[0]
 		|| !(ft_strcmp(".", st->cmd[0])) || !(ft_strcmp("..", st->cmd[0])))
 	{
 		st->com_path = NULL;
 		return ;
 	}
+	if (st->cmd[0][0] == '.' && st->cmd[0][1] == '/')
+		if (minishell(st))
+			return ;
 	st->com_path = get_acc_path(params->paths_array, st->cmd[0]);
 	if (st->com_path)
 		return ;
