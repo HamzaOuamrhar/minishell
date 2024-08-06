@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 12:09:23 by houamrha         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:54:58 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ int		ft_shell_atoi(char *s);
 void	change_pwd(t_params *params, char *tmp, int *i);
 int		just_echo(t_parse *st);
 void	signal_handle2(t_params *params);
+
 // execution
 
 void	wait_prompt1(t_params *params);

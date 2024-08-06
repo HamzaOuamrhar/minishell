@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:01:37 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 11:08:46 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:55:56 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	no_path(t_parse *st, t_params *params)
 		close (params->fds[1]);
 	}
 	params->flag = 1;
-	params->status = 127;
 	print_error(st->cmd[0], ": No such file or directory\n", NULL);
 	exit (127);
 }

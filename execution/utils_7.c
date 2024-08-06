@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:08:35 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:58:20 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	update_(t_parse *st, t_params *params)
 {
 	params->stdin_ = -1;
 	params->stdout_ = -1;
+	g_status = 0;
 	if (!st->cmd)
 		return ;
 	if (!st->cmd[0])
