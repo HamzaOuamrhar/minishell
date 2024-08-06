@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 21:04:19 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 09:40:54 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 	if (fd)
 	{
 		params->stdin_ = dup(STDIN_FILENO);
-		if (dup2(fd, 0) == -1)
+		if (dup2(fd, STDIN_FILENO) == -1)
 		{
 			perror ("dup2");
 			close (fd);
@@ -57,7 +57,7 @@ int	excute_cmd_dup(t_parse *st, t_params *params, int fd)
 	if (st->out_fd)
 	{
 		params->stdout_ = dup(STDOUT_FILENO);
-		if (dup2(st->out_fd, 1))
+		if (dup2(st->out_fd, STDOUT_FILENO) == -1)
 		{
 			perror ("dup2");
 			close (st->out_fd);
@@ -92,12 +92,9 @@ int	open_files(t_parse *st)
 			return (write(2, "shellantics: ambiguous redirect\n", 32),
 				close(st->in_fd), g_status = 1, 1);
 		if (file->type == 2)
-		{
-			st->out_fd = open(file->file, O_WRONLY | O_CREAT, O_TRUNC, 0700);
-			printf("%d\n", st->out_fd);
-		}
+			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		else if (file->type == 3)
-			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_APPEND, 0700);
+			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_APPEND, 0777);
 		if (st->out_fd == -1 || st->in_fd == -1)
 			return (perror("open"), 1);
 		if (file->next)
@@ -109,13 +106,13 @@ int	open_files(t_parse *st)
 
 int	in_out_dup(t_parse *st, t_params *params)
 {
-	// if (check_perms(st))
-	// {
-	// 	g_status = 1;
-	// 	if (!params->pid)
-	// 		exit (0);
-	// 	return (1);
-	// }
+	if (check_perms(st))
+	{
+		g_status = 1;
+		if (!params->pid)
+			exit (0);
+		return (1);
+	}
 	st->in_fd = 0;
 	if (open_files(st))
 	{

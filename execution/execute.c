@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 20:59:37 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:13:14 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,6 @@ void	executing(t_parse *st, t_params *params)
 
 void	excute_cmds(t_parse *st, t_params *params)
 {
-	// if (check_in_files(st))
-	// {
-	// 	g_status = 1;
-	// 	return ;
-	// }
 	if (params->cmds == 1 && check_builtins(st->cmd[0]))
 	{
 		if (just_a_checker(st, params))

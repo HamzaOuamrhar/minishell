@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:59:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 20:16:03 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:08:35 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ int	check_builtins(char *s)
 		|| !(ft_strcmp(s, "unset"))
 		|| !(ft_strcmp(s, "env")) || !(ft_strcmp(s, "exit"))
 		||!(ft_strcmp(s, "pwd"))
-		||!(ft_strcmp(s, "echo"))
-		||!(ft_strcmp(s, ".")))
+		||!(ft_strcmp(s, "echo")))
 		return (1);
 	return (0);
 }
