@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:01:37 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 20:39:52 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:30:18 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	no_path(t_parse *st, t_params *params)
 		close (params->fds[1]);
 	}
 	params->flag = 1;
-	g_status = 127;
+	params->status = 127;
 	print_error(st->cmd[0], ": No such file or directory\n", NULL);
 	exit (127);
 }
@@ -49,7 +49,7 @@ void	checking_and_exec(t_parse *st, t_params *params)
 			close (params->fds[1]);
 		}
 		params->flag = 1;
-		g_status = 127;
+		params->status = 127;
 		print_error(st->cmd[0], ": command not found\n", NULL);
 		exit (127);
 	}

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/06 10:18:42 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:35:22 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,11 +194,11 @@ int		echo_cmd(t_parse *st);
 int		ft_shell_atoi(char *s);
 void	change_pwd(t_params *params, char *tmp, int *i);
 int		just_echo(t_parse *st);
-void	signal_handle2(void);
+void	signal_handle2(t_params *params);
 // execution
 
 void	wait_prompt1(t_params *params);
-void	signal_handle(void);
+void	signal_handle(t_params *params);
 char	*get_acc_path(char **paths, char *com);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);

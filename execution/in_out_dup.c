@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 09:40:54 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:31:45 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	get_type(t_files *files, char *s)
 	return (0);
 }
 
-int	open_files(t_parse *st)
+int	open_files(t_parse *st, t_params *params)
 {
 	t_files	*file;
 
@@ -90,7 +90,7 @@ int	open_files(t_parse *st)
 	{
 		if (file->is_amb)
 			return (write(2, "shellantics: ambiguous redirect\n", 32),
-				close(st->in_fd), g_status = 1, 1);
+				close(st->in_fd), params->status = 1, 1);
 		if (file->type == 2)
 			st->out_fd = open(file->file, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		else if (file->type == 3)
@@ -108,13 +108,13 @@ int	in_out_dup(t_parse *st, t_params *params)
 {
 	if (check_perms(st))
 	{
-		g_status = 1;
+		params->status = 1;
 		if (!params->pid)
 			exit (0);
 		return (1);
 	}
 	st->in_fd = 0;
-	if (open_files(st))
+	if (open_files(st, params))
 	{
 		if (!params->pid)
 			exit (1);

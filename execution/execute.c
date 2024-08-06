@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:13:14 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:33:46 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	closing_fds(t_params *params)
 	{
 		waitpid(params->pid, &status, 0);
 		if (WIFEXITED(status))
-			g_status = WEXITSTATUS(status);
+			params->status = WEXITSTATUS(status);
 		close(params->fds[0]);
 		close(params->fds[1]);
 	}
@@ -56,7 +56,7 @@ void	executing(t_parse *st, t_params *params)
 		return ;
 	if (!params->pid)
 	{
-		signal_handle2();
+		signal_handle2(params);
 		forking_piping(params);
 		if (just_a_checker(st, params))
 			status = 1;
@@ -77,9 +77,9 @@ void	excute_cmds(t_parse *st, t_params *params)
 	if (params->cmds == 1 && check_builtins(st->cmd[0]))
 	{
 		if (just_a_checker(st, params))
-			g_status = 1;
+			params->status = 1;
 		else
-			g_status = checking_cmd(st, params);
+			params->status = checking_cmd(st, params);
 		if (params->stdin_ != -1)
 		{
 			dup2(params->stdin_, 0);
@@ -108,7 +108,7 @@ void	cloing_fds(t_params *params)
 	{
 		waitpid(params->pid, &status, 0);
 		if (WIFEXITED(status))
-			g_status = WEXITSTATUS(status);
+			params->status = WEXITSTATUS(status);
 		close(params->fds[0]);
 		close(params->fds[1]);
 	}

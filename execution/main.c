@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 10:04:05 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:36:02 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	starting_excute(t_parse *st, t_params *params, t_token *token)
 		params->cmds = lstsize(st);
 		while (st)
 		{
-			signal_handle();
+			signal_handle(params);
 			update_(st, params);
 			excute_cmds(st, params);
 			st = st->next;
@@ -57,7 +57,7 @@ void	wait_prompt1(t_params *params)
 	token = NULL;
 	while (1)
 	{
-		signal_handle();
+		signal_handle(params);
 		params->q = 0;
 		params->line = readline("• Shellantics$ ");
 		if (!params->line)

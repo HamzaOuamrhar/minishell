@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 16:02:19 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:30:18 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	just_export(t_params *params)
 void	exporting(t_parse *st, t_params *params, char **res, int i)
 {
 	export_cmd(res, st->cmd[i], params);
-	g_status = 0;
+	params->status = 0;
 }
 
 int	export_cmd1(t_parse *st, t_params *params)
@@ -98,11 +98,11 @@ int	export_cmd1(t_parse *st, t_params *params)
 		if (check_syntax(res[0]))
 		{
 			print_error("export", ": not a valid identifier\n", st->cmd[i]);
-			g_status = 1;
+			params->status = 1;
 		}
 		else
 			exporting(st, params, res, i);
 		i++;
 	}
-	return (g_status);
+	return (params->status);
 }

@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:15:04 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/06 10:30:18 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	trying_with_pwd(t_params *params)
 	if (!pwd)
 	{
 		write(2, "some thing went wrong here\n", 28);
-		g_status = 1;
+		params->status = 1;
 		free (pwd);
 		return (1);
 	}
