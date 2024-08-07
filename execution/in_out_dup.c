@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:24:39 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/07 00:38:23 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 08:35:28 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	open_files(t_parse *st, t_params *params)
 		if (file->type == 2)
 			st->out_fd = open(file->file, O_WRONLY | O_CREAT | O_TRUNC, 0604);
 		else if (file->type == 3)
-			st->out_fd = open(file->file, O_WRONLY | O_CREAT | O_APPEND, 0604);//here and there
+			st->out_fd = open(file->file, O_WRONLY | O_CREAT | O_APPEND, 0604);//here and there istty
 		if (st->out_fd == -1 || st->in_fd == -1)
 			return (perror("open"), 1);
 		if (file->next && file->type != 1)
@@ -120,7 +120,7 @@ int	in_out_dup(t_parse *st, t_params *params)
 		if (!params->pid)
 			exit (1);
 	}
-	if (!st->cmd[0] || !st->cmd)
+	if (!st->cmd || st->cmd[0])
 		return (1);
 	excute_cmd_dup(st, params, st->in_fd);
 	return (0);

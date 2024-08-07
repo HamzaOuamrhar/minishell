@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/07 00:10:03 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 08:36:47 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	executing(t_parse *st, t_params *params)
 		// signal_handle2();
 		forking_piping(params);
 		if (just_a_checker(st, params))
+		{
 			status = 1;
+			exit (0);
+		}
 		if (check_builtins(st->cmd[0]))
 			status = checking_cmd(st, params);
 		else
