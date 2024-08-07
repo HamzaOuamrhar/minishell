@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: houamrha <houamrha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/07 14:19:34 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:28:04 by houamrha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ int	export_cmd1(t_parse *st, t_params *params)
 	int		i;
 	char	**res;
 
-	res = NULL;
-	i = 1;
+	42 && (res = NULL, i = 1);
 	if (count_args(st->cmd) == 1)
 		return (just_export(params), 0);
 	while (st->cmd[i])
