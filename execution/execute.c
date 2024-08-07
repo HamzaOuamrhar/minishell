@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/07 10:14:07 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:08:23 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,38 @@ void	exiting(t_params *params, int status)
 	exit (status);
 }
 
-void	closing_fds(t_params *params)
+void	signal_fds(t_params *params)
 {
 	int	status;
 
 	status = 0;
+	waitpid(params->pid, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 2
+			|| WTERMSIG(status) == 3)
+		{
+			status = WTERMSIG(status) + 128;
+			if (WTERMSIG(status) == 3)
+				write(1, "Quit: 3\n", 8);
+			if (WTERMSIG(status) == 2)
+				write(1, "\n", 1);
+			params->status = status;
+		}
+	}
+	if (WIFEXITED(status))
+		params->status = WEXITSTATUS(status);
+	close(params->fds[0]);
+	close(params->fds[1]);
+}
+
+void	closing_fds(t_params *params)
+{
 	close (params->fds[1]);
 	if (params->save_fd != -1)
 		close (params->save_fd);
 	if (params->i == params->cmds - 1)
-	{
-		waitpid(params->pid, &status, 0);
-		if (WIFSIGNALED(status))
-		{
-			if (WTERMSIG(status) == 2
-				|| WTERMSIG(status) == 3)
-			{
-				status = WTERMSIG(status) + 128;
-				if (WTERMSIG(status) == 3)
-					write(1, "Quit: 3\n", 8);
-				if (WTERMSIG(status) == 2)
-					write(1, "\n", 1);
-				params->status = status;
-			}
-		}
-		if (WIFEXITED(status))
-			params->status = WEXITSTATUS(status);
-		close(params->fds[0]);
-		close(params->fds[1]);
-	}
+		signals_fds(params);
 	params->flag = 0;
 	if (params->i != params->cmds - 1)
 	{
@@ -70,7 +73,6 @@ void	executing(t_parse *st, t_params *params)
 		return ;
 	if (!params->pid)
 	{
-		// signal_handle2();
 		forking_piping(params);
 		if (just_a_checker(st, params))
 			exit (1);
