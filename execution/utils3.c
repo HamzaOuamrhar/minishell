@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:58:53 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:17:13 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:02:06 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	empty_env(t_params *params)
 	params->env3[2] = ft_copy("SHLVL=1");
 	params->env3[3] = ft_copy("_=/usr/bin/env");
 	params->env3[4] = NULL;
+	params->path_flag = 1;
 }
 
 char	**copy_env(char **env)

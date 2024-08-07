@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:23:49 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 21:09:43 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:05:50 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ int	pwd_cmd(t_params *params)
 	return (free(pwd), 0);
 }
 
-void	ft_unseting(t_env *tmp, t_env **env, t_env *tmp2)
+void	ft_unseting(t_env **tmp, t_env **env, t_env **tmp2)
 {
-	tmp2 = tmp;
-	if (tmp->next)
-		*(env) = tmp->next;
+	(*tmp2) = (*tmp);
+	if ((*tmp)->next)
+		*(env) = (*tmp)->next;
 	else
-		tmp->next = NULL;
+		(*tmp)->next = NULL;
 }
 
 void	unset_cmd1(t_env **env, char *s)
@@ -109,7 +109,7 @@ void	unset_cmd1(t_env **env, char *s)
 		}
 		if (!(ft_strcmp(tmp->key, s)))
 		{
-			ft_unseting(tmp, env, tmp2);
+			ft_unseting(&tmp, env, &tmp2);
 			break ;
 		}
 		tmp = tmp->next;

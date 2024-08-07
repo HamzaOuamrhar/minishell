@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 0024/04/19 10:50:47 by ez-zagh           #+#    #+#             */
-/*   Updated: 2024/08/07 10:50:16 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:59:31 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct t_params
 	int		stdin_;
 	int		stdout_;
 	int		status;
+	int		path_flag;
 }	t_params;
 
 typedef struct t_parse

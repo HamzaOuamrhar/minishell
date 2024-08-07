@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:41:22 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/07 10:56:34 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:47:55 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	readline_failure(t_params *params)
 {
 	freeing(params);
 	ft_malloc(0, 3);
-	exit (1);
+	write (1, "exit\n", 5);
+	exit (0);
 }
 
 void	wait_prompt1(t_params *params)

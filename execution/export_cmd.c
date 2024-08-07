@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:22:17 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 22:18:57 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:19:34 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	just_export(t_params *params)
 	tmp = params->sorted_env;
 	while (tmp)
 	{
-		if (!tmp->value && ft_strcmp("_", tmp->key))
+		if (!ft_strcmp(tmp->key, "PATH") && params->path_flag)
+			;
+		else if (!tmp->value && ft_strcmp("_", tmp->key))
 		{
 			write(1, "declare -x ", 12);
 			write(1, tmp->key, ft_strlen(tmp->key));
@@ -86,9 +88,9 @@ int	export_cmd1(t_parse *st, t_params *params)
 	char	**res;
 
 	res = NULL;
+	i = 1;
 	if (count_args(st->cmd) == 1)
 		return (just_export(params), 0);
-	i = 1;
 	while (st->cmd[i])
 	{
 		check_join(&(st->cmd[i]), st, params);
@@ -101,7 +103,10 @@ int	export_cmd1(t_parse *st, t_params *params)
 			params->status = 1;
 		}
 		else
+		{
+			params->path_flag = 0;
 			exporting(st, params, res, i);
+		}
 		i++;
 	}
 	return (params->status);

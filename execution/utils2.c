@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:46:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 21:51:14 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:21:12 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	env_cmd(t_parse	*st, t_params *params)
 {
 	t_env	*tmp;
 
-	search_and_replace("_", get_acc_path(params->paths_array,
-			"env"), &(params->env), 1);
 	if (count_args(st->cmd) > 1)
 	{
 		print_error("env", ": Too many arguments\n", NULL);
@@ -38,7 +36,8 @@ int	env_cmd(t_parse	*st, t_params *params)
 	tmp = params->env;
 	while (tmp)
 	{
-		if (tmp->key && tmp->value)
+		if (tmp->key && tmp->value && !(!ft_strcmp(tmp->key, "PATH")
+				&& params->path_flag))
 		{
 			write(1, tmp->key, ft_strlen(tmp->key));
 			write(1, "=", 1);
@@ -47,7 +46,7 @@ int	env_cmd(t_parse	*st, t_params *params)
 		}
 		tmp = tmp->next;
 	}
-	search_and_replace("_", ft_copy("env"), &(params->env), 1);
+	search_and_replace(ft_copy("_"), ft_copy("env"), &(params->env), 0);
 	return (0);
 }
 

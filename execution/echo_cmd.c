@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:43:44 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 10:30:18 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:47:30 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	trying_with_pwd(t_params *params)
 {
 	char	*pwd;
 
-	(void)params;
 	pwd = malloc(1024 * (sizeof(char)));
 	if (!pwd)
 		malloc_error(params);

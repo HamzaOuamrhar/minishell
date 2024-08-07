@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:50:33 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/06 22:54:31 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:01:44 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	intialize(t_params *params)
 	params->sorted_env = NULL;
 	params->sorted_env = NULL;
 	params->env = NULL;
+	params->path_flag = 0;
 }
 
 int	main(int argc, char *argv[], char *env[])

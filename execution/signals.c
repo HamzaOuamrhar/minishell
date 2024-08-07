@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:28:03 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/07 11:08:53 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:52:55 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	signal_handler(int sig)
 		return ;
 	if (sig == SIGINT)
 	{
-		g_status = 2;
+		g_status = SIGINT;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
