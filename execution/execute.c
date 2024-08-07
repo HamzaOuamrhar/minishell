@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:07 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/07 11:08:23 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:12:11 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	closing_fds(t_params *params)
 	if (params->save_fd != -1)
 		close (params->save_fd);
 	if (params->i == params->cmds - 1)
-		signals_fds(params);
+		signal_fds(params);
 	params->flag = 0;
 	if (params->i != params->cmds - 1)
 	{
