@@ -4,8 +4,7 @@ YELLOW_TEXT =\033[1;33m
 RESET_TEXT =\033[0m
 
 NAME = minishell
-N = -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror $(N)
+CFLAGS = -Wall -Wextra -Werror
 CC = cc
 READLINE_DIR=$(shell brew --prefix readline)
 EXECUTION_DIR = execution
