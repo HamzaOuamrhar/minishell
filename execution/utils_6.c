@@ -6,7 +6,7 @@
 /*   By: iez-zagh <iez-zagh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:40:06 by iez-zagh          #+#    #+#             */
-/*   Updated: 2024/08/05 12:16:24 by iez-zagh         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:53:29 by iez-zagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ void	update_shlvl(t_params *params)
 	n = ft_shell_atoi(get_key("SHLVL", params->env));
 	if (n == -1)
 	{
-		search_and_replace("SHLVL", ft_copy("1"), &(params->sorted_env), 1);
-		search_and_replace("SHLVL", ft_copy("1"), &(params->env), 1);
+		search_and_replace(ft_copy("SHLVL"), ft_copy("1"),
+			&(params->sorted_env), 0);
+		search_and_replace(ft_copy("SHLVL"), ft_copy("1"), &(params->env), 0);
 		return ;
 	}
 	if (n == -2)
 		lvl = ft_copy("0");
-	else if (++n == 999)
+	else if (++n > 999)
 	{
 		search_and_replace("SHLVL", ft_copy(""), &(params->sorted_env), 1);
 		search_and_replace("SHLVL", ft_copy(""), &(params->env), 1);
